@@ -34,7 +34,7 @@ client.dev = null;
 client.setUsage = setUsage;
 client.setError = setError;
 
-// Carregar comandos
+
 fs.readdirSync(`./comandos/`).forEach((local) => {
     if (!local) return;
     let arquivos = fs.readdirSync(`./comandos/${local}`).filter(arquivo => arquivo.endsWith('.js'));
@@ -116,10 +116,10 @@ client.on("messageCreate", async message => {
             console.log(`Comando não encontrado: ${cmd}`);
             message.reply({ content: "Comando não encontrado." });
         }
-        return; // Garantir que o AutoMod não interfere nos comandos
+        return; 
     }
 
-    // Verificação de AutoMod
+    
     const rules = await db.get(`automod_rules_${message.guild.id}`);
     if (!rules) return;
 
@@ -198,42 +198,42 @@ client.on("ready", () => {
     console.log(`${client.user.displayName} Online.`);
 
     setInterval(async () => {
-        const allUsers = await db.all(); // Obtém todos os usuários no banco de dados
+        const allUsers = await db.all(); 
     
         for (let user of allUsers) {
             const userData = await db.get(`${user.id}`);
-            if (!userData || !userData.investimentos) continue; // Se o usuário não tem investimentos, pula para o próximo
+            if (!userData || !userData.investimentos) continue; 
     
             let novosInvestimentos = userData.investimentos.map(investimento => {
                 let flutuacao;
                 
-                // Define a flutuação baseada no tipo de investimento
+                
                 switch (investimento.tipo) {
                     case 'ações':
-                        flutuacao = Math.random() * 0.2 - 0.1; // Variação entre -10% e +10% para ações
+                        flutuacao = Math.random() * 0.2 - 0.1; 
                         break;
                     case 'imóveis':
-                        flutuacao = Math.random() * 0.1 - 0.05; // Variação entre -5% e +5% para imóveis
+                        flutuacao = Math.random() * 0.1 - 0.05; 
                         break;
                     case 'startups':
-                        flutuacao = Math.random() * 0.4 - 0.2; // Variação entre -20% e +20% para startups
+                        flutuacao = Math.random() * 0.4 - 0.2; 
                         break;
                     default:
                         flutuacao = 0;
                 }
     
-                // Aplica a flutuação ao retorno do investimento
+                
                 investimento.retorno = Math.max(0, investimento.retorno + investimento.retorno * flutuacao).toFixed(2);
                 return investimento;
             });
     
-            // Atualiza os investimentos do usuário no banco de dados
+            
             await db.set(`${user.id}`, {
                 ...userData,
                 investimentos: novosInvestimentos
             });
         }
-    }, 3600000); // Executa a cada 1 hora (3600000 milissegundos)
+    }, 3600000);
     
     
 
