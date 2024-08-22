@@ -1,9 +1,9 @@
 const Discord = require("discord.js");
 const { QuickDB } = require("quick.db");
 const db = new QuickDB();
-const status = true;
 
 exports.run = async (client, message, args) => {
+    const status = (await db.get(`${this.help.name}_privado`)) ? (await db.get(`${this.help.name}_privado`)) : false;
     if (message.author.id !== client.dev.id && status === false) {
         return message.reply({ content: "Este comando está em manutenção!" });
     }
@@ -88,7 +88,7 @@ Regra adicionada: \`${ruleType}\` -> \`${ruleValue}\`.`)
         await db.set(`automod_rules_${guildId}`, rules);
 
         let embed = new Discord.EmbedBuilder()
-            .setDescription(`# <:cracha:820694021487460352> | AutoMod
+            .setDescription(`# <:cracha:820694021487460352> AutoMod
 
 Regra de auto-moderação removida.`)
             .setColor(client.cor)
@@ -106,7 +106,7 @@ Regra de auto-moderação removida.`)
         const rulesList = rules.map((rule, index) => `${index}: \`${rule.type}\` -> \`${rule.value}\``).join('\n');
 
         let embed = new Discord.EmbedBuilder()
-            .setDescription(`# <:cracha:820694021487460352> | AutoMod
+            .setDescription(`# <:cracha:820694021487460352> AutoMod
 
 Regras de auto-moderação configuradas:\n${rulesList}`)
             .setColor(client.cor)
@@ -118,7 +118,7 @@ Regras de auto-moderação configuradas:\n${rulesList}`)
         await db.delete(`automod_rules_${guildId}`);
 
         let embed = new Discord.EmbedBuilder()
-            .setDescription(`# <:cracha:820694021487460352> | AutoMod
+            .setDescription(`# <:cracha:820694021487460352> AutoMod
 
 Todas as regras de auto-moderação foram removidas.`)
             .setColor(client.cor)
@@ -129,7 +129,7 @@ Todas as regras de auto-moderação foram removidas.`)
     } else if (args[0] === "help") {
         let embed = new Discord.EmbedBuilder()
             .setColor(client.cor)
-            .setDescription(`# <:cracha:820694021487460352> | AutoMod
+            .setDescription(`# <:cracha:820694021487460352> AutoMod
 
 > **add:**
 ㅤㅤAdiciona uma nova regra de moderação, como uma palavra proibida, uma frase ou uma condição para links.
@@ -145,7 +145,7 @@ Todas as regras de auto-moderação foram removidas.`)
 
 > **clear:** 
 ㅤㅤRemove todas as regras configuradas.
-ㅤㅤㅤ!auto-mod clear: Limpa todas as regras.`)
+ㅤㅤㅤ${client.prefix}auto-mod clear: Limpa todas as regras.`)
             .setThumbnail(message.guild.iconURL({ size: 2048, extension: "png" }));
         message.reply({ embeds: [embed] });
     } else {
@@ -159,5 +159,5 @@ exports.help = {
     name: "auto-mod",
     aliases: ["automod"],
     description: "Configura regras de moderação automatizada no servidor. Usage: {prefixo}auto-mod <add|remove|list|clear> [args]",
-    status: status
+    status: false
 };

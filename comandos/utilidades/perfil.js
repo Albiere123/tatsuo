@@ -2,27 +2,24 @@ const Discord = require('discord.js');
 const { QuickDB } = require('quick.db');
 const Canvas = require('canvas');
 const db = new QuickDB();
-const status = true;
-const api = require('yuuta-functions')
+const api = require('yuuta-functions');
+
 const formatDate = (date) => {
     const options = { day: '2-digit', month: 'long', year: 'numeric' };
     return new Intl.DateTimeFormat('pt-BR', options).format(date);
 };
 
 async function getUserRank(userId, id) {
-   
     const users = await db.all();
 
-    
     const userBalances = users
-        .filter(f => !isNaN(f.value.money)&&f.id!=id)
+        .filter(f => !isNaN(f.value.money) && f.id !== id)
         .map(entry => ({
             userId: entry.id,
             money: entry.value.money,
         }))
-        .sort((a, b) => b.money - a.money); 
+        .sort((a, b) => b.money - a.money);
 
-    
     const rank = userBalances.findIndex(user => user.userId === userId);
 
     if (rank === -1) {
@@ -37,6 +34,7 @@ async function getUserRank(userId, id) {
 }
 
 exports.run = async (client, message, args) => {
+    const status = (await db.get(`${this.help.name}_privado`)) ? (await db.get(`${this.help.name}_privado`)) : false;
     if (message.author.id !== client.dev.id && status === false) {
         return message.reply({ content: "Este comando está em manutenção!" });
     }
@@ -45,8 +43,7 @@ exports.run = async (client, message, args) => {
 
     if (!mentionedUser && args.length > 0) {
         const usernameOrDisplayName = args.join(' ');
-        let user = client.users.cache.find(u => u.username.toLowerCase() === usernameOrDisplayName.toLowerCase() || `${u.username.toLowerCase()}#${u.discriminator}` === usernameOrDisplayName.toLowerCase());
-        mentionedUser = user;
+        mentionedUser = client.users.cache.find(u => u.username.toLowerCase() === usernameOrDisplayName.toLowerCase() || `${u.username.toLowerCase()}#${u.discriminator}` === usernameOrDisplayName.toLowerCase());
     }
 
     if (!mentionedUser) mentionedUser = message.author;
@@ -70,16 +67,39 @@ exports.run = async (client, message, args) => {
     ctx.clip();
     ctx.drawImage(avatar, 190, 60, 120, 120);
     ctx.restore();
-    let rank = ``;
-    if(mentionedUser.id == client.dev.id) rank = "O DEV não participa no rank!"
-    else rank = `Nº ${(await getUserRank(mentionedUser.id, client.dev.id)).rank == "Não encontrado" ? "0": `${(await getUserRank(mentionedUser.id, client.dev.id)).rank}`} no ranking de ${(await getUserRank(mentionedUser.id, client.dev.id)).totalUsers || 0}` || 'Ainda não possue rank.'
-    const user = await db.get(mentionedUser.id)
+
+    const userRank = await getUserRank(mentionedUser.id, client.dev.id);
+    let rankText = userRank.rank === "Não encontrado" ? "0" : userRank.rank;
+    const totalUsers = userRank.totalUsers || 0;
+    const rankDescription = client.dev.id != mentionedUser.id ? `Nº ${rankText} no ranking de ${totalUsers}`: "O DEV não participa do rank!";
+
+    const user = await db.get(mentionedUser.id);
+
+    let sbText = message.author.id === client.dev.id && user?.sb ? user.sb : 'Não definido';
+    const emojiImages = [];
+
+    if (sbText) {
+        const emojiMatches = sbText.match(/{emoji:(\d+)}/g);
+        if (emojiMatches) {
+            for (let match of emojiMatches) {
+                const emojiId = match.match(/\d+/)[0];
+                const emoji = client.emojis.cache.get(emojiId);
+                if (emoji) {
+                    const emojiImage = await Canvas.loadImage(emoji.url);
+                    emojiImages.push({ match, image: emojiImage });
+                    sbText = sbText.replace(match, `{image}`);
+                }
+            }
+        }
+    }
+
     const userInfo = {
         'Usuário': mentionedUser.username,
-        'Dinheiro': api.ab(user?.money) || 0,
+        'Trabalho': user?.trabalho || 'Não definido',
+        'Dinheiro': api.ab(user?.money.toFixed(2)) || 0,
         'Data de Criação': formatDate(mentionedUser.createdAt),
-        'Descrição': user?.sb || 'Não definido',
-        'Posição no Rank': rank || "0"
+        'Descrição': sbText.replaceAll("{bot}", client.user.username),
+        'Posição no Rank': rankDescription
     };
 
     const drawRoundedRect = (x, y, width, height, radius) => {
@@ -101,14 +121,80 @@ exports.run = async (client, message, args) => {
         ctx.stroke();
     };
 
-    let yOffset = 200;
     const boxHeight = 50;
-    const boxWidth = 400;
+    const boxWidth = 185;
     const boxMargin = 10;
-    for (const [label, value] of Object.entries(userInfo)) {
-        drawRoundedRect(50, yOffset, boxWidth, boxHeight, 15);
+
+    // Desenha os dois primeiros retângulos (Usuário e Trabalho) lado a lado
+    drawRoundedRect(50, 200, boxWidth, boxHeight, 15);
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText(`Usuário: ${userInfo['Usuário']}`, 60, 230);
+
+    drawRoundedRect(265, 200, boxWidth, boxHeight, 15);
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText(`Trabalho: ${userInfo['Trabalho']}`, 275, 230);
+
+    // Desenha o retângulo para Dinheiro
+    let yOffset = 200 + boxHeight + boxMargin;
+
+    drawRoundedRect(50, yOffset, 400, boxHeight, 15);
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText(`Dinheiro: ${userInfo['Dinheiro']}`, 60, yOffset + 30);
+
+    yOffset += boxHeight + boxMargin;
+
+    // Desenha o retângulo para Data de Criação
+    drawRoundedRect(50, yOffset, 400, boxHeight, 15);
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText(`Data de Criação: ${userInfo['Data de Criação']}`, 60, yOffset + 30);
+
+    yOffset += boxHeight + boxMargin;
+
+    // Ajusta a altura do retângulo da descrição para o mesmo tamanho dos outros retângulos
+    const descriptionBoxHeight = boxHeight; // Altura aumentada para acomodar texto
+
+    // Desenha o retângulo para Descrição
+    drawRoundedRect(50, yOffset, 400, descriptionBoxHeight, 15); // Retângulo da descrição com altura ajustada
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText(`Descrição:`, 60, yOffset + 30);
+
+    let textX = 60 + 90;
+    let textY = yOffset + 30; // Ajusta o texto da descrição para começar um pouco mais abaixo
+
+    const maxWidth = 400 - 20; // Espaço para margens
+
+    if (emojiImages.length > 0) {
+        const parts = userInfo['Descrição'].split('{image}');
+        for (let i = 0; i < parts.length; i++) {
+            const part = parts[i];
+            if (part) {
+                ctx.fillText(part, textX, textY+1);
+                textX += ctx.measureText(part).width;
+            }
+            
+            if (i < emojiImages.length) {
+                const emojiImage = emojiImages[i].image;
+                const emojiSize = 25; // Tamanho do emoji
+                ctx.drawImage(emojiImage, textX, textY - 16, emojiSize, emojiSize);
+                textX += emojiSize + 5; // Adiciona um espaço após o emoji
+            }
+
+            if (textX > maxWidth) {
+                textX = 60; // Reset x para nova linha // Avança para a próxima linha
+                ctx.fillText('', textX, textY); // Adiciona uma nova linha vazia
+            }
+        }
+    } else {
+        ctx.fillText(userInfo['Descrição'], 150, textY);
+    }
+
+    // Desenha os demais retângulos abaixo do retângulo da descrição
+    yOffset = textY + boxHeight + boxMargin; // Atualiza o yOffset para os próximos campos
+    for (const [label, value] of Object.entries(userInfo).slice(4)) {
+        if(label == "Descrição") continue;
+        drawRoundedRect(50, yOffset - 30, 400, boxHeight, 15);
         ctx.fillStyle = '#ffffff';
-        ctx.fillText(`${label}: ${value}`, 60, yOffset + 30);
+        ctx.fillText(`${label}: ${value}`, 60, yOffset);
         yOffset += boxHeight + boxMargin;
     }
 
@@ -128,5 +214,5 @@ exports.help = {
     name: 'perfil',
     aliases: ['profile', 'p'],
     description: 'Gera uma imagem de perfil personalizada de um usuário. Usage: {prefixo}perfil [user]',
-    status: status
+    status: false
 };

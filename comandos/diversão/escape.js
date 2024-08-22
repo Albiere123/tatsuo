@@ -1,7 +1,6 @@
 const Discord = require("discord.js");
 const { QuickDB } = require("quick.db");
 const db = new QuickDB();
-const status = true;
 const api = require("../../api.json");
 
 const puzzles = api.puzzles;
@@ -17,6 +16,8 @@ function shuffleArray(array) {
 
 
 exports.run = async (client, message, args) => {
+    const status = (await db.get(`${this.help.name}_privado`)) ? (await db.get(`${this.help.name}_privado`)) : false;
+
     if (message.author.id !== client.dev.id && status === false) 
         return message.reply({ content: "Este comando está em manutenção!" });
 
@@ -102,5 +103,5 @@ exports.help = {
     name: "escape",
     aliases: ["puzzles"],
     description: "Jogo de escape com enigmas e desafios. Usage: {prefixo}escape <maxset -> configurar limite || start -> começar || solve -> responder || end -> encerrar>",
-    status: status
+    status: false
 }

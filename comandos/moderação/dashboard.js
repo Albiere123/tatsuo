@@ -1,9 +1,9 @@
 const Discord = require("discord.js");
 const { QuickDB } = require("quick.db");
 const db = new QuickDB();
-const status = true;
 
 exports.run = async(client, message, args) => {
+    const status = (await db.get(`${this.help.name}_privado`)) ? (await db.get(`${this.help.name}_privado`)) : false;
     if(message.author.id !== client.dev.id && status == false) return message.reply({content: "Este comando está em manutenção!"});
 
     // Obtém o objeto `dashboard` do banco de dados, ou inicializa como um objeto vazio
@@ -52,8 +52,8 @@ exports.run = async(client, message, args) => {
         let main = new Discord.EmbedBuilder()
             .setDescription(`# <:cnfg:820694104206737428> | DashBoard`)
             .addFields([
-                { name: "<:sla:820694183811612732> Canal de Confissão <:seta2:966325688745484338>", value: `${confess} (Staff que setou: <@${confessChannel.mod}>)` },
-                { name: "<:sla:820694183811612732> Canal de Logs <:seta2:966325688745484338>", value: `${logs} (Staff que setou: <@${logsChannel.mod}>)` }
+                { name: "<:avaliacao:1275831072554356918> Canal de Confissão <:seta2:966325688745484338>", value: `${confess} (Staff que setou: <@${confessChannel.mod}>)` },
+                { name: "<:batepapo:1275650282616918068> Canal de Logs <:seta2:966325688745484338>", value: `${logs} (Staff que setou: <@${logsChannel.mod}>)` }
             ])
             .setColor(client.cor)
             .setThumbnail(message.guild.iconURL());
@@ -66,5 +66,5 @@ exports.help = {
     name: "dashboard",
     aliases: [],
     description: "Faça alterações nas opções setáveis do bot!",
-    status: status
+    status: false
 };

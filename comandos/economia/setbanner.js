@@ -2,8 +2,9 @@ const Discord = require('discord.js');
 const { QuickDB } = require('quick.db');
 const db = new QuickDB();
 const axios = require('axios');
-const status = true;
+
 const isValidPNGUrl = async (url) => {
+    const status = (await db.get(`${this.help.name}_privado`)) ? (await db.get(`${this.help.name}_privado`)) : false;
     try {
         const response = await axios.head(url);
         return response.headers['content-type'] === 'image/png' || response.headers['content-type'] == "image/jpeg";
@@ -29,7 +30,8 @@ exports.run = async (client, message, args) => {
         await db.set(`background_${message.author.id}`, url);
         await db.set(`${message.author.id}`, {
             money: (await user.money) - 2000,
-            sb: (await user.sb)
+            sb: (await user.sb),
+            trabalho: (await user.trabalho)
         })
         message.reply({ content: "BackGround atualizado com sucesso!" });
     } else {
@@ -41,5 +43,5 @@ exports.help = {
     name: 'setbackground',
     aliases: ['setbg'],
     description: 'Define um fundo personalizado para o perfil. Usage: {prefixo}setbackground <link>',
-    status: status
+    status: false
 };

@@ -197,6 +197,46 @@ client.on("messageCreate", async message => {
 client.on("ready", () => {
     console.log(`${client.user.displayName} Online.`);
 
+    setInterval(async () => {
+        const allUsers = await db.all(); // Obtém todos os usuários no banco de dados
+    
+        for (let user of allUsers) {
+            const userData = await db.get(`${user.id}`);
+            if (!userData || !userData.investimentos) continue; // Se o usuário não tem investimentos, pula para o próximo
+    
+            let novosInvestimentos = userData.investimentos.map(investimento => {
+                let flutuacao;
+                
+                // Define a flutuação baseada no tipo de investimento
+                switch (investimento.tipo) {
+                    case 'ações':
+                        flutuacao = Math.random() * 0.2 - 0.1; // Variação entre -10% e +10% para ações
+                        break;
+                    case 'imóveis':
+                        flutuacao = Math.random() * 0.1 - 0.05; // Variação entre -5% e +5% para imóveis
+                        break;
+                    case 'startups':
+                        flutuacao = Math.random() * 0.4 - 0.2; // Variação entre -20% e +20% para startups
+                        break;
+                    default:
+                        flutuacao = 0;
+                }
+    
+                // Aplica a flutuação ao retorno do investimento
+                investimento.retorno = Math.max(0, investimento.retorno + investimento.retorno * flutuacao).toFixed(2);
+                return investimento;
+            });
+    
+            // Atualiza os investimentos do usuário no banco de dados
+            await db.set(`${user.id}`, {
+                ...userData,
+                investimentos: novosInvestimentos
+            });
+        }
+    }, 3600000); // Executa a cada 1 hora (3600000 milissegundos)
+    
+    
+
     const a = require('./comandos/utilidades/lembrete.js');
 
     setInterval(() => a.help.checkReminders(client), 30000);
@@ -217,17 +257,17 @@ client.on("ready", () => {
 function setUsage(embed, usage) {
     if (!(embed instanceof Discord.EmbedBuilder)) return; 
     embed.addFields(
-        { name: `( <:chat:820694238692900864> ) Expressão Correta <:seta2:966325688745484338>`, value: usage, inline: false }
+        { name: `<:batepapo:1275650282616918068> Expressão Correta <:seta2:966325688745484338>`, value: usage, inline: false }
     );
-    embed.setTitle(`Ocorreu um erro!`);
+    embed.setDescription(`# <:bloquear:1275650261574094912> Ocorreu um erro!`)
     embed.setColor(client.cor);
     embed.setThumbnail(client.user.avatarURL({ size: 2048, extension: "png" }));
 }
 
 function setError(embed, error) {
     if (!(embed instanceof Discord.EmbedBuilder)) return; 
-    embed.addFields({ name: `( <:mfone:820694403113943081> ) Mensagem de Erro <:seta2:966325688745484338>`, value: error }); 
-    embed.setTitle(`Ocorreu um erro!`);
+    embed.addFields({ name: `<:megafone:1275650267592790016> Mensagem de Erro <:seta2:966325688745484338>`, value: error }); 
+    embed.setDescription(`# <:bloquear:1275650261574094912> Ocorreu um erro!`);
     embed.setColor(client.cor); 
     embed.setThumbnail(client.user.avatarURL({ size: 2048, extension: "png" }));
 }

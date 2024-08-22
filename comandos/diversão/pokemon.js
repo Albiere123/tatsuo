@@ -1,10 +1,12 @@
 const Discord = require('discord.js');
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const { createCanvas, loadImage } = require('canvas');
-const status = true;
 const gameStates = {};
-
+const {QuickDB} = require('quick.db')
+const db = new QuickDB()
 async function startGame(message, client) {
+    const status = (await db.get(`${this.help.name}_privado`)) ? (await db.get(`${this.help.name}_privado`)) : false;
+
     if (message.author.id !== client.dev.id && status == false) return message.reply({ content: "Este comando está em manutenção!" });
 
     const channelId = message.channel.id;
@@ -99,5 +101,5 @@ exports.help = {
     name: "pokemon",
     aliases: [],
     description: "Quem é esse pokemoon? Usage: {prefixo}pokemon",
-    status: status
+    status: false
 };

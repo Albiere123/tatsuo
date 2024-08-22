@@ -1,8 +1,12 @@
 const Discord = require("discord.js");
 const axios = require("axios");
 const api = require("../../api.json")
-const status = true;
+const {QuickDB} = require('quick.db')
+const db = new QuickDB()
+
 exports.run = async (client, message, args) => {
+    const status = (await db.get(`${this.help.name}_privado`)) ? (await db.get(`${this.help.name}_privado`)) : false;
+
     if(message.author.id !== client.dev.id && status == false) return message.reply({content: "Este comando está em manutenção!"})
     let error = new Discord.EmbedBuilder()
     let mention = await message.mentions.users.first();
@@ -31,5 +35,5 @@ exports.help = {
     name: "slap",
     aliases: ["tapa"],
     description: `Dê um tapa em um usuário! {prefixo}slap <usuário>`,
-    status: status
+    status: false
 };

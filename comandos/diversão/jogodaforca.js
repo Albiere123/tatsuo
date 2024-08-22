@@ -1,10 +1,11 @@
 const Discord = require('discord.js');
 const api = require("../../api.json")
 const words = api.forca;
-const status = true;
 function removeAccents(str) {
   return str.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
 }
+const {QuickDB} = require('quick.db')
+const db = new QuickDB()
 
 const maxAttempts = 6;
 const gameTime = 240000; // 4 minutos
@@ -12,6 +13,8 @@ const gameTime = 240000; // 4 minutos
 let activeGames = {};
 
 exports.run = async(client, message, args) => {
+  const status = (await db.get(`${this.help.name}_privado`)) ? (await db.get(`${this.help.name}_privado`)) : false;
+
   if(message.author.id !== client.dev.id && status == false) return message.reply({content: "Este comando está em manutenção!"})
   const channelId = message.channel.id;
   let erro = new Discord.EmbedBuilder()
@@ -105,5 +108,5 @@ exports.help = {
   name: 'forca',
   aliases: ['hangman'],
   description: "Jogue o famoso jogo da forca! Usage: {prefixo}forca",
-  status: status
+  status: false
 };

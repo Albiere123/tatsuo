@@ -2,8 +2,8 @@ const Discord = require('discord.js')
 const { QuickDB } = require("quick.db");
 const db = new QuickDB();
 const config = require("../../config.json")
-const status = true;
 exports.run = async(client, message, args) => {
+    const status = (await db.get(`${this.help.name}_privado`)) ? (await db.get(`${this.help.name}_privado`)) : false;
     if(message.author.id !== client.dev.id && status == false) return message.reply({content: "Este comando está em manutenção!"})
     let erro = new Discord.EmbedBuilder()
 
@@ -45,12 +45,12 @@ exports.run = async(client, message, args) => {
     }
 
     let embed = new Discord.EmbedBuilder()
-    .setTitle(`<:negado:967577164423766066> | Prefixo`)
+    .setDescription(`# <:global:1275650280850984961> Prefixo\nㅤ`)
     .addFields(
         {
-            name: `( <:ajuda:967571718027743292> ) Antigo prefixo`, value: `${aprefix}`
+            name: `**<:guia:1275650254384926781> Antigo prefixo**`, value: `${aprefix}`
         }, {
-            name: `( <:cracha:820694021487460352> ) Novo prefixo`, value: `${prefixo}`
+            name: `**<:codificacao:1275650255991472158> Novo prefixo**`, value: `${prefixo}`
         }
     )
     .setColor(client.cor)
@@ -63,5 +63,5 @@ exports.help = {
     name: "setprefix",
     aliases: ['prefix'],
     description: `Altere o meu prefixo! {prefixo}setprefix <novo prefixo>`,
-    status: status
+    status: false
 }

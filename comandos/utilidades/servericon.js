@@ -1,9 +1,9 @@
 const Discord = require("discord.js");
 const { QuickDB } = require("quick.db");
 const db = new QuickDB();
-const status = true;
 
 exports.run = async (client, message, args) => {
+    const status = (await db.get(`${this.help.name}_privado`)) ? (await db.get(`${this.help.name}_privado`)) : false;
     if (message.author.id !== client.dev.id && status === false) {
         return message.reply({ content: "Este comando está em manutenção!" });
     }
@@ -24,10 +24,10 @@ exports.run = async (client, message, args) => {
     let embed = new Discord.EmbedBuilder()
         .setColor(client.cor) 
         .setImage(guild.iconURL({ size: 4096, extension: "png" }))
-        .setDescription(`# <:foto:966744694195363850> | ServerIcon
+        .setDescription(`# <:imagem1:1275650286899167325> ServerIcon
 ㅤ
-**( <:doutilizador1:966745480170180670> ) Servidor:** ${guild.name}
-**( <:wifi:966765489130975232> ) [Download](${guild.iconURL({ size: 4096, extension: "png" })})**
+**<:servidor:1275850903349366895> Servidor:** ${guild.name}
+**<:paradownload:1275838205505179759> [Download](${guild.iconURL({ size: 4096, extension: "png" })})**
 ㅤ`);
 
    
@@ -38,5 +38,5 @@ exports.help = {
     name: "servericon",
     aliases: ["iconserver"],
     description: "Veja o ícone de um servidor. Usage: {prefixo}servericon [ID do servidor ou nome do servidor (o bot tem que estar no servidor)]",
-    status: status
+    status: false
 }

@@ -1,9 +1,9 @@
 const Discord = require("discord.js");
 const { QuickDB } = require("quick.db");
 const db = new QuickDB();
-const status = true;
 
 exports.run = async (client, message, args) => {
+    const status = (await db.get(`${this.help.name}_privado`)) ? (await db.get(`${this.help.name}_privado`)) : false;
     if (message.author.id !== client.dev.id && status === false) {
         return message.reply({ content: "Este comando está em manutenção!" });
     }
@@ -19,12 +19,12 @@ exports.run = async (client, message, args) => {
     if (!mention) mention = message.author;
 
     let embed = new Discord.EmbedBuilder()
-        .setColor(client.cor || '#FFFFFF') // Define uma cor padrão se client.cor não estiver definido
+        .setColor(client.cor) // Define uma cor padrão se client.cor não estiver definido
         .setImage(mention.avatarURL({ size: 4096, extension: "png" }))
-        .setDescription(`# <:foto:966744694195363850> | Avatar
+        .setDescription(`# <:imagem:1275650259707629589> Avatar
 ㅤ
-**( <:doutilizador1:966745480170180670> ) Usuário:** ${mention.username}
-**( <:wifi:966765489130975232> ) [Download](${mention.avatarURL({ size: 4096, extension: "png" })})**
+**<:doutilizador:1275838621043396681> Usuário:** ${mention.username}
+**<:paradownload:1275838205505179759> [Download](${mention.avatarURL({ size: 4096, extension: "png" })})**
 ㅤ`);
 
     message.reply({ embeds: [embed] });
@@ -34,5 +34,5 @@ exports.help = {
     name: "avatar",
     aliases: [],
     description: "Veja a foto de perfil de um usuário. Usage: {prefixo}avatar [menção/username#discriminator]",
-    status: status
+    status: false
 }

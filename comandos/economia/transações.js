@@ -1,9 +1,10 @@
 const Discord = require("discord.js");
 const { QuickDB } = require("quick.db");
 const db = new QuickDB();
-const status = true;
+
 
 exports.run = async(client, message, args) => {
+    const status = (await db.get(`${this.help.name}_privado`)) ? (await db.get(`${this.help.name}_privado`)) : false;
     if (message.author.id !== client.dev.id && status == false) return message.reply({content: "Este comando está em manutenção!"});
 
     let embed = new Discord.EmbedBuilder();
@@ -47,16 +48,18 @@ exports.run = async(client, message, args) => {
     const transactionsToShow = userTransactions.slice((page - 1) * pageSize, page * pageSize);
 
     if (transactionsToShow.length === 0) {
-        embed.setTitle("Sem Transações")
-            .setDescription(`Não há transações registradas para ${targetUserId === message.author.id ? 'você' : `${client.users.cache.get(targetUserId).username}`}.`)
+        embed
+            .setDescription(`<:historicodetransacoes:1275658669501186120> Sem Transações
+Não há transações registradas para ${targetUserId === message.author.id ? 'você' : `${client.users.cache.get(targetUserId).username}`}.`)
             .setColor(client.cor)
             .setThumbnail(client.users.cache.get(targetUserId).avatarURL({size:2048, extension: "png"}));
     } else {
-        embed.setTitle(`<:money:820694376052424725> | Histórico de Transações ${targetUserId === message.author.id ? '' : `para ${client.users.cache.get(targetUserId).username}`}`)
+        embed
             .setColor(client.cor)
-            .setDescription(`ㅤ\n`+transactionsToShow.map(tx => {
+            .setDescription(`# <:historicodetransacoes:1275658669501186120> Histórico de Transações ${targetUserId === message.author.id ? '' : `para ${client.users.cache.get(targetUserId).username}`}
+ㅤ\n`+transactionsToShow.map(tx => {
                 const type = tx.type === 'payment' ? 'Pagamento' : (tx.type === 'solo_bet' ? 'Aposta Solo' : 'Aposta Duo');
-                return `**ID:** ${tx.id}\n**Tipo:** ${type}\n**Valor:** R$ ${tx.amount}\n**Timestamp:** ${tx.timestamp}\n**Detalhes:** ${tx.type === 'solo_bet' ? `Multiplicador: ${tx.multiplier}` :tx.type == "payment" && tx.receiver == targetUserId ? `Recebido de: ${client.users.cache.get(tx.sender).username}`: tx.sender == targetUserId ? `Enviado para: ${client.users.cache.get(tx.receiver).username}` : ``}`
+                return `**<:transacoes:1275658665948610580> Transação**\n**ID:** ${tx.id}\n**Tipo:** ${type}\n**Valor:** R$ ${tx.amount}\n**Timestamp:** ${tx.timestamp}\n**Detalhes:** ${tx.type === 'solo_bet' ? `Multiplicador: ${tx.multiplier}` :tx.type == "payment" && tx.receiver == targetUserId ? `Recebido de: ${client.users.cache.get(tx.sender).username}`: tx.sender == targetUserId ? `Enviado para: ${client.users.cache.get(tx.receiver).username}` : ``}`
             }).join('\n\n'))
             .setFooter({text: `Página ${page} de ${totalPages}`})
             .setThumbnail(client.users.cache.get(targetUserId).avatarURL({size:2048, extension: "png"}));
@@ -93,11 +96,12 @@ exports.run = async(client, message, args) => {
         
         const updatedTransactionsToShow = userTransactions.slice((page - 1) * pageSize, page * pageSize);
 
-        embed.setTitle(`<:money:820694376052424725> | Histórico de Transações ${targetUserId === message.author.id ? '' : `para ${client.users.cache.get(targetUserId).username}`}`)
+        embed
             .setColor(client.cor)
-            .setDescription(`ㅤ\n`+updatedTransactionsToShow.map(tx => {
+            .setDescription(`# <:historicodetransacoes:1275658669501186120> Histórico de Transações ${targetUserId === message.author.id ? '' : `para ${client.users.cache.get(targetUserId).username}`}
+ㅤ\n`+updatedTransactionsToShow.map((tx, index) => {
                 const type = tx.type === 'payment' ? 'Pagamento' : (tx.type === 'solo_bet' ? 'Aposta Solo' : 'Aposta Duo');
-                return `**ID:** ${tx.id}\n**Tipo:** ${type}\n**Valor:** R$ ${tx.amount}\n**Timestamp:** ${tx.timestamp}\n**Detalhes:** ${tx.type === 'solo_bet' ? `Multiplicador: ${tx.multiplier}` :tx.type == "payment" && tx.receiver == targetUserId ? `Recebido de: ${client.users.cache.get(tx.sender).username}`: tx.sender == targetUserId ? `Enviado para: ${client.users.cache.get(tx.receiver).username}` : ``}`
+                return `**<:transacoes:1275658665948610580> Transação**\n**ID:** ${tx.id}\n**Tipo:** ${type}\n**Valor:** R$ ${tx.amount}\n**Timestamp:** ${tx.timestamp}\n**Detalhes:** ${tx.type === 'solo_bet' ? `Multiplicador: ${tx.multiplier}` :tx.type == "payment" && tx.receiver == targetUserId ? `Recebido de: ${client.users.cache.get(tx.sender).username}`: tx.sender == targetUserId ? `Enviado para: ${client.users.cache.get(tx.receiver).username}` : ``}`
             }).join('\n\n'))
             .setFooter({text: `Página ${page} de ${totalPages}`})
         
@@ -118,5 +122,5 @@ exports.help = {
     name: "transactions",
     aliases: ["transacoes"],
     description: "Veja o histórico de transações (pagamentos e apostas) realizadas para você ou outro usuário. Usage: {prefixo}transactions [@usuário|id|nome] [página]",
-    status: status
+    status: false
 };

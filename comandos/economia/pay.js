@@ -1,9 +1,10 @@
 const Discord = require("discord.js");
 const { QuickDB } = require("quick.db");
 const db = new QuickDB();
-const status = true;
+
 
 exports.run = async(client, message, args) => {
+    const status = (await db.get(`${this.help.name}_privado`)) ? (await db.get(`${this.help.name}_privado`)) : false;
     if(message.author.id !== client.dev.id && status == false) return message.reply({content: "Este comando está em manutenção!"});
 
     let embed = new Discord.EmbedBuilder();
@@ -46,7 +47,7 @@ exports.run = async(client, message, args) => {
     const senderData = await db.get(`${message.author.id}`);
     const senderBalance = senderData ? senderData.money : 0;
     const senderSb = senderData ? senderData.sb : "";
-
+    const senderTb = senderData ? senderData.trabalho: "";
     
     if (senderBalance < amount) {
         client.setError(embed, "Você não tem saldo suficiente para essa transação.");
@@ -55,8 +56,8 @@ exports.run = async(client, message, args) => {
 
     
     const confirmEmbed = new Discord.EmbedBuilder()
-        .setTitle("Confirmação de Pagamento")
-        .setDescription(`${message.author.tag} deseja enviar ${amount} moedas para você. Você aceita?`)
+        .setDescription(`# <:mudar:1275650265206493276> Confirmação de Pagamento
+ㅤ\n${message.author.tag} deseja enviar ${amount} moedas para você. Você aceita?`)
         .setFooter({text: "Responda com 'sim' ou 'não'."})
         .setColor(client.cor)
     const filter = m => m.author.id === user.id && ['sim', 'não'].includes(m.content.toLowerCase());
@@ -67,13 +68,14 @@ exports.run = async(client, message, args) => {
 
                 if (response === 'sim') {
                     // Atualiza apenas o saldo do remetente e destinatário, mantendo o "sb"
-                    await db.set(`${message.author.id}`, { money: senderBalance - amount, sb: senderSb });
+                    await db.set(`${message.author.id}`, { money: senderBalance - amount, sb: senderSb, trabalho: senderTb});
                     
                     const receiverData = await db.get(`${user.id}`);
                     const receiverBalance = receiverData ? receiverData.money : 0;
                     const receiverSb = receiverData ? receiverData.sb : "";
+                    const receiverTb = receiverData ? receiverData.trabalho : "";
                     const transactionId = Date.now();
-                    await db.set(`${user.id}`, { money: receiverBalance + amount, sb: receiverSb });
+                    await db.set(`${user.id}`, { money: receiverBalance + amount, sb: receiverSb, trabalho: receiverTb });
                     await db.push('transactions', {
                         id: transactionId,
                         type: 'payment',
@@ -98,5 +100,5 @@ exports.help = {
     name: "pay",
     aliases: ["pagar", "enviar"],
     description: "Permite enviar moedas para outro usuário usando menção, nome de usuário ou ID. Usage: {prefixo}pay <@usuário | nome | ID> <valor>",
-    status: status
+    status: false
 };

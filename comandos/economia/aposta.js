@@ -1,9 +1,10 @@
 const Discord = require("discord.js");
 const { QuickDB } = require("quick.db");
 const db = new QuickDB();
-const status = false;
 
 exports.run = async(client, message, args) => {
+    const status = (await db.get(`${this.help.name}_privado`)) ? (await db.get(`${this.help.name}_privado`)) : false;
+
     if(message.author.id !== client.dev.id && status == false) return message.reply({content: "Este comando está em manutenção!"});
 
     let embed = new Discord.EmbedBuilder();
@@ -108,11 +109,13 @@ exports.run = async(client, message, args) => {
                         const winnerData = await db.get(`${winner.id}`);
                         const loserData = await db.get(`${loser.id}`);
 
-                        await db.set(`${winner.id}`, { money: winnerData.money + amount, sb: winnerData.sb });
-                        await db.set(`${loser.id}`, { money: loserData.money - amount, sb: loserData.sb });
+                        await db.set(`${winner.id}`, { money: winnerData.money + amount, sb: winnerData.sb, trabalho: winnerData.trabalho });
+                        await db.set(`${loser.id}`, { money: loserData.money - amount, sb: loserData.sb, trabalho: loserData.trabalho });
 
-                        embed.setTitle("Aposta Completa!")
-                            .setDescription(`${winner.tag} ganhou ${amount} moedas de ${loser.tag}!`)
+                        embed
+                            .setDescription(`# <:aposta:1275832004700667924> Aposta Completa!
+ㅤ
+${winner.tag} ganhou ${amount} moedas de ${loser.tag}!`)
                             .setColor(client.cor);
 
                         transactionId = Date.now();
@@ -153,5 +156,5 @@ exports.help = {
     name: "bet",
     aliases: ["aposta"],
     description: "Realize uma aposta solo com multiplicador ou uma aposta duo com outro usuário. Usage: {prefixo}bet <solo|duo> <valor> [multiplicador] [@usuário]",
-    status: status
+    status: false
 };

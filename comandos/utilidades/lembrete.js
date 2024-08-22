@@ -1,9 +1,10 @@
 const Discord = require("discord.js");
 const { QuickDB } = require("quick.db");
 const db = new QuickDB();
-const status = true;
+
 
 exports.run = async (client, message, args) => {
+    const status = (await db.get(`${this.help.name}_privado`)) ? (await db.get(`${this.help.name}_privado`)) : false;
     if (message.author.id !== client.dev.id && status === false) return message.reply({ content: "Este comando está em manutenção!" });
 
     let embed = new Discord.EmbedBuilder();
@@ -18,7 +19,7 @@ exports.run = async (client, message, args) => {
 
         if (userReminders.length === 0) {
             embed
-                .setDescription(`# <:lembrete:1271519681097891942> | Lembretes
+                .setDescription(`# <:notificacao:1275650250740072581> Lembretes
 Você não tem lembretes programados.`)
                 .setThumbnail('https://cdn-icons-png.flaticon.com/512/3964/3964959.png')
                 .setColor(client.cor);
@@ -33,7 +34,7 @@ Você não tem lembretes programados.`)
         });
 
         embed
-            .setDescription(`# <:lembrete:1271519681097891942> | Lembretes
+            .setDescription(`# <:notificacao:1275650250740072581> Lembretes
 ㅤ              
 ${allReminders.join('\n\n')}`)
             .setThumbnail('https://cdn-icons-png.flaticon.com/512/3964/3964959.png')
@@ -87,11 +88,10 @@ ${allReminders.join('\n\n')}`)
     const formattedTimeString = formatTimeString(timeString);
 
     const embe = new Discord.EmbedBuilder()
-        .setTitle('<:lembrete:1271519681097891942> | Lembrete Configurado')
-        .setDescription(
-            `**( <:notificacao:966742159699083354> ) Eu vou te lembrar em:**\n` +
+        .setDescription(`# <:notificacao:1275650250740072581> Lembrete Configurado\n`+
+            `**\n<:verifica:1275650252803932251> Eu vou te lembrar em:**\n` +
             `**${formattedTimeString}**\n\n` +
-            `**( <:oemail1:966765165980811314> ) Mensagem programada:**\n` +
+            `**<:alarme:1275650257673388062> Mensagem programada:**\n` +
             `\`${reminderMessage}\``
         )
         .setColor(client.cor)
@@ -148,8 +148,8 @@ async function checkReminders(client) {
             if (channel) {
                 try {
                     let embed = new Discord.EmbedBuilder()
-                        .setTitle(`**<:lembrete:1271519681097891942> | Lembrete**`)
-                        .setDescription(`**Mensagem programada:** \`${reminder.reminder_message}\``)
+                        .setDescription(`# **<:notificacao:1275650250740072581> Lembrete**
+**<:alarme:1275650257673388062> Mensagem programada:** \`${reminder.reminder_message}\``)
                         .setThumbnail(`https://cdn-icons-png.flaticon.com/512/3964/3964959.png`)
                         .setColor(client.cor);
                     channel.send({ content: `<@${reminder.user_id}>`, embeds: [embed] })
@@ -172,7 +172,7 @@ exports.help = {
     name: "lembrete",
     aliases: ["remindder"],
     description: "Deixe me lhe lembrar de algo! Usage: {prefixo}lembrete <tempo | list -> lista de lembretes> <mensagem programada>",
-    status: status,
+    status: false,
     run: exports.run,
     checkReminders: checkReminders,
 };

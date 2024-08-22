@@ -1,7 +1,9 @@
 const Discord = require("discord.js")
 const axios = require('axios')
-const status = true;
+const {QuickDB} = require('quick.db')
+const db = new QuickDB()
 exports.run = async (client,  message, args) => {
+    const status = (await db.get(`${this.help.name}_privado`)) ? (await db.get(`${this.help.name}_privado`)) : false;
     if(message.author.id !== client.dev.id && status == false) return message.reply({content: "Este comando está em manutenção!"})
     let erro = new Discord.EmbedBuilder()
     if(!args[0]) {
@@ -20,12 +22,12 @@ exports.run = async (client,  message, args) => {
     
     let example = resposta.data.pt.example.replaceAll("<quebra de linha>", `\n`)
     let embed = new Discord.EmbedBuilder()
-    .setTitle("DBD")
+    .setDescription("# <:global:1275650280850984961> DBD")
     .addFields([
-        { name: "ㅤ\nNome da Função", value: resposta.data.pt.name},
-        { name: "Descrição", value: resposta.data.pt.description},
-        { name: "Expressão para uso", value: resposta.data.pt.use},
-        { name: "Exemplo", value: `\`\`\`${example}\`\`\``}
+        { name: "ㅤ\n<:lista:1275656990013526076> Nome da Função", value: resposta.data.pt.name},
+        { name: "<:descricaodotrabalho:1275839638631612487> Descrição", value: resposta.data.pt.description},
+        { name: "<:megafone:1275650267592790016> Expressão para uso", value: resposta.data.pt.use},
+        { name: "<:pesquisa:1275839827199398013> Exemplo", value: `\`\`\`${example}\`\`\``}
     ])
     .setColor(client.cor)
     .setImage(resposta.data.pt.image)
@@ -45,6 +47,6 @@ exports.run = async (client,  message, args) => {
 exports.help = {
     name: "dbd",
     aliases: [],
-    status: status,
+    status: false,
     description: "Use este comando para ver informações sobre funções do dbd. Usage: {prefixo}dbd <função ou evento>"
 }

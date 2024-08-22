@@ -3,9 +3,9 @@ const { QuickDB } = require('quick.db');
 const Canvas = require('canvas');
 const config = require('../../config.json');
 const db = new QuickDB();
-const status = true;
-
 exports.run = async (client, message, args) => {
+    const status = (await db.get(`${this.help.name}_privado`)) ? (await db.get(`${this.help.name}_privado`)) : false;
+
     if (message.author.id !== client.dev.id && status === false) {
         return message.reply({ content: "Este comando está em manutenção!" });
     }
@@ -122,5 +122,5 @@ exports.help = {
     name: 'ship',
     aliases: ['shipar'],
     description: 'Veja se um ship seu seria real! Usage: {prefixo}ship <user1> [user2]',
-    status: status,
+    status: false
 };
