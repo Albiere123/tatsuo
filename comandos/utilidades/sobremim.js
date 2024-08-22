@@ -42,7 +42,7 @@ exports.run = async (client, message, args) => {
         return message.reply({ embeds: [erro] }); 
     }
 
-    // Contar "{emoji:ID}" e "{Bot}" como 1 caractere
+    
     const adjustedLength = newAbout.replace(/\{emoji:\d+\}|\{Bot\}/g, 'x').length;
 
     let truncatedAbout = newAbout;
@@ -56,7 +56,7 @@ exports.run = async (client, message, args) => {
 
             if (match) {
                 currentLength += 1;
-                i += match[0].length - 1; // Avançar o índice para pular o match
+                i += match[0].length - 1; 
             } else {
                 currentLength += 1;
             }

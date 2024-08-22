@@ -4,6 +4,7 @@ const db = new QuickDB()
 
 exports.run = async (client, message, args) => {
   const status = (await db.get(`${this.help.name}_privado`)) ? (await db.get(`${this.help.name}_privado`)) : false;
+  if(status == false && client.dev.id != message.author.id) return message.reply("Comando em Manutenção!") 
 const reason = args.slice(0).join(' ')
 client.user.setActivity({name: `Com ${client.users.size} Usuarios.`, type: "WATCHING"})
       const embedrr = new Discord.EmbedBuilder()

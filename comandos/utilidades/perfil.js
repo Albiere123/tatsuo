@@ -125,7 +125,7 @@ exports.run = async (client, message, args) => {
     const boxWidth = 185;
     const boxMargin = 10;
 
-    // Desenha os dois primeiros retângulos (Usuário e Trabalho) lado a lado
+    
     drawRoundedRect(50, 200, boxWidth, boxHeight, 15);
     ctx.fillStyle = '#ffffff';
     ctx.fillText(`Usuário: ${userInfo['Usuário']}`, 60, 230);
@@ -134,7 +134,7 @@ exports.run = async (client, message, args) => {
     ctx.fillStyle = '#ffffff';
     ctx.fillText(`Trabalho: ${userInfo['Trabalho']}`, 275, 230);
 
-    // Desenha o retângulo para Dinheiro
+    
     let yOffset = 200 + boxHeight + boxMargin;
 
     drawRoundedRect(50, yOffset, 400, boxHeight, 15);
@@ -143,25 +143,25 @@ exports.run = async (client, message, args) => {
 
     yOffset += boxHeight + boxMargin;
 
-    // Desenha o retângulo para Data de Criação
+    
     drawRoundedRect(50, yOffset, 400, boxHeight, 15);
     ctx.fillStyle = '#ffffff';
     ctx.fillText(`Data de Criação: ${userInfo['Data de Criação']}`, 60, yOffset + 30);
 
     yOffset += boxHeight + boxMargin;
 
-    // Ajusta a altura do retângulo da descrição para o mesmo tamanho dos outros retângulos
-    const descriptionBoxHeight = boxHeight; // Altura aumentada para acomodar texto
+    
+    const descriptionBoxHeight = boxHeight; 
 
-    // Desenha o retângulo para Descrição
-    drawRoundedRect(50, yOffset, 400, descriptionBoxHeight, 15); // Retângulo da descrição com altura ajustada
+    
+    drawRoundedRect(50, yOffset, 400, descriptionBoxHeight, 15); 
     ctx.fillStyle = '#ffffff';
     ctx.fillText(`Descrição:`, 60, yOffset + 30);
 
     let textX = 60 + 90;
-    let textY = yOffset + 30; // Ajusta o texto da descrição para começar um pouco mais abaixo
+    let textY = yOffset + 30; 
 
-    const maxWidth = 400 - 20; // Espaço para margens
+    const maxWidth = 400 - 20; 
 
     if (emojiImages.length > 0) {
         const parts = userInfo['Descrição'].split('{image}');
@@ -174,22 +174,22 @@ exports.run = async (client, message, args) => {
             
             if (i < emojiImages.length) {
                 const emojiImage = emojiImages[i].image;
-                const emojiSize = 25; // Tamanho do emoji
+                const emojiSize = 25; 
                 ctx.drawImage(emojiImage, textX, textY - 16, emojiSize, emojiSize);
-                textX += emojiSize + 5; // Adiciona um espaço após o emoji
+                textX += emojiSize + 5; 
             }
 
             if (textX > maxWidth) {
-                textX = 60; // Reset x para nova linha // Avança para a próxima linha
-                ctx.fillText('', textX, textY); // Adiciona uma nova linha vazia
+                textX = 60;
+                ctx.fillText('', textX, textY); 
             }
         }
     } else {
         ctx.fillText(userInfo['Descrição'], 150, textY);
     }
 
-    // Desenha os demais retângulos abaixo do retângulo da descrição
-    yOffset = textY + boxHeight + boxMargin; // Atualiza o yOffset para os próximos campos
+    
+    yOffset = textY + boxHeight + boxMargin;
     for (const [label, value] of Object.entries(userInfo).slice(4)) {
         if(label == "Descrição") continue;
         drawRoundedRect(50, yOffset - 30, 400, boxHeight, 15);

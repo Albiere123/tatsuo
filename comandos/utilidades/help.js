@@ -141,7 +141,7 @@ exports.run = async (client, message, args) => {
     let msg = await message.reply({ embeds: [main], components: [row] });
 
     const filter = i => i.customId === 'select_menu' && i.user.id === message.author.id;
-    const collector = msg.createMessageComponentCollector({ filter, time: 60000 }); // 60 segundos
+    const collector = msg.createMessageComponentCollector({ filter, time: 60000 });
 
     collector.on('collect', async interaction => {
         const selectedValue = interaction.values[0];

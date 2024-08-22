@@ -67,7 +67,7 @@ exports.run = async(client, message, args) => {
                 const response = collected.first().content.toLowerCase();
 
                 if (response === 'sim') {
-                    // Atualiza apenas o saldo do remetente e destinatário, mantendo o "sb"
+                   
                     await db.set(`${message.author.id}`, { money: senderBalance - amount, sb: senderSb, trabalho: senderTb});
                     
                     const receiverData = await db.get(`${user.id}`);

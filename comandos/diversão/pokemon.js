@@ -70,7 +70,7 @@ async function startGame(message, client) {
                 message.channel.send({content: `Reiniciando o jogo...`})
                 gameStates[channelId].collector.stop();
 
-                // Reinicia o jogo automaticamente após 5 segundos se alguém acertar
+                
                 setTimeout(() => {
                     startGame(message, client);
                 }, 5000);

@@ -12,7 +12,7 @@ exports.run = async (client, message, args) => {
     let reminderMessage = args.slice(1).join(' ');
     let channelId = message.channel.id;
 
-    // Verificar se o primeiro argumento é "list"
+    
     if (timeString === "list") {
         const reminders = await db.get('reminders') || [];
         const userReminders = reminders.filter(reminder => reminder.user_id === message.author.id);
@@ -26,7 +26,7 @@ Você não tem lembretes programados.`)
             return message.channel.send({ embeds: [embed] });
         }
 
-        // Formatar todos os lembretes do usuário
+       
         const allReminders = userReminders.map((reminder, index) => {
             let formattedTime = formatTime(reminder.remind_at - Date.now());
             if(formattedTime < 0 || !formattedTime) formattedTime = "Esperando a proxima verificação..."

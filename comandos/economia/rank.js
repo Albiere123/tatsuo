@@ -4,10 +4,10 @@ const db = new QuickDB();
 const api = require("yuuta-functions")
 exports.run = async (client, message, args) => {
     const status = (await db.get(`${this.help.name}_privado`)) ? (await db.get(`${this.help.name}_privado`)) : false;
-    // Obtém todos os usuários e suas moedas
+
     const users = await db.all();
 
-    // Filtra apenas os usuários com saldo de moedas
+    
     const userBalances = users
         .filter(f => !isNaN(f.value.money)&&f.id!=client.dev.id)
         .map(entry => ({

@@ -27,9 +27,10 @@ exports.run = async(client, message, args) => {
         }
         gameState.isRunning = true;
         gameState.suspect = suspects[Math.floor(Math.random() * suspects.length)];
-        gameState.location = locations[Math.floor(Math.random() * locations.length)];
+        gameState.location =
+         locations[Math.floor(Math.random() * locations.length)];
         gameState.weapon = weapons[Math.floor(Math.random() * weapons.length)];
-        gameState.hintsGiven = 0;  // Reinicia o contador de dicas
+        gameState.hintsGiven = 0; 
 
         message.channel.send('O jogo de detetive começou! Façam suas perguntas ou tentem uma acusação com `'+client.prefix+'detetive acusar <suspeito> <local> <arma>`.');
         giveHint(message)
@@ -65,13 +66,13 @@ function giveHint(message) {
             hint = `Dica: A arma não é ${weapons.find(w => w !== gameState.weapon)}.`;
             break;
         default:
-            return;  // Sem mais dicas
+            return;  
     }
     message.channel.send(hint);
     gameState.hintsGiven++;
 
     if (gameState.hintsGiven < 3) {
-        setTimeout(giveHint, 60000, message);  // Próxima dica em 1 minuto
+        setTimeout(giveHint, 60000, message);  
     }
 }
 

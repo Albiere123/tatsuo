@@ -10,13 +10,13 @@ exports.run = async (client, message, args) => {
 
     let error = new Discord.EmbedBuilder();
 
-    // Verificando permissões do autor
+    
     if (!message.member.permissions.has(Discord.PermissionFlagsBits.BanMembers)) {
         client.setError(error, `Parece que você não possui a permissão de \`Banir membros\``);
         return message.reply({ embeds: [error] });
     }
 
-    // Verificando permissões do bot
+    
     if (!message.guild.members.cache.get(client.user.id).permissions.has(Discord.PermissionFlagsBits.ManageMessages)) {
         client.setError(error, `Estou sem um cargo com a permissão de \`Gerenciar Mensagens.\``);
         return message.reply({ embeds: [error] });
@@ -28,7 +28,7 @@ exports.run = async (client, message, args) => {
     let erro = new Discord.EmbedBuilder()
         .setThumbnail(message.guild.iconURL({ size: 2048, extension: "png" }));
 
-    // Lista de tipos de regras permitidas
+    
     const allowedRuleTypes = ['palavra', 'link'];
 
     if (!subCommand) {
@@ -41,7 +41,7 @@ exports.run = async (client, message, args) => {
         const ruleType = args[1];
         const ruleValue = args.slice(2).join(' ');
 
-        // Verifica se o tipo de regra é permitido
+        
         if (!allowedRuleTypes.includes(ruleType)) {
             client.setError(erro, `Tipo de regra inválido. Os tipos permitidos são: ${allowedRuleTypes.join(', ')}`);
             return message.reply({ embeds: [erro] });

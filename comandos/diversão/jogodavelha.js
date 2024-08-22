@@ -41,7 +41,7 @@ exports.run = async (client, message, args) => {
     };
 
     const checkWin = (symbol) => {
-        // Check rows, columns, and diagonals for a win
+       
         const winningPatterns = [
             [board[0][0], board[0][1], board[0][2]],
             [board[1][0], board[1][1], board[1][2]],

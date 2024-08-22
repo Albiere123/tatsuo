@@ -8,7 +8,7 @@ const {QuickDB} = require('quick.db')
 const db = new QuickDB()
 
 const maxAttempts = 6;
-const gameTime = 240000; // 4 minutos
+const gameTime = 240000; 
 
 let activeGames = {};
 
@@ -92,7 +92,7 @@ exports.run = async(client, message, args) => {
       }
     }
 
-    setTimeout(() => { currentPlayer = null; }, 1000); // 1 segundo de espera antes do próximo jogador
+    setTimeout(() => { currentPlayer = null; }, 1000); 
   });
 
   collector.on('end', () => {

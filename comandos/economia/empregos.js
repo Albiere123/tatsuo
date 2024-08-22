@@ -6,7 +6,7 @@ exports.run = async(client, message, args) => {
     const status = (await db.get(`${this.help.name}_privado`)) ? (await db.get(`${this.help.name}_privado`)) : false;
     if(message.author.id !== client.dev.id && status == false) return message.reply({content: "Este comando está em manutenção!"});
     
-    // Cria os botões para as opções de emprego
+    
     const buttonStreamer = new Discord.ButtonBuilder()
         .setCustomId('select_streamer')
         .setLabel('Streamer')
@@ -26,7 +26,7 @@ exports.run = async(client, message, args) => {
 <:lista:1275656990013526076>  Lista de empregos:
 - Streamer;
 - CLT`)
-        .setThumbnail('https://cdn-icons-png.flaticon.com/512/1995/1995574.png'); // Ícone ilustrativo
+        .setThumbnail('https://cdn-icons-png.flaticon.com/512/1995/1995574.png'); 
     
     const msg = await message.reply({ embeds: [embed], components: [row] });
 
