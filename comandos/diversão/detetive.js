@@ -32,12 +32,12 @@ exports.run = async(client, message, args) => {
         gameState.weapon = weapons[Math.floor(Math.random() * weapons.length)];
         gameState.hintsGiven = 0; 
 
-        message.channel.send('O jogo de detetive começou! Façam suas perguntas ou tentem uma acusação com `'+client.prefix+'detetive acusar <suspeito> <local> <arma>`.');
+        message.channel.send('O jogo de detetive começou! Façam suas perguntas ou tentem uma acusação com `'+client.prefix+'detetive acusar <suspeito> <local> <arma>`'+`\nCaso não saiba as opções disponiveis use \`${client.prefix}detetive ajuda\``);
         giveHint(message)
         setTimeout(giveHint, 60000, message);  
     } else if (args[0] == "acusar") {
         if (!args[1] || !args[2] || !args[3]) {
-            return message.reply({content: "Você não utilizou o comando corretamente. Use: `"+client.prefix+"detetive acusar <suspeito> <local> <arma>`"});
+            return message.reply({content: "Você não utilizou o comando corretamente. Use: `"+client.prefix+`detetive acusar <suspeito> <local> <arma>\`\nCaso não saiba as opções disponiveis use \`${client.prefix}detetive ajuda\``});
         }
         if (args[1] !== gameState.suspect || args[2] !== gameState.location || args[3] !== gameState.weapon) {
             return message.reply({content: "Você errou! Tente novamente."});
@@ -48,6 +48,17 @@ exports.run = async(client, message, args) => {
     }else if (args[0] == "encerrar") {
         resetGame();
         message.reply({content: "O jogo foi forcado a encerrar por "+ message.author.username})
+    }else if (args[0] == "help" || args[0] == "ajuda") {
+        let embed = new Discord.EmbedBuilder()
+        .setDescription(`# Detetive
+ㅤ
+Suspeitos: ${suspects.join(", ")}
+ㅤ
+Locais: ${locations.join(", ")}
+ㅤ
+Armas: ${weapons.join(", ")}`)
+        .setColor(client.cor)
+        message.reply({embeds: [embed]})
     }
 };
 

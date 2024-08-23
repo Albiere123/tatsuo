@@ -44,11 +44,11 @@ exports.run = async(client, message, args) => {
         }
 
         if (statusArg === "on") {
-            await db.set(`${command.help.name}_privado`, false);
+            await db.set(`${command.help.name}_privado`, true);
             embed.setTitle("Comando Liberado")
                 .setDescription(`O comando \`${command.help.name}\` foi liberado com sucesso!`);
         } else if (statusArg === "off") {
-            await db.set(`${command.help.name}_privado`, true);
+            await db.set(`${command.help.name}_privado`, false);
             embed.setTitle("Comando Em Manutenção")
                 .setDescription(`O comando \`${command.help.name}\` foi colocado em manutenção!`);
         } else {

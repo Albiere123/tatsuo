@@ -471,7 +471,1181 @@
         "Você participou de um evento de networking e fez novas conexões valiosas para sua carreira! 🤝"
       ]
     }
-  }
+  },
+  "perguntas": [
+    {
+      "question": "Qual é o nome do elemento químico com o símbolo 'Au'?",
+      "options": ["Prata", "Ouro", "Cobre", "Zinco"],
+      "answer": 1
+    },
+    {
+      "question": "Em que ano a União Soviética foi oficialmente dissolvida?",
+      "options": ["1989", "1990", "1991", "1992"],
+      "answer": 2
+    },
+    {
+      "question": "Qual é o nome do pintor que criou 'A Noite Estrelada'?",
+      "options": ["Claude Monet", "Vincent van Gogh", "Pablo Picasso", "Salvador Dalí"],
+      "answer": 1
+    },
+    {
+      "question": "Quem foi o primeiro homem a pisar na Lua?",
+      "options": ["Neil Armstrong", "Buzz Aldrin", "Yuri Gagarin", "Michael Collins"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o maior oceano do planeta Terra?",
+      "options": ["Oceano Atlântico", "Oceano Pacífico", "Oceano Índico", "Oceano Ártico"],
+      "answer": 1
+    },
+    {
+        "question": "Qual é a capital da França?",
+        "options": ["Paris", "Londres", "Berlim", "Madri"],
+        "answer": 0
+    },
+    {
+        "question": "Qual é o maior planeta do nosso sistema solar?",
+        "options": ["Terra", "Marte", "Júpiter", "Saturno"],
+        "answer": 2
+    },
+    {
+        "question": "Quem foi a única pessoa na história a receber o Prêmio Nobel em áreas científicas diferentes?",
+        "options": ["Albert Einstein", "Linus Pauling", "Mahatma Gandhi", "Marie Curie", "Stephen Hawking"],
+        "answer": 3
+    },
+    {
+        "question": "De que lugar é essa bandeira?",
+       "options": ["Sergipe", "Maranhão", "Goiás", "Piauí", "Ilhas Salomão"],
+        "answer": 4,
+        "image": "https://static.todamateria.com.br/upload/il/ha/ilhassalomao-cke.jpg?auto_optimize=low"
+    },
+    {
+      "question": "Qual é a capital da Austrália?",
+      "options": ["Sydney", "Melbourne", "Canberra", "Brisbane"],
+      "answer": 2
+    },
+    {
+      "question": "Qual é o elemento químico com o símbolo 'Hg'?",
+      "options": ["Mercúrio", "Hidrogênio", "Neônio", "Cálcio"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o maior deserto do mundo?",
+      "options": ["Sahara", "Gobi", "Ártico", "Antártica"],
+      "answer": 3
+    },
+    {
+      "question": "Quem escreveu 'Dom Quixote'?",
+      "options": ["Miguel de Cervantes", "William Shakespeare", "Gabriel García Márquez", "Jorge Luis Borges"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o planeta mais próximo do Sol?",
+      "options": ["Mercúrio", "Vênus", "Terra", "Marte"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a fórmula química da água?",
+      "options": ["H2O", "CO2", "O2", "CH4"],
+      "answer": 0
+    },
+    {
+      "question": "Quem pintou a Mona Lisa?",
+      "options": ["Leonardo da Vinci", "Michelangelo", "Raphael", "Caravaggio"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o maior animal terrestre?",
+      "options": ["Elefante africano", "Girafa", "Rinoceronte", "Hipopótamo"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o maior órgão do corpo humano?",
+      "options": ["Coração", "Fígado", "Pulmão", "Pele"],
+      "answer": 3
+    },
+    {
+      "question": "Em que país a Torre Eiffel está localizada?",
+      "options": ["Alemanha", "França", "Espanha", "Itália"],
+      "answer": 1
+    },
+    {
+      "question": "Qual é a capital do Japão?",
+      "options": ["Seul", "Pequim", "Tóquio", "Bangcoc"],
+      "answer": 2
+    },
+    {
+      "question": "Quem escreveu 'A Origem das Espécies'?",
+      "options": ["Charles Darwin", "Jean-Baptiste Lamarck", "Gregor Mendel", "Louis Pasteur"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o maior planeta do sistema solar?",
+      "options": ["Júpiter", "Saturno", "Urano", "Netuno"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o oceano mais profundo?",
+      "options": ["Atlântico", "Índico", "Pacífico", "Ártico"],
+      "answer": 2
+    },
+    {
+      "question": "Qual é a moeda oficial do Japão?",
+      "options": ["Yuan", "Won", "Dólar", "Iene"],
+      "answer": 3
+    },
+    {
+      "question": "Qual é o maior continente em termos de área?",
+      "options": ["África", "Ásia", "América do Norte", "Antártida"],
+      "answer": 1
+    },
+    {
+      "question": "Qual é o elemento químico com o símbolo 'Na'?",
+      "options": ["Sódio", "Nióbio", "Nitrogênio", "Neônio"],
+      "answer": 0
+    },
+    {
+      "question": "Quem foi o primeiro presidente dos Estados Unidos?",
+      "options": ["George Washington", "Thomas Jefferson", "Abraham Lincoln", "John Adams"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a montanha mais alta do mundo?",
+      "options": ["K2", "Kangchenjunga", "Everest", "Makalu"],
+      "answer": 2
+    },
+    {
+      "question": "Qual é a capital da Noruega?",
+      "options": ["Oslo", "Estocolmo", "Helsinque", "Copenhague"],
+      "answer": 0
+    },
+    {
+      "question": "Quem é o autor de '1984'?",
+      "options": ["George Orwell", "Aldous Huxley", "Ray Bradbury", "H.G. Wells"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o maior animal marinho?",
+      "options": ["Baleia-azul", "Tubarão-branco", "Orca", "Baleia-jubarte"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o símbolo químico do Ouro?",
+      "options": ["Au", "Ag", "Pb", "Fe"],
+      "answer": 0
+    },
+    {
+      "question": "Qual país é conhecido como 'Terra do Sol Nascente'?",
+      "options": ["Japão", "China", "Coreia do Sul", "Tailândia"],
+      "answer": 0
+    },
+    {
+      "question": "Quem pintou 'A Última Ceia'?",
+      "options": ["Leonardo da Vinci", "Michelangelo", "Raphael", "Titian"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a capital do Brasil?",
+      "options": ["São Paulo", "Rio de Janeiro", "Brasília", "Salvador"],
+      "answer": 2
+    },
+    {
+      "question": "Qual é o maior deserto quente do mundo?",
+      "options": ["Sahara", "Gobi", "Kalahari", "Sonora"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o nome da teoria que explica a origem do universo?",
+      "options": ["Teoria da Relatividade", "Teoria do Big Bang", "Teoria da Evolução", "Teoria da Gravitação"],
+      "answer": 1
+    },
+    {
+      "question": "Quem foi o primeiro homem a ganhar um prêmio Nobel?",
+      "options": ["Marie Curie", "Albert Einstein", "Wilhelm Röntgen", "Henry Becquerel"],
+      "answer": 2
+    },
+    {
+      "question": "Qual é a moeda oficial da Suíça?",
+      "options": ["Euro", "Franco Suíço", "Dólar", "Lira"],
+      "answer": 1
+    },
+    {
+      "question": "Qual é a capital da Itália?",
+      "options": ["Milão", "Roma", "Veneza", "Florença"],
+      "answer": 1
+    },
+    {
+      "question": "Quem escreveu 'A Divina Comédia'?",
+      "options": ["Dante Alighieri", "Giovanni Boccaccio", "Petrarca", "Machiavelli"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o menor país do mundo em termos de área?",
+      "options": ["Mônaco", "San Marino", "Vaticano", "Liechtenstein"],
+      "answer": 2
+    },
+    {
+      "question": "Qual é o símbolo químico do Ferro?",
+      "options": ["Fe", "F", "Fr", "Fl"],
+      "answer": 0
+    },
+    {
+      "question": "Quem descobriu a penicilina?",
+      "options": ["Alexander Fleming", "Louis Pasteur", "Joseph Lister", "Robert Koch"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o maior lago do mundo em termos de área?",
+      "options": ["Lago Superior", "Lago Baikal", "Lago Victoria", "Lago Cáspio"],
+      "answer": 3
+    },
+    {
+      "question": "Qual é a principal fonte de energia da Terra?",
+      "options": ["Energia solar", "Energia eólica", "Energia geotérmica", "Energia hidrelétrica"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a capital da Espanha?",
+      "options": ["Barcelona", "Madrid", "Sevilha", "Valência"],
+      "answer": 1
+    },
+    {
+      "question": "Quem foi o primeiro imperador romano?",
+      "options": ["Júlio César", "Augusto", "Nero", "Constantino"],
+      "answer": 1
+    },
+    {
+      "question": "Qual é o elemento químico com o símbolo 'Cl'?",
+      "options": ["Cloro", "Cobalto", "Carbono", "Cálcio"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o maior órgão do corpo humano?",
+      "options": ["Coração", "Fígado", "Pulmão", "Pele"],
+      "answer": 3
+    },
+    {
+      "question": "Qual é o maior sistema de cavernas do mundo?",
+      "options": ["Sistema de Mammoth Cave", "Sistema de Carlsbad Caverns", "Sistema de Waitomo", "Sistema de Postojna"],
+      "answer": 0
+    },
+    {
+      "question": "Quem foi o líder da Revolução Francesa?",
+      "options": ["Maximilien Robespierre", "Napoleão Bonaparte", "Louis XVI", "Jean-Paul Marat"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o nome do livro sagrado do Islã?",
+      "options": ["Torá", "Bíblia", "Alcorão", "Vedas"],
+      "answer": 2
+    },
+    {
+      "question": "Qual é a capital da Argentina?",
+      "options": ["Buenos Aires", "Córdoba", "Rosário", "Mendoza"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o maior continente em termos de população?",
+      "options": ["África", "Ásia", "América do Norte", "Europa"],
+      "answer": 1
+    },
+    {
+      "question": "Qual é a capital da Suécia?",
+      "options": ["Estocolmo", "Helsinque", "Oslo", "Copenhague"],
+      "answer": 0
+    },
+    {
+      "question": "Quem pintou 'A Última Ceia'?",
+      "options": ["Leonardo da Vinci", "Michelangelo", "Raphael", "Caravaggio"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a capital da Dinamarca?",
+      "options": ["Oslo", "Estocolmo", "Helsinque", "Copenhague"],
+      "answer": 3
+    },
+    {
+      "question": "Qual é a montanha mais alta da América do Sul?",
+      "options": ["Aconcágua", "Ojos del Salado", "Monte Pissis", "Huascarán"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o maior país do mundo em termos de área?",
+      "options": ["Canadá", "Estados Unidos", "China", "Rússia"],
+      "answer": 3
+    },
+    {
+      "question": "Qual é o maior país do mundo em termos de área?",
+      "options": ["Canadá", "Estados Unidos", "Rússia", "China"],
+      "answer": 2
+    },
+    {
+      "question": "Quem escreveu 'Dom Quixote'?",
+      "options": ["Miguel de Cervantes", "William Shakespeare", "Gabriel García Márquez", "Jorge Luis Borges"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o planeta mais próximo do Sol?",
+      "options": ["Mercúrio", "Vênus", "Terra", "Marte"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o menor osso do corpo humano?",
+      "options": ["Estribo", "Martelo", "Bigorna", "Fêmur"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a fórmula química da água?",
+      "options": ["H2O", "CO2", "O2", "H2SO4"],
+      "answer": 0
+    },
+    {
+      "question": "Quem pintou 'O Nascimento de Vênus'?",
+      "options": ["Leonardo da Vinci", "Sandro Botticelli", "Michelangelo", "Raphael"],
+      "answer": 1
+    },
+    {
+      "question": "Qual é o mais alto edifício do mundo?",
+      "options": ["Burj Khalifa", "Shanghai Tower", "Abraj Al-Bait Clock Tower", "Ping An Finance Centre"],
+      "answer": 0
+    },
+    {
+      "question": "Quem foi o primeiro presidente dos Estados Unidos?",
+      "options": ["Thomas Jefferson", "Abraham Lincoln", "George Washington", "John Adams"],
+      "answer": 2
+    },
+    {
+      "question": "Qual é o maior deserto do mundo?",
+      "options": ["Deserto do Saara", "Deserto da Arábia", "Deserto de Gobi", "Antártica"],
+      "answer": 3
+    },
+    {
+      "question": "Qual é o principal ingrediente do guacamole?",
+      "options": ["Tomate", "Cebola", "Abacate", "Pimentão"],
+      "answer": 2
+    },
+    {
+      "question": "Qual é a capital da Austrália?",
+      "options": ["Sydney", "Melbourne", "Canberra", "Brisbane"],
+      "answer": 2
+    },
+    {
+      "question": "Quem descobriu a penicilina?",
+      "options": ["Alexander Fleming", "Louis Pasteur", "Joseph Lister", "Robert Koch"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a moeda oficial do Japão?",
+      "options": ["Won", "Dólar", "Euro", "Iene"],
+      "answer": 3
+    },
+    {
+      "question": "Quem foi o compositor da 'Nona Sinfonia'?",
+      "options": ["Ludwig van Beethoven", "Johann Sebastian Bach", "Wolfgang Amadeus Mozart", "Franz Schubert"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o símbolo químico do ouro?",
+      "options": ["Ag", "Au", "Pb", "Fe"],
+      "answer": 1
+    },
+    {
+      "question": "Qual é o maior mamífero terrestre?",
+      "options": ["Elefante africano", "Girafa", "Rinoceronte", "Hipopótamo"],
+      "answer": 0
+    },
+    {
+      "question": "Quem foi o autor de '1984'?",
+      "options": ["Aldous Huxley", "George Orwell", "Ray Bradbury", "Huxley Aldous"],
+      "answer": 1
+    },
+    {
+      "question": "Qual é o rio mais longo do mundo?",
+      "options": ["Amazonas", "Nilo", "Yangtze", "Mississippi"],
+      "answer": 1
+    },
+    {
+      "question": "Qual é a capital da Espanha?",
+      "options": ["Barcelona", "Valência", "Madrid", "Sevilha"],
+      "answer": 2
+    },
+    {
+      "question": "Qual é o maior planeta do sistema solar?",
+      "options": ["Júpiter", "Saturno", "Urano", "Netuno"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a fórmula da cafeína?",
+      "options": ["C6H12O6", "C8H10N4O2", "C2H5OH", "C3H6O"],
+      "answer": 1
+    },
+    {
+      "question": "Quem foi o primeiro imperador do Império Romano?",
+      "options": ["Júlio César", "Augusto", "Nero", "Calígula"],
+      "answer": 1
+    },
+    {
+      "question": "Qual é o maior oceano do mundo?",
+      "options": ["Oceano Pacífico", "Oceano Atlântico", "Oceano Índico", "Oceano Ártico"],
+      "answer": 0
+    },
+    {
+      "question": "Quem escreveu 'A Odisséia'?",
+      "options": ["Homero", "Sócrates", "Platão", "Aristóteles"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o elemento químico mais abundante no universo?",
+      "options": ["Oxigênio", "Carbono", "Hidrogênio", "Hélio"],
+      "answer": 2
+    },
+    {
+      "question": "Qual é a capital da Noruega?",
+      "options": ["Copenhague", "Helsinque", "Oslo", "Estocolmo"],
+      "answer": 2
+    },
+    {
+      "question": "Qual é a principal religião da Índia?",
+      "options": ["Cristianismo", "Budismo", "Hinduísmo", "Islamismo"],
+      "answer": 2
+    },
+    {
+      "question": "Qual é a fórmula da vitamina C?",
+      "options": ["C6H12O6", "C5H8O2", "C3H4O3", "C6H8O7"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a capital da Bélgica?",
+      "options": ["Amsterdã", "Luxemburgo", "Bruxelas", "Antuérpia"],
+      "answer": 2
+    },
+    {
+      "question": "Qual é o maior animal marinho?",
+      "options": ["Baleia Azul", "Tubarão Branco", "Orca", "Baleia Jubarte"],
+      "answer": 0
+    },
+    {
+      "question": "Quem pintou 'A Última Ceia'?",
+      "options": ["Leonardo da Vinci", "Michelangelo", "Raphael", "Donatello"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o maior arquipélago do mundo?",
+      "options": ["Arquipélago da Indonésia", "Arquipélago de Filipinas", "Arquipélago de Galápagos", "Arquipélago de Madagascar"],
+      "answer": 0
+    },
+    {
+      "question": "Quem foi o fundador do Império Mongol?",
+      "options": ["Genghis Khan", "Kublai Khan", "Attila", "Tamerlão"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a capital do Canadá?",
+      "options": ["Vancouver", "Toronto", "Ottawa", "Montreal"],
+      "answer": 2
+    },
+    {
+      "question": "Quem escreveu 'O Pequeno Príncipe'?",
+      "options": ["Antoine de Saint-Exupéry", "Jules Verne", "Hermann Hesse", "Marcel Proust"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a capital da Suécia?",
+      "options": ["Helsinque", "Copenhague", "Estocolmo", "Oslo"],
+      "answer": 2
+    },
+    {
+      "question": "Qual é o maior continente do mundo?",
+      "options": ["África", "Ásia", "América do Norte", "América do Sul"],
+      "answer": 1
+    },
+    {
+      "question": "Qual é o nome do processo pelo qual as plantas produzem seu próprio alimento?",
+      "options": ["Respiração", "Fermentação", "Fotossíntese", "Digestão"],
+      "answer": 2
+    },
+    {
+      "question": "Qual é a principal língua falada no Brasil?",
+      "options": ["Espanhol", "Português", "Inglês", "Francês"],
+      "answer": 1
+    },
+    {
+      "question": "Quem escreveu 'As Aventuras de Sherlock Holmes'?",
+      "options": ["Agatha Christie", "Arthur Conan Doyle", "Edgar Allan Poe", "J.K. Rowling"],
+      "answer": 1
+    },
+    {
+      "question": "Qual é o maior lago do mundo?",
+      "options": ["Lago Baikal", "Lago Superior", "Lago Vitória", "Lago Caspian"],
+      "answer": 3
+    },
+    {
+      "question": "Quem foi o autor de 'A Divina Comédia'?",
+      "options": ["Dante Alighieri", "John Milton", "Geoffrey Chaucer", "William Blake"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a capital do Egito?",
+      "options": ["Cairo", "Londres", "Paris", "Roma"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o maior ser vivo do planeta Terra?",
+      "options": ["Gigante de Redwood", "Blue Whale", "Coral de tamanho gigante", "Fungos subterrâneos"],
+      "answer": 3
+    },
+    {
+      "question": "Qual é o principal gás responsável pelo efeito estufa?",
+      "options": ["Dióxido de Carbono", "Metano", "Oxigênio", "Nitrogênio"],
+      "answer": 0
+    },
+    {
+      "question": "Quem descobriu a América em 1492?",
+      "options": ["Cristóvão Colombo", "Ferdinand Magellan", "Vasco da Gama", "Hernán Cortés"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o símbolo químico do mercúrio?",
+      "options": ["Hg", "Ag", "Pb", "Au"],
+      "answer": 0
+    },
+    {
+      "question": "Quem pintou 'A Persistência da Memória'?",
+      "options": ["Salvador Dalí", "Pablo Picasso", "René Magritte", "Marc Chagall"],
+      "answer": 0
+    },
+{
+      "question": "Qual é o animal mais rápido do mundo?",
+      "options": ["Guepardo", "Falcão-peregrino", "Leão", "Águia"],
+      "answer": 1
+    },{
+      "question": "Quem inventou a lâmpada elétrica?",
+      "options": ["Alexander Graham Bell", "Nikola Tesla", "Thomas Edison", "Benjamin Franklin"],
+      "answer": 2
+    },{
+      "question": "Quem escreveu 'Cem Anos de Solidão'?",
+      "options": ["Gabriel García Márquez", "Mario Vargas Llosa", "Julio Cortázar", "Pablo Neruda"],
+      "answer": 0
+    },{
+      "question": "Qual é o menor país do mundo?",
+      "options": ["Mônaco", "San Marino", "Liechtenstein", "Vaticano"],
+      "answer": 3
+    },{
+      "question": "Quem pintou 'O Grito'?",
+      "options": ["Claude Monet", "Edvard Munch", "Paul Cézanne", "Gustav Klimt"],
+      "answer": 1
+    }, {
+      "question": "Qual é o rio mais longo do mundo?",
+      "options": ["Rio Amazonas", "Rio Nilo", "Rio Yangtzé", "Rio Mississipi"],
+      "answer": 1
+    },{
+      "question": "Quem escreveu 'A Revolução dos Bichos'?",
+      "options": ["George Orwell", "Aldous Huxley", "Ray Bradbury", "Isaac Asimov"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o nome da camada da atmosfera que nos protege dos raios UV?",
+      "options": ["Troposfera", "Estratosfera", "Mesosfera", "Camada de Ozônio"],
+      "answer": 3
+    },
+    {
+      "question": "Quem foi o autor de 'Moby Dick'?",
+      "options": ["Jules Verne", "Mark Twain", "Herman Melville", "Charles Dickens"],
+      "answer": 2
+    },
+    {
+      "question": "Qual é a maior ilha do mundo?",
+      "options": ["Groenlândia", "Nova Guiné", "Bornéu", "Madagascar"],
+      "answer": 0
+    },
+    {
+      "question": "Quem pintou 'Noite Estrelada'?",
+      "options": ["Vincent van Gogh", "Claude Monet", "Pablo Picasso", "Leonardo da Vinci"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o metal mais precioso do mundo?",
+      "options": ["Ouro", "Prata", "Platina", "Paládio"],
+      "answer": 2
+    },
+    {
+      "question": "Quem escreveu 'Orgulho e Preconceito'?",
+      "options": ["Charlotte Brontë", "Emily Brontë", "Jane Austen", "Mary Shelley"],
+      "answer": 2
+    },
+    {
+      "question": "Qual é a capital da Argentina?",
+      "options": ["Buenos Aires", "Córdoba", "Rosário", "Mendoza"],
+      "answer": 0
+    },
+    {
+      "question": "Quem foi o cientista que propôs a teoria da relatividade?",
+      "options": ["Isaac Newton", "Albert Einstein", "Galileu Galilei", "Niels Bohr"],
+      "answer": 1
+    },
+    {
+      "question": "Qual é o país conhecido como 'Terra do Sol Nascente'?",
+      "options": ["China", "Coreia do Sul", "Japão", "Filipinas"],
+      "answer": 2
+    },
+    {
+      "question": "Quem descobriu a penicilina?",
+      "options": ["Louis Pasteur", "Alexander Fleming", "Robert Koch", "Joseph Lister"],
+      "answer": 1
+    },
+    {
+      "question": "Qual é o órgão mais pesado do corpo humano?",
+      "options": ["Coração", "Fígado", "Pulmão", "Cérebro"],
+      "answer": 1
+    },
+    {
+      "question": "Quem escreveu 'O Pequeno Príncipe'?",
+      "options": ["Antoine de Saint-Exupéry", "Hans Christian Andersen", "Lewis Carroll", "J.R.R. Tolkien"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o país com o maior número de pirâmides do mundo?",
+      "options": ["Egito", "Sudão", "México", "Peru"],
+      "answer": 1
+    },
+    {
+      "question": "Quem pintou 'Guernica'?",
+      "options": ["Vincent van Gogh", "Pablo Picasso", "Claude Monet", "Salvador Dalí"],
+      "answer": 1
+    },  {
+      "question": "Qual é a capital da Alemanha?",
+      "options": ["Berlim", "Munique", "Frankfurt", "Colônia"],
+      "answer": 0
+    },
+    {
+      "question": "Quem descobriu a gravitação universal?",
+      "options": ["Isaac Newton", "Galileu Galilei", "Albert Einstein", "Johannes Kepler"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o maior país da América do Sul?",
+      "options": ["Argentina", "Brasil", "Colômbia", "Peru"],
+      "answer": 1
+    },
+    {
+      "question": "Quem escreveu 'O Grande Gatsby'?",
+      "options": ["F. Scott Fitzgerald", "Ernest Hemingway", "William Faulkner", "John Steinbeck"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o símbolo químico do ferro?",
+      "options": ["Fe", "F", "Ir", "Fr"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o nome do famoso experimento que envolveu a divisão do átomo?",
+      "options": ["Experimento de Rutherford", "Experimento de Fission", "Experimento de Bohr", "Experimento de Fusão"],
+      "answer": 1
+    },
+    {
+      "question": "Quem pintou 'O Casamento de Arnolfini'?",
+      "options": ["Jan van Eyck", "Hieronymus Bosch", "Pieter Bruegel", "Rembrandt"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o maior mamífero terrestre?",
+      "options": ["Elefante Africano", "Rinoceronte", "Hipopótamo", "Girafa"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o nome da teoria que explica a evolução das espécies?",
+      "options": ["Teoria do Big Bang", "Teoria da Relatividade", "Teoria da Evolução", "Teoria da Gravitação"],
+      "answer": 2
+    },
+    {
+      "question": "Qual é o processo pelo qual as plantas produzem oxigênio?",
+      "options": ["Respiração", "Fotossíntese", "Fermentação", "Glicólise"],
+      "answer": 1
+    },
+    {
+      "question": "Qual é o nome do fenômeno pelo qual o Sol bloqueia a luz da Lua?",
+      "options": ["Eclipse Solar", "Eclipse Lunar", "Supernova", "Aurora Boreal"],
+      "answer": 1
+    },
+    {
+      "question": "Quem foi o famoso matemático que desenvolveu o cálculo diferencial e integral?",
+      "options": ["Isaac Newton", "Gottfried Wilhelm Leibniz", "Carl Friedrich Gauss", "Leonhard Euler"],
+      "answer": 1
+    },
+    {
+      "question": "Qual é o menor país da Europa?",
+      "options": ["San Marino", "Mônaco", "Liechtenstein", "Vaticano"],
+      "answer": 3
+    },
+    {
+      "question": "Qual é o nome da maior cadeia montanhosa do mundo?",
+      "options": ["Andes", "Himalaia", "Rocky Mountains", "Alpes"],
+      "answer": 1
+    },
+    {
+      "question": "Quem foi o fundador do império mongol?",
+      "options": ["Kublai Khan", "Genghis Khan", "Kublai Khan", "Attila"],
+      "answer": 1
+    },
+    {
+      "question": "Qual é o maior animal do planeta?",
+      "options": ["Elefante", "Baleia Azul", "Tubarão Baleia", "Girafa"],
+      "answer": 1
+    },
+    {
+      "question": "Qual é a principal fonte de energia utilizada em reatores nucleares?",
+      "options": ["Uranium", "Plutonium", "Carbono", "Tório"],
+      "answer": 0
+    },
+    {
+      "question": "Quem pintou o mural 'A Escola de Atenas'?",
+      "options": ["Leonardo da Vinci", "Raphael", "Michelangelo", "Caravaggio"],
+      "answer": 1
+    },
+    {
+      "question": "Qual é o nome do maior sistema de cavernas do mundo?",
+      "options": ["Cavernas de Carlsbad", "Cavernas de Mammoth", "Cavernas de Waitomo", "Cavernas de Postojna"],
+      "answer": 1
+    },
+    {
+      "question": "Quem foi o primeiro a alcançar o Polo Sul?",
+      "options": ["Robert Falcon Scott", "Ernest Shackleton", "Roald Amundsen", "Douglas Mawson"],
+      "answer": 2
+    },
+    {
+      "question": "Qual é o maior país da África?",
+      "options": ["Egito", "Nigéria", "África do Sul", "Argélia"],
+      "answer": 3
+    },
+    {
+      "question": "Quem escreveu 'A Casa dos Espíritos'?",
+      "options": ["Gabriel García Márquez", "Isabel Allende", "Mario Vargas Llosa", "Laura Esquivel"],
+      "answer": 1
+    },
+    {
+      "question": "Qual é o elemento químico mais abundante no universo?",
+      "options": ["Oxigênio", "Hidrogênio", "Carbono", "Neônio"],
+      "answer": 1
+    },
+    {
+      "question": "Qual é o nome do processo pelo qual uma célula divide-se para formar duas células-filhas?",
+      "options": ["Mitoses", "Meiose", "Citoquinese", "Amitose"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o país conhecido como a 'Terra dos Fiordes'?",
+      "options": ["Noruega", "Suécia", "Islândia", "Finlândia"],
+      "answer": 0
+    },
+    {
+      "question": "Quem escreveu 'O Sol é para Todos'?",
+      "options": ["Harper Lee", "Mark Twain", "J.D. Salinger", "John Steinbeck"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a maior floresta tropical do mundo?",
+      "options": ["Floresta Amazônica", "Floresta do Congo", "Floresta Boreal", "Floresta de Valdivia"],
+      "answer": 0
+    },
+    {
+      "question": "Quem é o deus grego da guerra?",
+      "options": ["Zeus", "Ares", "Hades", "Apolo"],
+      "answer": 1
+    },
+    {
+      "question": "Qual é o maior estádio de futebol do mundo em capacidade?",
+      "options": ["Camp Nou", "Estádio do Maracanã", "Estádio de Wembley", "Estádio da Rungrado 1 de Maio"],
+      "answer": 3
+    },
+    {
+      "question": "Quem foi o autor de 'O Primo Basílio'?",
+      "options": ["José de Alencar", "Machado de Assis", "José Maria de Eça de Queirós", "Jorge Amado"],
+      "answer": 2
+    },
+    {
+      "question": "Qual é o maior lago da África?",
+      "options": ["Lago Vitória", "Lago Tanganyika", "Lago Malawi", "Lago Chad"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o nome da partícula subatômica com carga positiva?",
+      "options": ["Neutrão", "Elétron", "Próton", "Nêutron"],
+      "answer": 2
+    },
+    {
+      "question": "Quem foi o primeiro astronauta a orbitar a Terra?",
+      "options": ["Yuri Gagarin", "Alan Shepard", "John Glenn", "Gherman Titov"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a maior cadeia de montanhas da América do Sul?",
+      "options": ["Andes", "Rocky Mountains", "Apalaches", "Serra do Mar"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o nome do projeto que criou a primeira bomba atômica?",
+      "options": ["Projeto Manhattan", "Projeto Apollo", "Projeto Gemini", "Projeto Polaris"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a maior cidade dos Estados Unidos em população?",
+      "options": ["Los Angeles", "Chicago", "Nova Iorque", "Houston"],
+      "answer": 2
+    },
+    {
+      "question": "Quem foi o autor de 'O Morro dos Ventos Uivantes'?",
+      "options": ["Emily Brontë", "Charlotte Brontë", "Jane Austen", "George Eliot"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a unidade de medida da força?",
+      "options": ["Newton", "Joule", "Pascal", "Watt"],
+      "answer": 0
+    },
+    {
+      "question": "Quem foi o fundador da Microsoft?",
+      "options": ["Steve Jobs", "Bill Gates", "Mark Zuckerberg", "Larry Page"],
+      "answer": 1
+    },
+    {
+      "question": "Qual é o nome do maior oceano da Terra?",
+      "options": ["Oceano Atlântico", "Oceano Pacífico", "Oceano Índico", "Oceano Ártico"],
+      "answer": 1
+    },
+    {
+      "question": "Quem é o autor de 'O Pequeno Príncipe'?",
+      "options": ["Antoine de Saint-Exupéry", "Jules Verne", "Victor Hugo", "Hermann Hesse"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o nome da molécula responsável pela cor dos olhos?",
+      "options": ["Melanina", "Hemoglobina", "Clorofila", "Carotenoide"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a fórmula química da água?",
+      "options": ["H₂O", "CO₂", "NaCl", "CH₄"],
+      "answer": 0
+    },
+    {
+      "question": "Quem é o autor de 'Dom Casmurro'?",
+      "options": ["Machado de Assis", "José de Alencar", "Jorge Amado", "Graciliano Ramos"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o símbolo químico do carbono?",
+      "options": ["C", "Ca", "Co", "Cr"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a capital da Itália?",
+      "options": ["Roma", "Milão", "Florença", "Veneza"],
+      "answer": 0
+    },
+    {
+      "question": "Quem pintou 'A Ronda Noturna'?",
+      "options": ["Rembrandt", "Caravaggio", "Vermeer", "Goya"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o nome da estrela mais próxima da Terra, depois do Sol?",
+      "options": ["Proxima Centauri", "Alpha Centauri", "Sirius", "Betelgeuse"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o elemento químico com símbolo 'Na'?",
+      "options": ["Sódio", "Nióbio", "Nítrogênio", "Níquel"],
+      "answer": 0
+    },
+    {
+      "question": "Quem foi o líder do movimento pelos direitos civis nos Estados Unidos nos anos 60?",
+      "options": ["Martin Luther King Jr.", "Malcolm X", "Rosa Parks", "John Lewis"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o nome do maior planeta do sistema solar?",
+      "options": ["Júpiter", "Saturno", "Urano", "Netuno"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o principal gás responsável pelo efeito estufa?",
+      "options": ["Dióxido de Carbono", "Metano", "Óxidos de Nitrogênio", "Ozônio"],
+      "answer": 0
+    },
+    {
+      "question": "Quem escreveu 'A Metamorfose'?",
+      "options": ["Franz Kafka", "Herman Hesse", "Fiódor Dostoiévski", "Leo Tolstói"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o nome da teoria que descreve a origem do universo?",
+      "options": ["Teoria do Big Bang", "Teoria da Relatividade", "Teoria da Evolução", "Teoria das Cordas"],
+      "answer": 0
+    },
+    {
+      "question": "Quem foi o primeiro homem a subir ao Everest?",
+      "options": ["Sir Edmund Hillary", "Tenzing Norgay", "George Mallory", "Reinhold Messner"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a unidade de medida da frequência?",
+      "options": ["Hertz", "Decibel", "Newton", "Joule"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o nome da teoria que explica a formação das camadas da Terra?",
+      "options": ["Teoria da Deriva Continental", "Teoria da Tectônica de Placas", "Teoria do Big Bang", "Teoria da Evolução"],
+      "answer": 1
+    },
+    {
+      "question": "Qual é o principal combustível usado em usinas termelétricas?",
+      "options": ["Carvão", "Gás Natural", "Nuclear", "Eólica"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o nome do processo de divisão celular que resulta em quatro células-filhas?",
+      "options": ["Mitoses", "Meiose", "Amitose", "Citocinese"],
+      "answer": 1
+    },
+    {
+      "question": "Qual é o maior deserto da América do Norte?",
+      "options": ["Deserto de Sonora", "Deserto de Mojave", "Deserto de Chihuahuan", "Deserto de Great Basin"],
+      "answer": 2
+    },
+    {
+      "question": "Quem foi o cientista que desenvolveu a teoria da relatividade?",
+      "options": ["Isaac Newton", "Albert Einstein", "Niels Bohr", "Max Planck"],
+      "answer": 1
+    },
+    {
+      "question": "Qual é a maior estrutura viva do planeta?",
+      "options": ["Grande Barreira de Corais", "Serrania de Roraima", "Floresta Amazônica", "Mata Atlântica"],
+      "answer": 0
+    },{
+      "question": "Quem foi o compositor da Nona Sinfonia?",
+      "options": ["Ludwig van Beethoven", "Wolfgang Amadeus Mozart", "Johann Sebastian Bach", "Frédéric Chopin"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o nome do processo de remoção de resíduos do corpo humano?",
+      "options": ["Excreção", "Digestão", "Respiração", "Circulação"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o maior deserto da América do Sul?",
+      "options": ["Deserto de Atacama", "Deserto de Patagônia", "Deserto de Sechura", "Deserto de Chihuahuan"],
+      "answer": 0
+    },{
+      "question": "Qual é a fórmula para calcular a área de um triângulo?",
+      "options": ["(base × altura) / 2", "base × altura", "2 × (base + altura)", "base × altura / 4"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o valor de π (pi) até a segunda casa decimal?",
+      "options": ["3.14", "3.12", "3.15", "3.13"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a raiz quadrada de 144?",
+      "options": ["12", "14", "16", "18"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a fórmula para calcular a circunferência de um círculo?",
+      "options": ["2 × π × raio", "π × raio²", "π × diâmetro", "raio × raio"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a soma dos ângulos internos de um triângulo?",
+      "options": ["180°", "90°", "360°", "270°"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o valor de 7 × 8?",
+      "options": ["56", "54", "64", "48"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o próximo número na sequência 2, 4, 8, 16, ...?",
+      "options": ["32", "24", "30", "20"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a fórmula para calcular a área de um círculo?",
+      "options": ["π × raio²", "2 × π × raio", "π × diâmetro", "raio × altura"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a soma de 25 e 37?",
+      "options": ["62", "60", "52", "65"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a diferença entre 100 e 45?",
+      "options": ["55", "60", "50", "65"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a fórmula para calcular o volume de um cubo?",
+      "options": ["lado³", "2 × lado", "lado × altura", "4 × lado²"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a raiz quadrada de 81?",
+      "options": ["9", "8", "10", "7"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o valor de 9²?",
+      "options": ["81", "72", "90", "81"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o perímetro de um quadrado com lados de 5 cm?",
+      "options": ["20 cm", "25 cm", "15 cm", "10 cm"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a fórmula para calcular a área de um retângulo?",
+      "options": ["largura × altura", "2 × largura + altura", "largura + altura", "2 × largura × altura"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o resultado de 15 ÷ 3?",
+      "options": ["5", "6", "4", "7"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o próximo número na sequência 3, 6, 9, 12, ...?",
+      "options": ["15", "18", "14", "16"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a soma dos ângulos internos de um quadrado?",
+      "options": ["360°", "180°", "90°", "270°"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a fórmula para calcular o volume de um cilindro?",
+      "options": ["π × raio² × altura", "2 × π × raio × altura", "π × diâmetro × altura", "raio² × altura"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a fórmula para calcular a média de um conjunto de números?",
+      "options": ["(soma dos números) / quantidade de números", "(soma dos números) × quantidade de números", "quantidade de números / soma dos números", "soma dos números"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a fórmula para calcular a área de um paralelogramo?",
+      "options": ["base × altura", "2 × base + altura", "base × 2 × altura", "base + altura"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a raiz cúbica de 27?",
+      "options": ["3", "9", "6", "5"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a fórmula para calcular o perímetro de um círculo?",
+      "options": ["2 × π × raio", "π × raio²", "π × diâmetro", "diâmetro × diâmetro"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o valor de 6 × 7?",
+      "options": ["42", "36", "48", "54"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a fórmula para calcular o volume de uma esfera?",
+      "options": ["(4/3) × π × raio³", "(4/3) × π × raio²", "4 × π × raio²", "π × raio²"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o valor de 50% de 80?",
+      "options": ["40", "50", "30", "60"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a fórmula para calcular a área de um trapézio?",
+      "options": ["((base maior + base menor) × altura) / 2", "base maior × base menor", "2 × base maior × altura", "base menor × altura"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a soma de 120 e 75?",
+      "options": ["195", "200", "180", "185"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a fórmula para calcular a área de um quadrado?",
+      "options": ["lado²", "2 × lado", "lado × altura", "4 × lado"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a raiz quadrada de 25?",
+      "options": ["5", "6", "4", "7"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a fórmula para calcular o volume de um prisma retangular?",
+      "options": ["comprimento × largura × altura", "2 × (comprimento + largura)", "comprimento × largura", "comprimento + largura + altura"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o resultado de 8 × 9?",
+      "options": ["72", "64", "81", "63"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a fórmula para calcular a área de um losango?",
+      "options": ["(diagonal maior × diagonal menor) / 2", "diagonal maior + diagonal menor", "diagonal maior × diagonal menor", "2 × diagonal maior × diagonal menor"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a soma dos ângulos internos de um pentágono?",
+      "options": ["540°", "360°", "180°", "720°"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a fórmula para calcular o perímetro de um triângulo?",
+      "options": ["soma dos lados", "base × altura", "2 × (base + altura)", "base + altura"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a raiz cúbica de 64?",
+      "options": ["4", "8", "6", "3"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o valor de 10 × 10?",
+      "options": ["100", "90", "110", "80"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a fórmula para calcular o perímetro de um retângulo?",
+      "options": ["2 × (largura + altura)", "largura × altura", "largura + altura", "2 × largura + altura"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o resultado de 100 ÷ 4?",
+      "options": ["25", "20", "30", "15"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a fórmula para calcular a área de um trapézio?",
+      "options": ["((base maior + base menor) × altura) / 2", "base maior × base menor", "2 × base maior × altura", "base menor × altura"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é a soma de 68 e 94?",
+      "options": ["162", "160", "150", "170"],
+      "answer": 0
+    },
+    {
+      "question": "Qual é o valor de 15²?",
+      "options": ["225", "210", "240", "200"],
+      "answer": 0
+    }
+  ]
     
   
 

@@ -19,7 +19,7 @@ exports.run = async (client, message, args) => {
     if (!mention) mention = message.author;
 
     let embed = new Discord.EmbedBuilder()
-        .setColor(client.cor) // Define uma cor padrão se client.cor não estiver definido
+        .setColor(client.cor) 
         .setImage(mention.avatarURL({ size: 4096, extension: "png" }))
         .setDescription(`# <:imagem:1275650259707629589> Avatar
 ㅤ

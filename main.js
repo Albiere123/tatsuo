@@ -80,12 +80,11 @@ function gerarEmbed(titulo, descricao, thumbnail, footer, imagem, cor) {
 }
 
 client.on("messageCreate", async message => {
-    
     if (message.author.bot || message.channel.type == Discord.ChannelType.DM) return; 
     client.dev = await client.users.cache.get("722811981660291082")
     let c = await db.get(`${message.guild.id}.config`)
     client.prefix = c?.prefix || config.prefix;
-
+    
     if(message.content.startsWith(`<@${client.user.id}>`) || message.content.startsWith(`<@!${client.user.id}>`)) {
         let embed = new Discord.EmbedBuilder()
         .setDescription(`# <:coracao:966744213981126807> | Mini Ajuda
