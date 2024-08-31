@@ -96,7 +96,7 @@ exports.run = async (client, message, args) => {
     const userInfo = {
         'Usuário': mentionedUser.username,
         'Trabalho': user?.trabalho || 'Não definido',
-        'Dinheiro': api.ab(user?.money.toFixed(2)) || 0,
+        'Dinheiro': api.ab(Number(user?.money.toFixed(2))) || 0,
         'Data de Criação': formatDate(mentionedUser.createdAt),
         'Descrição': sbText.replaceAll("{bot}", client.user.username),
         'Posição no Rank': rankDescription

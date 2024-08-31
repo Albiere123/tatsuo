@@ -5,7 +5,10 @@ require('dotenv').config();
 const config = require('./config.json');
 const fs = require("fs");
 const { QuickDB } = require("quick.db");
+const { create } = require("domain");
+const { isNumberObject } = require("util/types");
 const db = new QuickDB();
+const { PermissionsBitField, ChannelType } = require('discord.js'); // Certifique-se de importar os tipos necessários
 
 const client = new Discord.Client({
     intents: [
@@ -33,6 +36,158 @@ client.aliases = new Discord.Collection();
 client.dev = null;
 client.setUsage = setUsage;
 client.setError = setError;
+client.get = get;
+client.set = set;
+client.perms = verificarPermissoes;
+client.allPerms = [
+    PermissionsBitField.Flags.CreateInstantInvite, // 1
+    PermissionsBitField.Flags.KickMembers, // 2
+    PermissionsBitField.Flags.BanMembers, // 4
+    PermissionsBitField.Flags.Administrator, // 8
+    PermissionsBitField.Flags.ManageChannels, // 16
+    PermissionsBitField.Flags.ManageGuild, // 32
+    PermissionsBitField.Flags.AddReactions, // 64
+    PermissionsBitField.Flags.ViewAuditLog, // 128
+    PermissionsBitField.Flags.PrioritySpeaker, // 256
+    PermissionsBitField.Flags.Stream, // 512
+    PermissionsBitField.Flags.ViewChannel, // 1024
+    PermissionsBitField.Flags.SendMessages, // 2048
+    PermissionsBitField.Flags.SendTTSMessages, // 4096
+    PermissionsBitField.Flags.ManageMessages, // 8192
+    PermissionsBitField.Flags.AttachFiles, // 16384
+    PermissionsBitField.Flags.ReadMessageHistory, // 32768
+    PermissionsBitField.Flags.MentionEveryone, // 65536
+    PermissionsBitField.Flags.UseExternalEmojis, // 131072
+    PermissionsBitField.Flags.ViewGuildInsights, // 262144
+    PermissionsBitField.Flags.ChangeNickname, // 33554432
+    PermissionsBitField.Flags.ManageNicknames, // 67108864
+    PermissionsBitField.Flags.ManageRoles, // 134217728
+    PermissionsBitField.Flags.ManageWebhooks, // 268435456
+    PermissionsBitField.Flags.ManageEmojisAndStickers, // 536870912
+    PermissionsBitField.Flags.UseApplicationCommands, // 1073741824
+    PermissionsBitField.Flags.RequestToSpeak, // 2147483648
+    PermissionsBitField.Flags.ManageEvents, // 4294967296
+    PermissionsBitField.Flags.ManageThreads, // 8589934592
+    PermissionsBitField.Flags.CreatePublicThreads, // 17179869184
+    PermissionsBitField.Flags.CreatePrivateThreads, // 34359738368
+    PermissionsBitField.Flags.UseExternalStickers, // 68719476736
+    PermissionsBitField.Flags.SendMessagesInThreads, // 137438953472
+    PermissionsBitField.Flags.UseEmbeddedActivities, // 274877906944
+    PermissionsBitField.Flags.ModerateMembers, // 549755813888
+    PermissionsBitField.Flags.UseSoundboard, // 1099511627776
+    PermissionsBitField.Flags.CreateGuildExpressions, // 2199023255552
+    PermissionsBitField.Flags.CreateEvents, // 4398046511104
+    PermissionsBitField.Flags.UseExternalSounds, // 8796093022208
+    PermissionsBitField.Flags.SendPolls // 35184372088832
+];
+
+async function getRequiredPermissions(command, client, message, args) {
+    const permissions = new Set();
+    
+    const commandCode = command.run.toString(); // Certifique-se de que `commandCode` seja o valor esperado
+
+    // Adicione permissões necessárias com base no comando
+    if (/\.send\(/.test(commandCode)) {
+        permissions.add(PermissionsBitField.Flags.SendMessages);
+    }
+    if (/\.embed/.test(commandCode) || /\.setEmbed/.test(commandCode) || /embedLinks/.test(commandCode) || /\.embedLinks/.test(commandCode)) {
+        permissions.add(PermissionsBitField.Flags.EmbedLinks);
+    }
+    if (/\.addReaction/.test(commandCode) || /\.react/.test(commandCode) || /addReaction/.test(commandCode)) {
+        permissions.add(PermissionsBitField.Flags.AddReactions);
+    }
+    if (/\.createCollector/.test(commandCode) || /\.createMessageComponentCollector/.test(commandCode) || /createCollector/.test(commandCode)) {
+        permissions.add(PermissionsBitField.Flags.ManageMessages);
+    }
+    if (/\.setEmoji/.test(commandCode) || /setEmoji/.test(commandCode)) {
+        permissions.add(PermissionsBitField.Flags.UseExternalEmojis);
+    }
+    if (/\.connect/.test(commandCode) || /\.join/.test(commandCode)) {
+        if (message.channel.type === ChannelType.GuildVoice) {
+            permissions.add(PermissionsBitField.Flags.Connect);
+        } 
+    }
+    if (/\.speak/.test(commandCode)) {
+        if (message.channel.type === ChannelType.GuildVoice) {
+            permissions.add(PermissionsBitField.Flags.Speak);
+        } 
+    }
+    if (/\.priority/.test(commandCode)) {
+        permissions.add(PermissionsBitField.Flags.MuteMembers);
+    }
+    if (/\.kick/.test(commandCode) || /\.ban/.test(commandCode)) {
+        permissions.add(PermissionsBitField.Flags.KickMembers);
+        permissions.add(PermissionsBitField.Flags.BanMembers);
+    }
+
+    // Verifique se o bot tem as permissões necessárias
+    const botPermissions = message.channel.permissionsFor(message.guild.members.me);
+
+    // Convertendo permissões do bot para um array de strings para verificação
+    const botPermissionsArray = botPermissions.toArray();
+
+    // Verifique se o bot possui todas as permissões necessárias
+    const missingPermissions = Array.from(permissions).filter(perm => !botPermissionsArray.includes(perm));
+    return missingPermissions;
+}
+
+
+
+const { PermissionFlagsBits } = require('discord.js');
+
+// Cria um mapeamento inverso
+const permissionValues = {
+    [PermissionFlagsBits.CreateInstantInvite]: PermissionFlagsBits.CreateInstantInvite,
+    [PermissionFlagsBits.KickMembers]: PermissionFlagsBits.KickMembers,
+    [PermissionFlagsBits.BanMembers]: PermissionFlagsBits.BanMembers,
+    [PermissionFlagsBits.Administrator]: PermissionFlagsBits.Administrator,
+    [PermissionFlagsBits.ManageChannels]: PermissionFlagsBits.ManageChannels,
+    [PermissionFlagsBits.ManageGuild]: PermissionFlagsBits.ManageGuild,
+    [PermissionFlagsBits.AddReactions]: PermissionFlagsBits.AddReactions,
+    [PermissionFlagsBits.ViewAuditLog]: PermissionFlagsBits.ViewAuditLog,
+    [PermissionFlagsBits.PrioritySpeaker]: PermissionFlagsBits.PrioritySpeaker,
+    [PermissionFlagsBits.Stream]: PermissionFlagsBits.Stream,
+    [PermissionFlagsBits.ViewChannel]: PermissionFlagsBits.ViewChannel,
+    [PermissionFlagsBits.SendMessages]: PermissionFlagsBits.SendMessages,
+    [PermissionFlagsBits.SendTTSMessages]: PermissionFlagsBits.SendTTSMessages,
+    [PermissionFlagsBits.ManageMessages]: PermissionFlagsBits.ManageMessages,
+    [PermissionFlagsBits.EmbedLinks]: PermissionFlagsBits.EmbedLinks,
+    [PermissionFlagsBits.AttachFiles]: PermissionFlagsBits.AttachFiles,
+    [PermissionFlagsBits.ReadMessageHistory]: PermissionFlagsBits.ReadMessageHistory,
+    [PermissionFlagsBits.MentionEveryone]: PermissionFlagsBits.MentionEveryone,
+    [PermissionFlagsBits.UseExternalEmojis]: PermissionFlagsBits.UseExternalEmojis,
+    [PermissionFlagsBits.ViewGuildInsights]: PermissionFlagsBits.ViewGuildInsights,
+    [PermissionFlagsBits.Connect]: PermissionFlagsBits.Connect,
+    [PermissionFlagsBits.Speak]: PermissionFlagsBits.Speak,
+    [PermissionFlagsBits.MuteMembers]: PermissionFlagsBits.MuteMembers,
+    [PermissionFlagsBits.DeafenMembers]: PermissionFlagsBits.DeafenMembers,
+    [PermissionFlagsBits.MoveMembers]: PermissionFlagsBits.MoveMembers,
+    [PermissionFlagsBits.UseVAD]: PermissionFlagsBits.UseVAD,
+    [PermissionFlagsBits.ChangeNickname]: PermissionFlagsBits.ChangeNickname,
+    [PermissionFlagsBits.ManageNicknames]: PermissionFlagsBits.ManageNicknames,
+    [PermissionFlagsBits.ManageRoles]: PermissionFlagsBits.ManageRoles,
+    [PermissionFlagsBits.ManageWebhooks]: PermissionFlagsBits.ManageWebhooks,
+    [PermissionFlagsBits.ManageEmojisAndStickers]: PermissionFlagsBits.ManageEmojisAndStickers,
+    [PermissionFlagsBits.UseApplicationCommands]: PermissionFlagsBits.UseApplicationCommands,
+    [PermissionFlagsBits.RequestToSpeak]: PermissionFlagsBits.RequestToSpeak,
+    [PermissionFlagsBits.ManageThreads]: PermissionFlagsBits.ManageThreads,
+    [PermissionFlagsBits.UsePublicThreads]: PermissionFlagsBits.UsePublicThreads,
+    [PermissionFlagsBits.UsePrivateThreads]: PermissionFlagsBits.UsePrivateThreads,
+    [PermissionFlagsBits.UseExternalStickers]: PermissionFlagsBits.UseExternalStickers,
+    [PermissionFlagsBits.SendMessagesInThreads]: PermissionFlagsBits.SendMessagesInThreads,
+    [PermissionFlagsBits.StartEmbeddedActivities]: PermissionFlagsBits.StartEmbeddedActivities,
+    [PermissionFlagsBits.ModerateMembers]: PermissionFlagsBits.ModerateMembers
+};
+function getPermissionFlag(value) {
+    // Percorre o mapeamento para encontrar o nome da propriedade correspondente
+    for (const [bitfieldValue, permission] of Object.entries(permissionValues)) {
+        if (BigInt(bitfieldValue) === value) {
+            return permission;
+        }
+    }
+    return null; // Retorna null se não encontrar
+}
+
 
 
 fs.readdirSync(`./comandos/`).forEach((local) => {
@@ -80,6 +235,7 @@ function gerarEmbed(titulo, descricao, thumbnail, footer, imagem, cor) {
 }
 
 client.on("messageCreate", async message => {
+    
     if (message.author.bot || message.channel.type == Discord.ChannelType.DM) return; 
     client.dev = await client.users.cache.get("722811981660291082")
     let c = await db.get(`${message.guild.id}.config`)
@@ -104,8 +260,33 @@ client.on("messageCreate", async message => {
 
         let comando = client.comandos.get(cmd) || client.comandos.get(client.aliases.get(cmd));
 
-        if (comando) {
-            try {
+        if (comando) { 
+            const requiredPermissions = await getRequiredPermissions(comando, client, message, args);
+    
+            if (!Array.isArray(requiredPermissions)) {
+                console.error('requiredPermissions não é um array:', requiredPermissions);
+                return;
+            }
+            let missingPermissions = []
+            let perms = message.channel.permissionsFor(message.guild.members.cache.get(client.user.id))
+            requiredPermissions.forEach(perm => {
+                if(perm == Discord.PermissionFlagsBits.ManageMessages) return;
+                if(!perms.has(perm)) missingPermissions.push(perm)
+            });
+            
+           
+            
+
+            if (missingPermissions.length > 0) {
+                return message.reply({
+                    content: `Estou faltando as seguintes permissões para executar este comando: ${missingPermissions.map( perm => {
+                        const permissionName = Object.keys(PermissionFlagsBits).find(key => PermissionFlagsBits[key] === perm);
+                        return permissionName
+                
+                }).join(", ")}`
+                });
+            }
+             try {
                 await comando.run(client, message, args);
             } catch (e) {
                 console.error(`Erro ao executar comando: ${e.message}`);
@@ -153,8 +334,6 @@ client.on("messageCreate", async message => {
 
             if (logChannel) {
                 await logChannel.send({ embeds: [embed] });
-            } else {
-                console.log("Canal de logs não definido. Mensagem de log não enviada.");
             }
 
             return;
@@ -195,50 +374,16 @@ client.on("messageCreate", async message => {
 
 client.on("ready", () => {
     console.log(`${client.user.displayName} Online.`);
-
-    setInterval(async () => {
-        const allUsers = await db.all(); 
-    
-        for (let user of allUsers) {
-            const userData = await db.get(`${user.id}`);
-            if (!userData || !userData.investimentos) continue; 
-    
-            let novosInvestimentos = userData.investimentos.map(investimento => {
-                let flutuacao;
-                
-                
-                switch (investimento.tipo) {
-                    case 'ações':
-                        flutuacao = Math.random() * 0.2 - 0.1; 
-                        break;
-                    case 'imóveis':
-                        flutuacao = Math.random() * 0.1 - 0.05; 
-                        break;
-                    case 'startups':
-                        flutuacao = Math.random() * 0.4 - 0.2; 
-                        break;
-                    default:
-                        flutuacao = 0;
-                }
-    
-                
-                investimento.retorno = Math.max(0, investimento.retorno + investimento.retorno * flutuacao).toFixed(2);
-                return investimento;
-            });
-    
-            
-            await db.set(`${user.id}`, {
-                ...userData,
-                investimentos: novosInvestimentos
-            });
-        }
-    }, 3600000);
+    setInterval(async () => require("./comandos/economia/investimentos.js").help.atualizarInvestimentos(), 3600000);
     
     
 
     const a = require('./comandos/utilidades/lembrete.js');
-
-    setInterval(() => a.help.checkReminders(client), 30000);
+    const b = require('./comandos/moderação/sorteio.js')
+    setInterval(() => {
+        a.help.checkReminders(client);
+        b.help.iniciarColetores(client)
+    }, 5000);
 
     const activities = [
         { name: `Vendo ${client.users.cache.size} usuários`, type: ActivityType.Watching },
@@ -270,5 +415,75 @@ function setError(embed, error) {
     embed.setColor(client.cor); 
     embed.setThumbnail(client.user.avatarURL({ size: 2048, extension: "png" }));
 }
+
+
+function set(s, r) {
+    return db.set(`${s}`, r)
+}
+
+function get(s) {
+    return db.get(`${s}`)
+
+}
+
+function verificarPermissoes(canal, cliente, perms) {
+    if (!Array.isArray(perms)) throw new Error("Apenas arrays entram como `PERMS`");
+    if (!(cliente instanceof Discord.Client)) throw new Error("Apenas CLIENT do discord entram como `CLIENTE`");
+    if (typeof canal !== 'number') throw new Error("Apenas números entram como `CANAIS`");
+
+    const permissoesNecessarias = perms || client.allPerms;
+    const permissoesFaltantes = permissoesNecessarias.filter(permissao => !canal.permissionsFor(cliente.user).has(permissao));
+    if (permissoesFaltantes.length > 0) {
+    const permissoesNominais = permissoesFaltantes.map(permissao => {
+        switch (permissao) {
+            case Discord.PermissionFlagsBits.CreateInstantInvite: return 'Criar Convites Instantâneos';
+            case Discord.PermissionFlagsBits.KickMembers: return 'Expulsar Membros';
+            case Discord.PermissionFlagsBits.BanMembers: return 'Banir Membros';
+            case Discord.PermissionFlagsBits.Administrator: return 'Administrador';
+            case Discord.PermissionFlagsBits.ManageChannels: return 'Gerenciar Canais';
+            case Discord.PermissionFlagsBits.ManageGuild: return 'Gerenciar Servidor';
+            case Discord.PermissionFlagsBits.AddReactions: return 'Adicionar Reações';
+            case Discord.PermissionFlagsBits.ViewAuditLog: return 'Visualizar Log de Auditoria';
+            case Discord.PermissionFlagsBits.PrioritySpeaker: return 'Voz Prioritária';
+            case Discord.PermissionFlagsBits.Stream: return 'Transmitir Vídeo';
+            case Discord.PermissionFlagsBits.ViewChannel: return 'Ver Canal';
+            case Discord.PermissionFlagsBits.SendMessages: return 'Enviar Mensagens';
+            case Discord.PermissionFlagsBits.SendTTSMessages: return 'Enviar Mensagens de Texto-para-Fala';
+            case Discord.PermissionFlagsBits.ManageMessages: return 'Gerenciar Mensagens';
+            case Discord.PermissionFlagsBits.EmbedLinks: return 'Enviar Embeds';
+            case Discord.PermissionFlagsBits.AttachFiles: return 'Anexar Arquivos';
+            case Discord.PermissionFlagsBits.ReadMessageHistory: return 'Ler Histórico de Mensagens';
+            case Discord.PermissionFlagsBits.MentionEveryone: return 'Mencionar Everyone';
+            case Discord.PermissionFlagsBits.UseExternalEmojis: return 'Usar Emojis Externos';
+            case Discord.PermissionFlagsBits.ViewGuildInsights: return 'Visualizar Insights do Servidor';
+            case Discord.PermissionFlagsBits.Connect: return 'Conectar';
+            case Discord.PermissionFlagsBits.Speak: return 'Falar';
+            case Discord.PermissionFlagsBits.MuteMembers: return 'Silenciar Membros';
+            case Discord.PermissionFlagsBits.DeafenMembers: return 'Ensurdecer Membros';
+            case Discord.PermissionFlagsBits.MoveMembers: return 'Mover Membros';
+            case Discord.PermissionFlagsBits.UseVAD: return 'Usar Detecção de Voz';
+            case Discord.PermissionFlagsBits.ChangeNickname: return 'Alterar Apelido';
+            case Discord.PermissionFlagsBits.ManageNicknames: return 'Gerenciar Apelidos';
+            case Discord.PermissionFlagsBits.ManageRoles: return 'Gerenciar Cargos';
+            case Discord.PermissionFlagsBits.ManageWebhooks: return 'Gerenciar Webhooks';
+            case Discord.PermissionFlagsBits.ManageEmojisAndStickers: return 'Gerenciar Emojis e Figurinhas';
+            case Discord.PermissionFlagsBits.UseApplicationCommands: return 'Usar Comandos de Aplicação';
+            case Discord.PermissionFlagsBits.RequestToSpeak: return 'Solicitar para Falar';
+            case Discord.PermissionFlagsBits.ManageThreads: return 'Gerenciar Tópicos';
+            case Discord.PermissionFlagsBits.UsePublicThreads: return 'Usar Tópicos Públicos';
+            case Discord.PermissionFlagsBits.UsePrivateThreads: return 'Usar Tópicos Privados';
+            case Discord.PermissionFlagsBits.UseExternalStickers: return 'Usar Figurinhas Externas';
+            case Discord.PermissionFlagsBits.SendMessagesInThreads: return 'Enviar Mensagens em Tópicos';
+            case Discord.PermissionFlagsBits.StartEmbeddedActivities: return 'Iniciar Atividades Incorporadas';
+            case Discord.PermissionFlagsBits.ModerateMembers: return 'Moderar Membros';
+            default: return 'Permissão Desconhecida';
+        }
+        
+        }).join(', ');
+    }
+    return permissoesNominais;
+}
+
+
 
 client.login(process.env.TOKEN);

@@ -151,8 +151,8 @@ exports.run = async (client, message, args) => {
 };
 
 exports.help = {
-    name: 'trivia',
-    aliases: ['quiz'],
+    name: 'quiz',
+    aliases: ['trivia'],
     description: "Responda a quizes e suba no rank! Usage: {prefixo}quiz",
     status: false
 };

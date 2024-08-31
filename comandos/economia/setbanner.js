@@ -50,7 +50,8 @@ exports.run = async (client, message, args) => {
         await db.set(`${message.author.id}`, {
             money: user.money - 2000,
             sb: user.sb,
-            trabalho: user.trabalho
+            trabalho: user.trabalho,
+            investimentos: user.investimentos? user.investimentos : null
         });
         message.reply({ content: "Background atualizado com sucesso!" });
     } else {

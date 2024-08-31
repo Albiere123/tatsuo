@@ -24,9 +24,9 @@ exports.run = async (client,  message, args) => {
     let embed = new Discord.EmbedBuilder()
     .setDescription("# <:global:1275650280850984961> DBD")
     .addFields([
-        { name: "ㅤ\n<:lista:1275656990013526076> Nome da Função", value: resposta.data.pt.name},
+        { name: "ㅤ\n<:lista:1275656990013526076> Nome da Função", value: `\`${resposta.data.pt.name}\``},
         { name: "<:descricaodotrabalho:1275839638631612487> Descrição", value: resposta.data.pt.description},
-        { name: "<:megafone:1275650267592790016> Expressão para uso", value: resposta.data.pt.use},
+        { name: "<:megafone:1275650267592790016> Expressão para uso", value: `\`\`\`${resposta.data.pt.use}\`\`\``},
         { name: "<:pesquisa:1275839827199398013> Exemplo", value: `\`\`\`${example}\`\`\``}
     ])
     .setColor(client.cor)

@@ -13,7 +13,7 @@ exports.run = async (client, message, args) => {
     
     const confessionChannel = client.channels.cache.get(confessionChannelId.id);
     if (!confessionChannel) {
-        client.setError(error, "Canal de confissões não encontrado! Peço que avise a um Staff do servidor com a permissão de `Gerenciar Canais`")
+        client.setError(error, "Canal de confissões não encontrado! Peço que avise a um Staff do servidor com a permissão de `Gerenciar Canais` para configurá-lo no ocmanod `"+client.prefix+"dashboard confess <#novo canal>`")
         client.setUsage(error, `${client.prefix}confess <mensagem>`)
         return message.reply({ embeds: [error] });
     }

@@ -68,14 +68,16 @@ exports.run = async(client, message, args) => {
 
                 if (response === 'sim') {
                    
-                    await db.set(`${message.author.id}`, { money: senderBalance - amount, sb: senderSb, trabalho: senderTb});
+                    await db.set(`${message.author.id}`, { money: senderBalance - amount, sb: senderSb, trabalho: senderTb,
+                        investimentos: senderData.investimentos? senderData.investimentos : null});
                     
                     const receiverData = await db.get(`${user.id}`);
                     const receiverBalance = receiverData ? receiverData.money : 0;
                     const receiverSb = receiverData ? receiverData.sb : "";
                     const receiverTb = receiverData ? receiverData.trabalho : "";
                     const transactionId = Date.now();
-                    await db.set(`${user.id}`, { money: receiverBalance + amount, sb: receiverSb, trabalho: receiverTb });
+                    await db.set(`${user.id}`, { money: receiverBalance + amount, sb: receiverSb, trabalho: receiverTb,
+                        investimentos: receiverData.investimentos? receiverData.investimentos : null});
                     await db.push('transactions', {
                         id: transactionId,
                         type: 'payment',

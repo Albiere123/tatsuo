@@ -109,8 +109,8 @@ exports.run = async(client, message, args) => {
                         const winnerData = await db.get(`${winner.id}`);
                         const loserData = await db.get(`${loser.id}`);
 
-                        await db.set(`${winner.id}`, { money: winnerData.money + amount, sb: winnerData.sb, trabalho: winnerData.trabalho });
-                        await db.set(`${loser.id}`, { money: loserData.money - amount, sb: loserData.sb, trabalho: loserData.trabalho });
+                        await db.set(`${winner.id}`, { money: winnerData.money + amount, sb: winnerData.sb, trabalho: winnerData.trabalho, investimentos: winnerData.investimentos? winnerData.investimentos : null });
+                        await db.set(`${loser.id}`, { money: loserData.money - amount, sb: loserData.sb, trabalho: loserData.trabalho, investimentos: loserData.investimentos? loserData.investimentos : null});
 
                         embed
                             .setDescription(`# <:aposta:1275832004700667924> Aposta Completa!

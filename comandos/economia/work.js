@@ -4,8 +4,7 @@ const db = new QuickDB();
 
 const api = require("../../api.json")
 
-async function getWork(user) {
-    const status = (await db.get(`work_privado`)) ? (await db.get(`work_privado`)) : false;
+async function getWork(user, message, client) {
     user = await db.get(`${user.id}`)
     const trabalho = await user.trabalho || false;
     if(trabalho == "Streamer") return {
@@ -20,6 +19,7 @@ async function getWork(user) {
 }
 
 exports.run = async(client, message, args) => {
+    const status = (await db.get(`work_privado`)) ? (await db.get(`work_privado`)) : false;
     if(message.author.id !== client.dev.id && status == false) return message.reply({content: "Este comando está em manutenção!"})
         const userId = message.author.id;
     const minReward = 750;
@@ -42,7 +42,7 @@ exports.run = async(client, message, args) => {
         }
     }
 
-    let user = await getWork(message.author)
+    let user = await getWork(message.author, message, client)
     let erro = new Discord.EmbedBuilder()
     if(!user) {
         client.setError(erro, `Parace que você não possue um emprego...`)
@@ -57,6 +57,13 @@ exports.run = async(client, message, args) => {
     .setThumbnail(user.imagem)
     .setColor(client.cor)
     message.reply({embeds: [embed]})
+    let userD = await db.get(message.author.id)
+    userD.money = (userD.money ? userD.money : 0) + reward 
+    await db.set(message.author.id, {
+        money: userD.money,
+        sb: userD.sb,
+        trabalho: userD.trabalho,
+        investimentos: userD.investimentos ? userD.investimentos : null})
     await db.set(`work_${userId}`, now.toISOString())
 }
 

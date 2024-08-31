@@ -24,7 +24,7 @@ exports.run = async (client, message, args) => {
     let main = new Discord.EmbedBuilder()
     .setDescription(`# Menu de Ranking's
 Escolha entre as categorias:
-    - Ranking Global -> Ranking global do bot
+    - Ranking Global -> Ranking global do bot;
     - Ranking Quiz -> Ranking do Quiz no servidor.`)
     .setColor(client.cor)
     const msg = await message.channel.send({embeds: [main], components: [row]})
@@ -48,10 +48,10 @@ Escolha entre as categorias:
         .sort((a, b) => b.score - a.score)
         .map((user, index) => {
             user.name = client.users.cache.get(user.userId).username
-            if (index == 0) return `<:medalhadeouro:1275833851536736367> ${user.name} - **${user.money}** Pontos`;
-            else if (index == 1) return `<:medalhadeprata:1275833849410228264>  ${user.name} - **${user.money}** Pontos`;
-            else if (index == 2) return `<:medalhadebronze:1275833846503575586> ${user.name} - **${user.money}** Pontos`;
-            else return `<:medalhaestrela:1275833855600885844> ${user.name} - **${user.money}** Pontos`;
+            if (index == 0) return `<:medalhadeouro:1275833851536736367> ${user.name} - **R$ ${user.money}**`;
+            else if (index == 1) return `<:medalhadeprata:1275833849410228264>  ${user.name} - **R$ ${user.money}**`;
+            else if (index == 2) return `<:medalhadebronze:1275833846503575586> ${user.name} - **R$ ${user.money}**`;
+            else return `<:medalhaestrela:1275833855600885844> ${user.name} - **R$ ${user.money}**`;
         })
         .join('\n');
 

@@ -26,7 +26,7 @@ exports.run = async (client, message, args) => {
 
    
     try {
-        const user = await db.get(userId) || { money: 0, sb: null, trabalho: null};
+        const user = await db.get(userId) || { money: 0, sb: null, trabalho: null, investimentos: null};
         user.money += reward;
         await db.set(userId, user);
 
