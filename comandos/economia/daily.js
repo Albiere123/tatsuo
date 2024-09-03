@@ -40,7 +40,7 @@ exports.run = async (client, message, args) => {
 ㅤ
 **<:dinheiro:1275650298005950494> Quanto ganhou:** R$${api.ab(reward)}
 ㅤ
-**<:cartaodecredito:1275832591894970450> Saldo atual:** R$${api.ab(user.money)}`)
+**<:cartaodecredito:1275832591894970450> Saldo atual:** R$${api.ab(Number(user.money.toFixed(0)))}`)
             .setThumbnail(message.author.avatarURL({size: 2048, extension: "png"}))
         await message.reply({ embeds: [embed] });
     } catch (error) {

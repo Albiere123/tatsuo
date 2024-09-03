@@ -19,7 +19,7 @@ exports.run = async (client, message, args) => {
                 const response = collected.first().content.toLowerCase();
 
                 if (response === 'sim') {
-                    // Atualiza os dados do usuário para remover o trabalho
+
                     await db.set(message.author.id, {
                         money: userData.money,
                         sb: userData.sb,
@@ -45,8 +45,13 @@ exports.run = async (client, message, args) => {
         .setCustomId('select_clt')
         .setLabel('CLT')
         .setStyle(Discord.ButtonStyle.Primary);
+    
+    const buttonES = new Discord.ButtonBuilder()
+        .setCustomId('select_es')
+        .setLabel('Engenheiro de Software')
+        .setStyle(Discord.ButtonStyle.Primary);
 
-    const row = new Discord.ActionRowBuilder().addComponents(buttonStreamer, buttonCLT);
+    const row = new Discord.ActionRowBuilder().addComponents(buttonStreamer, buttonCLT, buttonES);
 
     const embed = new Discord.EmbedBuilder()
         .setColor(client.cor)
@@ -54,7 +59,8 @@ exports.run = async (client, message, args) => {
 ㅤ
 <:lista:1275656990013526076>  Lista de empregos:
 - Streamer;
-- CLT`)
+- CLT
+- Engenheiro de Softwer`)
         .setThumbnail('https://cdn-icons-png.flaticon.com/512/1995/1995574.png');
 
     const msg = await message.reply({ embeds: [embed], components: [row] });
@@ -79,6 +85,14 @@ exports.run = async (client, message, args) => {
                 investimentos: userData.investimentos || null
             });
             await i.update({ content: 'Você escolheu o emprego de **CLT**!', embeds: [], components: [] });
+        } else if (i.customId === "select_es") {
+            await db.set(message.author.id, {
+                money: userData.money || 0,
+                sb: userData.sb || "Não definido.",
+                trabalho: "Engenheiro de Software",
+                investimentos: userData.investimentos || null
+            });
+            await i.update({ content: 'Você escolheu o emprego de **Engenheiro de Software**!', embeds: [], components: [] });
         }
     });
 

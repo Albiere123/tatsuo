@@ -5,11 +5,10 @@ require('dotenv').config();
 const config = require('./config.json');
 const fs = require("fs");
 const { QuickDB } = require("quick.db");
-const { create } = require("domain");
-const { isNumberObject } = require("util/types");
 const db = new QuickDB();
-const { PermissionsBitField, ChannelType } = require('discord.js'); // Certifique-se de importar os tipos necessários
-
+const { PermissionsBitField, ChannelType } = require('discord.js'); 
+const CustomDB = require('./database');
+const botdb = new CustomDB();
 const client = new Discord.Client({
     intents: [
         GatewayIntentBits.Guilds,
@@ -33,60 +32,61 @@ const client = new Discord.Client({
 client.cor = config.cor;
 client.comandos = new Discord.Collection();
 client.aliases = new Discord.Collection();
-client.dev = null;
+client.dev = client.users.cache.get("722811981660291082")
 client.setUsage = setUsage;
 client.setError = setError;
 client.get = get;
 client.set = set;
 client.perms = verificarPermissoes;
+client.db = botdb;
 client.allPerms = [
-    PermissionsBitField.Flags.CreateInstantInvite, // 1
-    PermissionsBitField.Flags.KickMembers, // 2
-    PermissionsBitField.Flags.BanMembers, // 4
-    PermissionsBitField.Flags.Administrator, // 8
-    PermissionsBitField.Flags.ManageChannels, // 16
-    PermissionsBitField.Flags.ManageGuild, // 32
-    PermissionsBitField.Flags.AddReactions, // 64
-    PermissionsBitField.Flags.ViewAuditLog, // 128
-    PermissionsBitField.Flags.PrioritySpeaker, // 256
-    PermissionsBitField.Flags.Stream, // 512
-    PermissionsBitField.Flags.ViewChannel, // 1024
-    PermissionsBitField.Flags.SendMessages, // 2048
-    PermissionsBitField.Flags.SendTTSMessages, // 4096
-    PermissionsBitField.Flags.ManageMessages, // 8192
-    PermissionsBitField.Flags.AttachFiles, // 16384
-    PermissionsBitField.Flags.ReadMessageHistory, // 32768
-    PermissionsBitField.Flags.MentionEveryone, // 65536
-    PermissionsBitField.Flags.UseExternalEmojis, // 131072
-    PermissionsBitField.Flags.ViewGuildInsights, // 262144
-    PermissionsBitField.Flags.ChangeNickname, // 33554432
-    PermissionsBitField.Flags.ManageNicknames, // 67108864
-    PermissionsBitField.Flags.ManageRoles, // 134217728
-    PermissionsBitField.Flags.ManageWebhooks, // 268435456
-    PermissionsBitField.Flags.ManageEmojisAndStickers, // 536870912
-    PermissionsBitField.Flags.UseApplicationCommands, // 1073741824
-    PermissionsBitField.Flags.RequestToSpeak, // 2147483648
-    PermissionsBitField.Flags.ManageEvents, // 4294967296
-    PermissionsBitField.Flags.ManageThreads, // 8589934592
-    PermissionsBitField.Flags.CreatePublicThreads, // 17179869184
-    PermissionsBitField.Flags.CreatePrivateThreads, // 34359738368
-    PermissionsBitField.Flags.UseExternalStickers, // 68719476736
-    PermissionsBitField.Flags.SendMessagesInThreads, // 137438953472
-    PermissionsBitField.Flags.UseEmbeddedActivities, // 274877906944
-    PermissionsBitField.Flags.ModerateMembers, // 549755813888
-    PermissionsBitField.Flags.UseSoundboard, // 1099511627776
-    PermissionsBitField.Flags.CreateGuildExpressions, // 2199023255552
-    PermissionsBitField.Flags.CreateEvents, // 4398046511104
-    PermissionsBitField.Flags.UseExternalSounds, // 8796093022208
-    PermissionsBitField.Flags.SendPolls // 35184372088832
+    PermissionsBitField.Flags.CreateInstantInvite, 
+    PermissionsBitField.Flags.KickMembers, 
+    PermissionsBitField.Flags.BanMembers, 
+    PermissionsBitField.Flags.Administrator, 
+    PermissionsBitField.Flags.ManageChannels,
+    PermissionsBitField.Flags.ManageGuild, 
+    PermissionsBitField.Flags.AddReactions, 
+    PermissionsBitField.Flags.ViewAuditLog, 
+    PermissionsBitField.Flags.PrioritySpeaker, 
+    PermissionsBitField.Flags.Stream,
+    PermissionsBitField.Flags.ViewChannel, 
+    PermissionsBitField.Flags.SendMessages, 
+    PermissionsBitField.Flags.SendTTSMessages, 
+    PermissionsBitField.Flags.ManageMessages, 
+    PermissionsBitField.Flags.AttachFiles, 
+    PermissionsBitField.Flags.ReadMessageHistory,
+    PermissionsBitField.Flags.MentionEveryone,
+    PermissionsBitField.Flags.UseExternalEmojis, 
+    PermissionsBitField.Flags.ViewGuildInsights, 
+    PermissionsBitField.Flags.ChangeNickname,
+    PermissionsBitField.Flags.ManageNicknames, 
+    PermissionsBitField.Flags.ManageRoles,
+    PermissionsBitField.Flags.ManageWebhooks,
+    PermissionsBitField.Flags.ManageEmojisAndStickers, 
+    PermissionsBitField.Flags.UseApplicationCommands,
+    PermissionsBitField.Flags.RequestToSpeak, 
+    PermissionsBitField.Flags.ManageEvents, 
+    PermissionsBitField.Flags.ManageThreads, 
+    PermissionsBitField.Flags.CreatePublicThreads, 
+    PermissionsBitField.Flags.CreatePrivateThreads, 
+    PermissionsBitField.Flags.UseExternalStickers, 
+    PermissionsBitField.Flags.SendMessagesInThreads, 
+    PermissionsBitField.Flags.UseEmbeddedActivities, 
+    PermissionsBitField.Flags.ModerateMembers, 
+    PermissionsBitField.Flags.UseSoundboard, 
+    PermissionsBitField.Flags.CreateGuildExpressions, 
+    PermissionsBitField.Flags.CreateEvents, 
+    PermissionsBitField.Flags.UseExternalSounds, 
+    PermissionsBitField.Flags.SendPolls 
 ];
 
 async function getRequiredPermissions(command, client, message, args) {
     const permissions = new Set();
     
-    const commandCode = command.run.toString(); // Certifique-se de que `commandCode` seja o valor esperado
+    const commandCode = command.run.toString(); 
 
-    // Adicione permissões necessárias com base no comando
+   
     if (/\.send\(/.test(commandCode)) {
         permissions.add(PermissionsBitField.Flags.SendMessages);
     }
@@ -120,13 +120,13 @@ async function getRequiredPermissions(command, client, message, args) {
         permissions.add(PermissionsBitField.Flags.BanMembers);
     }
 
-    // Verifique se o bot tem as permissões necessárias
+    
     const botPermissions = message.channel.permissionsFor(message.guild.members.me);
 
-    // Convertendo permissões do bot para um array de strings para verificação
+    
     const botPermissionsArray = botPermissions.toArray();
 
-    // Verifique se o bot possui todas as permissões necessárias
+    
     const missingPermissions = Array.from(permissions).filter(perm => !botPermissionsArray.includes(perm));
     return missingPermissions;
 }
@@ -135,7 +135,6 @@ async function getRequiredPermissions(command, client, message, args) {
 
 const { PermissionFlagsBits } = require('discord.js');
 
-// Cria um mapeamento inverso
 const permissionValues = {
     [PermissionFlagsBits.CreateInstantInvite]: PermissionFlagsBits.CreateInstantInvite,
     [PermissionFlagsBits.KickMembers]: PermissionFlagsBits.KickMembers,
@@ -179,13 +178,13 @@ const permissionValues = {
     [PermissionFlagsBits.ModerateMembers]: PermissionFlagsBits.ModerateMembers
 };
 function getPermissionFlag(value) {
-    // Percorre o mapeamento para encontrar o nome da propriedade correspondente
+    
     for (const [bitfieldValue, permission] of Object.entries(permissionValues)) {
         if (BigInt(bitfieldValue) === value) {
             return permission;
         }
     }
-    return null; // Retorna null se não encontrar
+    return null;
 }
 
 
@@ -237,8 +236,8 @@ function gerarEmbed(titulo, descricao, thumbnail, footer, imagem, cor) {
 client.on("messageCreate", async message => {
     
     if (message.author.bot || message.channel.type == Discord.ChannelType.DM) return; 
-    client.dev = await client.users.cache.get("722811981660291082")
     let c = await db.get(`${message.guild.id}.config`)
+    
     client.prefix = c?.prefix || config.prefix;
     
     if(message.content.startsWith(`<@${client.user.id}>`) || message.content.startsWith(`<@!${client.user.id}>`)) {

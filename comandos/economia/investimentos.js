@@ -25,7 +25,7 @@ exports.run = async (client, message, args) => {
 
         if (!mentionedUser && args.length > 1) {
             const usernameOrDisplayName = args.slice(1).join(' ');
-            message.reply(usernameOrDisplayName)
+            
             mentionedUser = client.users.cache.find(u => u.username.toLowerCase() === usernameOrDisplayName.toLowerCase() || `${u.username.toLowerCase()}#${u.discriminator}` === usernameOrDisplayName.toLowerCase());
         }
     
@@ -63,7 +63,16 @@ exports.run = async (client, message, args) => {
     userData.money = userData.money - valor + retorno;
 
     await db.set(message.author.id, userData);
-
+    transactionId = Date.now();
+    await db.push('transactions', {
+        id: transactionId,
+        type: "investimento",
+        sender: message.author.id,
+        receiver: message.author.id,
+        investimento: tipo,
+        amount: valor,
+        timestamp: new Date().toISOString()
+                        });
     embed.setTitle("Investimento Bem Sucedido")
         .setDescription(`Você investiu **${valor}** em **${tipo}** e recebeu um retorno de **${retorno}**!`);
     

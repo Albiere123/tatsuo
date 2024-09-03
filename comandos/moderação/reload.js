@@ -5,21 +5,20 @@ const path = require('path');
 exports.run = async (client, message, args) => {
     if (message.author.id !== client.dev.id) return;
 
-    
-    const comandosModificados = [];
-    const commandMap = new Map(); // Mapeia nomes de comandos para caminhos de arquivo
+    const comandosModificadosPorCategoria = new Map();
+    const commandMap = new Map(); 
 
     const reloadCommand = (local, fileName) => {
         const filePath = path.resolve(`./comandos/${local}/${fileName}`);
         const stats = fs.statSync(filePath);
         const lastModified = stats.mtime.getTime();
 
-        // Verifica se o comando foi modificado desde a última recarga
+        
         if (client.lastReload && lastModified <= client.lastReload) {
             return false;
         }
 
-        // Remove o comando atual da cache
+        
         delete require.cache[require.resolve(filePath)];
         
         try {
@@ -27,7 +26,10 @@ exports.run = async (client, message, args) => {
             client.comandos.set(command.help.name, command);
             command.help.aliases.forEach(alias => client.aliases.set(alias, command.help.name));
 
-            comandosModificados.push(command.help.name);
+            if (!comandosModificadosPorCategoria.has(local)) {
+                comandosModificadosPorCategoria.set(local, []);
+            }
+            comandosModificadosPorCategoria.get(local).push(command.help.name);
             return true;
         } catch (error) {
             console.error(`Erro ao recarregar o comando ${fileName}:`, error);
@@ -35,7 +37,7 @@ exports.run = async (client, message, args) => {
         }
     };
 
-    // Cria um mapeamento de nomes de comandos para seus caminhos de arquivo
+    
     const createCommandMap = () => {
         fs.readdirSync('./comandos/').forEach(local => {
             let arquivos = fs.readdirSync(`./comandos/${local}`).filter(arquivo => arquivo.endsWith('.js'));
@@ -60,15 +62,23 @@ exports.run = async (client, message, args) => {
 
         client.lastReload = Date.now();
 
-        if (comandosModificados.length === 0) {
+        if (comandosModificadosPorCategoria.size === 0) {
             return message.reply({ content: "Nenhum comando foi modificado desde a última recarga." });
         }
 
         const embed = new Discord.EmbedBuilder()
             .setTitle('Comandos Recarregados')
             .setColor(client.cor)
-            .setDescription(`**${comandosModificados.length} comandos recarregados com sucesso:**\n` + comandosModificados.map(cmd => `- **${cmd}**`).join('\n'))
             .setThumbnail(client.user.avatarURL());
+
+        
+        comandosModificadosPorCategoria.forEach((comandos, categoria) => {
+            embed.addFields({
+                name: `${categoria}`,
+                value: comandos.map(cmd => `- **${cmd}**`).join('\n'),
+                inline: false
+            });
+        });
 
         return message.reply({ embeds: [embed] });
 

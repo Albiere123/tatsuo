@@ -93,8 +93,8 @@ exports.run = async(client, message, args) => {
         const confirmEmbed = new Discord.EmbedBuilder()
             .setTitle("Desafio de Aposta!")
             .setDescription(`${message.author.tag} desafiou você para uma aposta de ${amount} moedas. Aceita? Responda com 'sim' ou 'não'.`)
-            .setFooter({text: "Responda com 'sim' ou 'não'."});
-
+            .setFooter({text: "Responda com 'sim' ou 'não'."})
+            .setColor(client.cor)
         const filter = m => m.author.id === opponent.id && ['sim', 'não'].includes(m.content.toLowerCase());
         message.channel.send({embeds: [confirmEmbed]}).then(() => {
             message.channel.awaitMessages({filter, max: 1, time: 60000, errors: ['time']})

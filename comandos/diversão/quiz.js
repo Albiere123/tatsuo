@@ -1,10 +1,11 @@
 const { Client, Intents, EmbedBuilder } = require('discord.js');
 const { promisify } = require('util');
 const sleep = promisify(setTimeout);
-const {QuickDB} = require('quick.db');
-const db = new QuickDB()
+const { QuickDB } = require('quick.db');
+const db = new QuickDB();
 const questions = require("../../api.json").perguntas;
-const Discord = require("discord.js")
+const Discord = require("discord.js");
+
 const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -27,6 +28,8 @@ exports.run = async (client, message, args) => {
         return message.reply('Já há um quiz em andamento neste canal. Por favor, aguarde o término para iniciar um novo.');
     }
 
+    const isSpecialQuiz = args[0] === "sp";  
+
     activeQuizzes[channelId] = {
         active: true,
         collector: null,
@@ -36,8 +39,8 @@ exports.run = async (client, message, args) => {
         currentQuestion: null,
         correctAnswerIndex: null,
         answeredUsers: new Set(),
-        questionAnswered: false 
-
+        questionAnswered: false,
+        specialQuizTimeout: null  
     };
 
     const quiz = activeQuizzes[channelId];
@@ -68,12 +71,17 @@ exports.run = async (client, message, args) => {
     };
 
     quiz.collector = message.channel.createMessageCollector({ filter, time: 30000 * quiz.shuffledQuestions.length });
-
+    let currentPlayer = null
     quiz.collector.on('collect', async m => {
         if (!quiz.active || quiz.questionAnswered) return;  
 
         const answer = parseInt(m.content) - 1;
         if (answer === quiz.correctAnswerIndex) {
+            if (currentPlayer && m.author.id !== currentPlayer.id) {
+                return message.channel.send(`Aguarde sua vez, ${m.author.username}!`);
+              }
+          
+              currentPlayer = m.author;
             quiz.answeredUsers.add(m.author.id);  
             quiz.questionAnswered = true; 
 
@@ -82,9 +90,10 @@ exports.run = async (client, message, args) => {
             }
             quiz.userScores[m.author.id].score++;
 
-            await m.reply({ embeds: [new EmbedBuilder().setColor(client.cor).setDescription(`Parabéns, ${m.author.username}! Você acertou!\n\nIniciando a próxima pergunta...`)] });
+            await m.reply({ embeds: [new EmbedBuilder().setColor(client.cor).setThumbnail("https://cdn-icons-png.flaticon.com/128/1168/1168610.png").setDescription(`Parabéns, ${m.author.username}! Você acertou!\n\nIniciando a próxima pergunta...`)] });
             message.guild.members.cache.get(client.user.id).permissions.has(Discord.PermissionFlagsBits.AddReactions) ? await m.react('✅'): null;
             quiz.questionIndex++;
+            addScore(message.guild.id, m.author.id, 1, message)
             if (quiz.questionIndex < quiz.shuffledQuestions.length) {
                 setTimeout(() => {
                     askQuestion(quiz.shuffledQuestions[quiz.questionIndex]);
@@ -92,20 +101,30 @@ exports.run = async (client, message, args) => {
             } else {
                 quiz.collector.stop();
             }
-        } else if (!quiz.questionAnswered) {
-            await m.reply({ embeds: [new EmbedBuilder().setColor(client.cor).setDescription(`Resposta errada, ${m.author.username}! A resposta correta era: ${quiz.currentQuestion.options[quiz.currentQuestion.answer]}`)]});
+        } else if (!quiz.questionAnswered && !isSpecialQuiz) {
+            await m.reply({ embeds: [new EmbedBuilder().setColor(client.cor).setThumbnail("https://cdn-icons-png.flaticon.com/128/1168/1168582.png").setDescription(`# <:bloquear:1275650261574094912> Você Errou! \nResposta errada, ${m.author.username}! A resposta correta era: ${quiz.currentQuestion.options[quiz.currentQuestion.answer]}`)] });
             quiz.collector.stop();        
+        } else if (!quiz.questionAnswered && isSpecialQuiz) {
+            await m.reply({ embeds: [new EmbedBuilder().setColor(client.cor).setThumbnail("https://cdn-icons-png.flaticon.com/128/1168/1168582.png").setDescription(`# <:bloquear:1275650261574094912> Você Errou!\nResposta errada, ${m.author.username}! A resposta correta era: ${quiz.currentQuestion.options[quiz.currentQuestion.answer]}\nIniciando a próxima pergunta...`)] });
+            if (quiz.questionIndex < quiz.shuffledQuestions.length) {
+                setTimeout(() => {
+                    askQuestion(quiz.shuffledQuestions[quiz.questionIndex+1]);
+                }, 5000); 
+            } else {
+                quiz.collector.stop();
+            }
+            quiz.answeredUsers.add(m.author.id);  
         }
+        setTimeout(() => { currentPlayer = null; }, 5000);
     });
 
     quiz.collector.on('end', async collected => {
         quiz.active = false; 
         await sleep(1000);
         await displayRanking(message.channel, quiz.userScores);
-        await updateGlobalScores(quiz.userScores);
+        await updateGlobalScores(quiz.userScores, message);
         delete activeQuizzes[channelId];
     });
-
     const displayRanking = async (channel, scores) => {
         const ranking = Object.values(scores)
             .sort((a, b) => b.score - a.score)
@@ -134,20 +153,46 @@ exports.run = async (client, message, args) => {
         }
     };
 
-    const updateGlobalScores = async (userScores) => {
-        const globalScores = await db.get('triviaGlobalScores') || {};
-
-        Object.entries(userScores).forEach(([userId, userScore]) => {
-            if (!globalScores[userId]) {
-                globalScores[userId] = { name: userScore.name, score: 0 };
+    if (isSpecialQuiz) {
+        quiz.specialQuizTimeout = setTimeout(() => {
+            if (quiz.active) {
+                quiz.collector.stop();
+                message.channel.send('Tempo esgotado para o modo especial! O quiz foi encerrado.');
+                quiz.active = false;
+                updateGlobalScores(quiz.userScores, message);
+                delete activeQuizzes[channelId];
             }
-            globalScores[userId].score += userScore.score;
-        });
-
-        await db.set('triviaGlobalScores', globalScores);
-    };
+        }, 240000);
+    }
 
     askQuestion(quiz.shuffledQuestions[quiz.questionIndex]);
+};
+
+const updateGlobalScores = async (userScores, message) => {
+    let globalScores = await db.get('triviaGlobalScores_'+message.guild.id) || {};
+
+    Object.entries(userScores).forEach(([userId, userScore]) => {
+        if (!globalScores[userId]) {
+            globalScores[userId] = { name: userScore.name, score: 0 };
+        }
+        globalScores[userId].score += userScore.score;
+        
+    });
+
+    await db.set('triviaGlobalScores_' + message.guild.id, globalScores);
+    await db.set('triviaGlobalScores', globalScores);
+};
+
+const addScore = async (guildId, userId, points, message) => {
+    const key = `triviaLocalScores_${guildId}`;
+    let scores = await db.get(key) || {};
+    
+    if (!scores[userId]) {
+        scores[userId] = { name: message.guild.members.cache.get(userId).user.username, score: 0 };
+    }
+    
+    scores[userId].score += points;
+    await db.set(key, scores); 
 };
 
 exports.help = {

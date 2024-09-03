@@ -26,7 +26,7 @@ exports.run = async (client, message, args) => {
             result = require('util').inspect(result, { depth: 0 });
         }
 
-        // Limitar o tamanho do resultado para evitar mensagens muito longas
+        
         const resultLimit = 2000;
         if (result.length > resultLimit) {
             result = result.slice(0, resultLimit) + '... [Resultado truncado]';
@@ -34,7 +34,7 @@ exports.run = async (client, message, args) => {
 
         message.reply({ content: `\`\`\`js\n${result}\n\`\`\`` });
     } catch (error) {
-        // Limitar o tamanho da mensagem de erro
+        
         const errorLimit = 2000;
         let errorMessage = error.message;
         if (errorMessage.length > errorLimit) {

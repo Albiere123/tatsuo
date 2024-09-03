@@ -29,9 +29,9 @@ exports.run = async (client, message, args) => {
         }
     }
 
-    const newAbout = args.join(' ');
+    let newAbout = args.join(' ');
     if (!newAbout) {
-        client.setError(erro, `Forneça uma descrição!`);
+        client.setError(erro, `Forneça uma descrição! Você pode adicionar emojis ao usar {emoji:IDDOEMOJI}`);
         client.setUsage(erro, `${client.prefix}sobre <descrição>`);
         return message.reply({ embeds: [erro] });
     }
@@ -70,7 +70,30 @@ exports.run = async (client, message, args) => {
 
     const tb = (await db.get(userId)) ? (await db.get(userId))?.trabalho : "";
     let oldAbout = (await db.get(userId))?.sb || 'Não definido';
-    await db.set(`${userId}`, {money: (await db.get(userId))?.money, sb: truncatedAbout, trabalho: tb});
+    const emojiMatches = oldAbout.match(/{emoji:(\d+)}/g);
+        if (emojiMatches) {
+            for (let match of emojiMatches) {
+                const emojiId = match.match(/\d+/)[0];
+                const emoji = client.emojis.cache.get(emojiId);
+                if (emoji) {
+                    oldAbout = oldAbout.replace(match, `<:${emoji.identifier}>`);
+                }
+            }
+        }
+        newAbout = truncatedAbout;
+        const emojis = newAbout.match(/{emoji:(\d+)}/g);
+        if (emojis) {
+            for (let match of emojis) {
+                const emojiId = match.match(/\d+/)[0];
+                const emoji = client.emojis.cache.get(emojiId);
+                if (emoji) {
+                    newAbout = newAbout.replace(match, `<:${emoji.identifier}>`);
+                }
+            }
+        }
+    await db.set(`${userId}`, {money: (await db.get(userId))?.money, sb: truncatedAbout, trabalho: tb, investimentos: (await db.get(userId))?.investimentos}).catch(e => {
+        if(e) console.log(e)
+    });
     await db.set(`sobremim_${userId}_timestamp`, now.toISOString());
 
     let embed = new Discord.EmbedBuilder()
@@ -78,7 +101,7 @@ exports.run = async (client, message, args) => {
 ㅤ
 **<:transferenciadedados:1275650263511994409> Antiga descrição:** ${oldAbout}
 ㅤ
-**<:mudar:1275650265206493276> Nova descrição:** ${truncatedAbout}
+**<:mudar:1275650265206493276> Nova descrição:** ${newAbout}
 ㅤ`)
         .setColor(client.cor)
         .setThumbnail(`https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRd_JI5ApY2ZwutFAjg-ELaP_Af6bIHSKQdBQ&s`);

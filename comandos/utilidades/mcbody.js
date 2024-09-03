@@ -8,10 +8,9 @@ exports.run = async (client, message, args) => {
 const reason = args.slice(0).join(' ')
 client.user.setActivity({name: `Com ${client.users.size} Usuarios.`, type: "WATCHING"})
       const embedrr = new Discord.EmbedBuilder()
-      .setTitle('<:minecraft:1275841564610138189>  MCBody - Erro')
       .setColor(client.cor)
-      .setDescription(` | Erro: \n \nVocê precisa citar um nick de minecraft.\n`)
-      
+      client.setError(embedrr, `Você precisa citar um nick de minecraft.`)
+      client.setUsage(embedrr, `${client.prefix}mcbody <nick>`)
       if (reason.length < 1) return message.reply({embeds: [embedrr]})
 
       const embed = new Discord.EmbedBuilder()

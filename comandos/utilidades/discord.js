@@ -6,7 +6,7 @@ exports.run = async (client,  message, args) => {
     const status = (await db.get(`${this.help.name}_privado`)) ? (await db.get(`${this.help.name}_privado`)) : false;
     if(message.author.id !== client.dev.id && status == false) return message.reply({content: "Este comando está em manutenção!"})
     let erro = new Discord.EmbedBuilder()
-    if(!args[0]) {
+    if(!args[0] || args[0].length > 15) {
         client.setError(erro, `Insira o nome de uma função ou evento existente no DBD`)
         client.setUsage(erro, `${client.prefix}dbd <função ou evento>`)
         return message.reply({embeds: [erro]})
@@ -35,7 +35,6 @@ exports.run = async (client,  message, args) => {
     message.reply({embeds: [embed]})
 } catch(e) {
     let b = ``;
-    console.log(e)
     if(a.startsWith("on")) b = "e Evento"
     else b = "a Função"
     client.setError(erro, `Não encontrei est${b} na API, verifique se est${b} existe. Minha API contém 35,75% das funções e eventos!`)

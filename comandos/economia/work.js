@@ -6,7 +6,7 @@ const api = require("../../api.json")
 
 async function getWork(user, message, client) {
     user = await db.get(`${user.id}`)
-    const trabalho = await user.trabalho || false;
+    const trabalho = await user?.trabalho || false;
     if(trabalho == "Streamer") return {
         description: api.work.desc.streamer[Math.floor(Math.random() * api.work.desc.streamer.length)],
         imagem: "https://cdn-icons-png.flaticon.com/512/9299/9299767.png"
@@ -14,6 +14,10 @@ async function getWork(user, message, client) {
     else if(trabalho == "CLT") return {
         description: api.work.desc.clt[Math.floor(Math.random() * api.work.desc.clt.length)],
         imagem: "https://cdn-icons-png.flaticon.com/512/1839/1839325.png"
+    }
+    else if(trabalho == "Engenheiro de Software") return {
+        description: api.work.desc.es[Math.floor(Math.random() * api.work.desc.es.length)],
+        imagem: "https://cdn-icons-png.flaticon.com/128/6010/6010054.png"
     }
     else return trabalho;
 }
