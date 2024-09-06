@@ -27,7 +27,7 @@ async function startGame(message, client) {
         const imageBuffer = await imageResponse.buffer();
         const image = await loadImage(imageBuffer);
         
-        // Reduzir a imagem do Pokémon
+        
         const canva1 = createCanvas(image.width, image.height);
         const c1 = canva1.getContext('2d');
         c1.drawImage(image, 0, 0);
@@ -41,17 +41,17 @@ async function startGame(message, client) {
         const baseImage = await loadImage('https://static.quizur.com/i/b/57c1c26fc0b812.5998420157c1c26fb156c9.51498011.png');
         const imageB = await loadImage(imageC);
 
-        // Etapa 1: Criar a imagem com o Pokémon escondido
+        
         const canvas = createCanvas(baseImage.width, baseImage.height);
         const ctx = canvas.getContext('2d');
 
         ctx.drawImage(baseImage, 0, 0);
 
-        // Ajustar a posição e o tamanho da imagem do Pokémon
-        const pokemonWidth = 190; // Largura da imagem do Pokémon
-        const pokemonHeight = 230; // Altura da imagem do Pokémon
-        const pokemonX = 25; // Coordenada X para posicionar a imagem
-        const pokemonY = 130; // Coordenada Y para posicionar a imagem
+       
+        const pokemonWidth = 190;
+        const pokemonHeight = 230; 
+        const pokemonX = 25; 
+        const pokemonY = 130; 
 
         ctx.drawImage(imageB, pokemonX, pokemonY, pokemonWidth, pokemonHeight);
 
@@ -82,13 +82,13 @@ async function startGame(message, client) {
             if (!gameStates[channelId].answeredUsers.has(response.author.id)) {
                 gameStates[channelId].answeredUsers.add(response.author.id);
 
-                // Etapa 2: Criar a imagem revelada
+                
                 const revealCanvas = createCanvas(baseImage.width, baseImage.height);
                 const revealCtx = revealCanvas.getContext('2d');
 
                 revealCtx.drawImage(baseImage, 0, 0);
 
-                // Remover a máscara para revelar o Pokémon
+               
                 revealCtx.globalCompositeOperation = 'source-over';
                 revealCtx.drawImage(gameStates[channelId].pokemonImage, pokemonX, pokemonY, pokemonWidth, pokemonHeight);
 

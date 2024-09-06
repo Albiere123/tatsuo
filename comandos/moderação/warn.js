@@ -19,7 +19,7 @@ exports.run = async (client, message, args) => {
 
         const reason = args.slice(1).join(" ") || "Nenhuma razão fornecida";
 
-        // Armazenando o aviso no banco de dados
+       
         const warnings = (await db.get(`warnings_${member.id}`)) || [];
         warnings.push({
             reason: reason,

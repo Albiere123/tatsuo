@@ -69,7 +69,7 @@ exports.run = async (client, message, args) => {
             const attachment = new AttachmentBuilder("./data/triggered.gif", { name: 'triggered.gif' });
             await message.reply({ files: [attachment] });
 
-            // Remove o arquivo GIF gerado
+            
             fs.unlinkSync(gifPath);
             
         }, 2000);

@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const { QuickDB } = require("quick.db");
 const db = new QuickDB();
 
-// Função para truncar texto com limite e adicionar '...'
+
 function truncateText(text, maxLength) {
     if (text.length > maxLength) {
         return text.slice(0, maxLength - 3) + '...';

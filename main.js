@@ -493,9 +493,9 @@ function verificarPermissoes(canal, cliente, perms) {
 
 
 const messageCache = new Discord.Collection();
-const timeWindow = 10 * 1000; // 10 segundos
-const spamThreshold = 3; // 3 mensagens repetidas
-const i = {}; // Correção: uso de objeto para contagem por membro
+const timeWindow = 10 * 1000; 
+const spamThreshold = 3; 
+const i = {}; 
 
 client.on('messageCreate', async (msg) => {
     let antraid = await db.get(`antiraid_${msg.guild.id}`);
@@ -520,7 +520,7 @@ client.on('messageCreate', async (msg) => {
 
     if (repeatedMessages.length >= spamThreshold) {
         try {
-            await msg.member.timeout(8 * 60 * 60 * 1000, 'Raid de spam detectada: mensagens repetidas'); // 8 horas de timeout
+            await msg.member.timeout(8 * 60 * 60 * 1000, 'Raid de spam detectada: mensagens repetidas');
             msg.reply(`Usuário ${msg.author.tag} foi mutado por spam.`);
         } catch (error) {
             if (error.message.includes('Missing Permissions')) {

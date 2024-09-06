@@ -20,7 +20,7 @@ exports.run = async (client, message, args) => {
     let user = mentionedUser;
     const member = message.guild.members.cache.get(user.id);
 
-    // Embeds das páginas
+    
     const pages = [
         new Discord.EmbedBuilder()
             .setTitle(`Página 1 - Informações Básicas`)
