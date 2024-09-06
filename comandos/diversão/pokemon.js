@@ -1,14 +1,9 @@
-const Discord = require('discord.js');
-const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
+const { AttachmentBuilder, EmbedBuilder } = require('discord.js');
 const { createCanvas, loadImage } = require('canvas');
+const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const gameStates = {};
-const {QuickDB} = require('quick.db')
-const db = new QuickDB()
+
 async function startGame(message, client) {
-    const status = (await db.get(`${this.help.name}_privado`)) ? (await db.get(`${this.help.name}_privado`)) : false;
-
-    if (message.author.id !== client.dev.id && status == false) return message.reply({ content: "Este comando está em manutenção!" });
-
     const channelId = message.channel.id;
 
     if (gameStates[channelId] && gameStates[channelId].collector) {
@@ -22,37 +17,57 @@ async function startGame(message, client) {
     try {
         const response = await fetch(pokemonUrl);
         if (!response.ok) throw new Error('Erro ao buscar dados do Pokémon');
-        
+
         const data = await response.json();
         const pokemonName = data.name ? data.name.toLowerCase() : 'unknown';
 
         const imageResponse = await fetch(spriteUrl);
         if (!imageResponse.ok) throw new Error('Erro ao buscar imagem do Pokémon');
-        
-        const arrayBuffer = await imageResponse.arrayBuffer();
-        const image = await loadImage(Buffer.from(arrayBuffer));
 
-        const canvas = createCanvas(image.width, image.height);
+        const imageBuffer = await imageResponse.buffer();
+        const image = await loadImage(imageBuffer);
+        
+        // Reduzir a imagem do Pokémon
+        const canva1 = createCanvas(image.width, image.height);
+        const c1 = canva1.getContext('2d');
+        c1.drawImage(image, 0, 0);
+
+        c1.globalCompositeOperation = 'source-atop';
+        c1.fillStyle = 'black';
+        c1.fillRect(0, 0, canva1.width, canva1.height);
+
+        const imageC = canva1.toBuffer();
+        
+        const baseImage = await loadImage('https://static.quizur.com/i/b/57c1c26fc0b812.5998420157c1c26fb156c9.51498011.png');
+        const imageB = await loadImage(imageC);
+
+        // Etapa 1: Criar a imagem com o Pokémon escondido
+        const canvas = createCanvas(baseImage.width, baseImage.height);
         const ctx = canvas.getContext('2d');
 
-        ctx.drawImage(image, 0, 0);
+        ctx.drawImage(baseImage, 0, 0);
 
-        ctx.globalCompositeOperation = 'source-atop';
-        ctx.fillStyle = 'black';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        // Ajustar a posição e o tamanho da imagem do Pokémon
+        const pokemonWidth = 190; // Largura da imagem do Pokémon
+        const pokemonHeight = 230; // Altura da imagem do Pokémon
+        const pokemonX = 25; // Coordenada X para posicionar a imagem
+        const pokemonY = 130; // Coordenada Y para posicionar a imagem
 
-        const outputBuffer = canvas.toBuffer();
+        ctx.drawImage(imageB, pokemonX, pokemonY, pokemonWidth, pokemonHeight);
 
-        const attachment = new Discord.AttachmentBuilder(outputBuffer, { name: 'pokemon.png' });
-        const embed = new Discord.EmbedBuilder()
+        const initialBuffer = canvas.toBuffer();
+        const attachment = new AttachmentBuilder(initialBuffer, { name: 'pokemon_hidden.png' });
+        const embed = new EmbedBuilder()
             .setColor(client.cor)
-            .setTitle("<:gengar:1270450755517681705> | Quem é esse pokemooon?")
-            .setImage('attachment://pokemon.png');
+            .setTitle('<:gengar:1270450755517681705> | Quem é esse pokemooon?')
+            .setImage('attachment://pokemon_hidden.png');
 
         gameStates[channelId] = {
-            name: pokemonName,
+            name: pokemonName.toLowerCase(),
             answeredUsers: new Set(),
-            collector: null
+            collector: null,
+            imageBuffer: initialBuffer,
+            pokemonImage: image
         };
 
         await message.channel.send({ embeds: [embed], files: [attachment] });
@@ -63,17 +78,30 @@ async function startGame(message, client) {
 
         gameStates[channelId].collector = message.channel.createMessageCollector({ filter, time: 60000 });
 
-        gameStates[channelId].collector.on('collect', response => {
+        gameStates[channelId].collector.on('collect', (response) => {
             if (!gameStates[channelId].answeredUsers.has(response.author.id)) {
                 gameStates[channelId].answeredUsers.add(response.author.id);
-                message.channel.send(`${response.author.username} acertou! O Pokémon é \`${gameStates[channelId].name}\`!`);
-                message.channel.send({content: `Reiniciando o jogo...`})
-                gameStates[channelId].collector.stop();
 
-                
-                setTimeout(() => {
-                    startGame(message, client);
-                }, 5000);
+                // Etapa 2: Criar a imagem revelada
+                const revealCanvas = createCanvas(baseImage.width, baseImage.height);
+                const revealCtx = revealCanvas.getContext('2d');
+
+                revealCtx.drawImage(baseImage, 0, 0);
+
+                // Remover a máscara para revelar o Pokémon
+                revealCtx.globalCompositeOperation = 'source-over';
+                revealCtx.drawImage(gameStates[channelId].pokemonImage, pokemonX, pokemonY, pokemonWidth, pokemonHeight);
+
+                const revealBuffer = revealCanvas.toBuffer();
+                const revealAttachment = new AttachmentBuilder(revealBuffer, { name: 'pokemon_revealed.png' });
+                const revealEmbed = new EmbedBuilder()
+                    .setColor(client.cor)
+                    .setTitle(`${response.author.username} acertou! O Pokémon é \`${gameStates[channelId].name}!\``)
+                    .setImage('attachment://pokemon_revealed.png');
+
+                message.channel.send({ embeds: [revealEmbed], files: [revealAttachment] });
+
+                gameStates[channelId].collector.stop();
             } else {
                 response.reply('Você já respondeu a essa imagem!');
             }
@@ -81,9 +109,8 @@ async function startGame(message, client) {
 
         gameStates[channelId].collector.on('end', collected => {
             if (collected.size === 0) {
-                message.channel.send(`O tempo acabou! O Pokémon era \`${gameStates[channelId].name}\`.`);
+                message.channel.send(`O tempo acabou! O Pokémon era \`${gameStates[channelId].name}.\``);
             }
-
             delete gameStates[channelId];
         });
 
@@ -95,11 +122,11 @@ async function startGame(message, client) {
 
 exports.run = async (client, message, args) => {
     await startGame(message, client);
-};
+}
 
 exports.help = {
     name: "pokemon",
-    aliases: [],
-    description: "Quem é esse pokemoon? Usage: {prefixo}pokemon",
-    status: false
-};
+    description: "Jogue o famoso \"Quem é esse pokemooon?\"",
+    status: false,
+    aliases: []
+}

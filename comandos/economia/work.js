@@ -64,10 +64,10 @@ exports.run = async(client, message, args) => {
     let userD = await db.get(message.author.id)
     userD.money = (userD.money ? userD.money : 0) + reward 
     await db.set(message.author.id, {
-        money: userD.money,
-        sb: userD.sb,
-        trabalho: userD.trabalho,
-        investimentos: userD.investimentos ? userD.investimentos : null})
+        money: userD?.money || 0,
+        sb: userD?.sb,
+        trabalho: userD?.trabalho,
+        investimentos: userD?.investimentos || null})
     await db.set(`work_${userId}`, now.toISOString())
 }
 

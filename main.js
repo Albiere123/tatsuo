@@ -32,7 +32,6 @@ const client = new Discord.Client({
 client.cor = config.cor;
 client.comandos = new Discord.Collection();
 client.aliases = new Discord.Collection();
-client.dev = client.users.cache.get("722811981660291082")
 client.setUsage = setUsage;
 client.setError = setError;
 client.get = get;
@@ -119,6 +118,13 @@ async function getRequiredPermissions(command, client, message, args) {
         permissions.add(PermissionsBitField.Flags.KickMembers);
         permissions.add(PermissionsBitField.Flags.BanMembers);
     }
+    if(/\.mute/.test(commandCode)) {
+        permissions.add(PermissionFlagsBits.MuteMembers)
+    }
+    if (/\.manageChannels/.test(commandCode)) {
+        permissions.add(PermissionFlagsBits.ManageChannels);
+    }
+    
 
     
     const botPermissions = message.channel.permissionsFor(message.guild.members.me);
@@ -371,10 +377,10 @@ client.on("messageCreate", async message => {
     }
 });
 
-client.on("ready", () => {
+client.on("ready", async () => {
     console.log(`${client.user.displayName} Online.`);
     setInterval(async () => require("./comandos/economia/investimentos.js").help.atualizarInvestimentos(), 3600000);
-    
+    client.dev = await client.users.cache.get("722811981660291082")
     
 
     const a = require('./comandos/utilidades/lembrete.js');
@@ -382,6 +388,7 @@ client.on("ready", () => {
     setInterval(() => {
         a.help.checkReminders(client);
         b.help.iniciarColetores(client)
+        require("./comandos/moderação/ban.js").help.checkExpiredBansAndMutes()
     }, 5000);
 
     const activities = [
@@ -482,6 +489,58 @@ function verificarPermissoes(canal, cliente, perms) {
     }
     return permissoesNominais;
 }
+
+
+
+const messageCache = new Discord.Collection();
+const timeWindow = 10 * 1000; // 10 segundos
+const spamThreshold = 3; // 3 mensagens repetidas
+const i = {}; // Correção: uso de objeto para contagem por membro
+
+client.on('messageCreate', async (msg) => {
+    let antraid = await db.get(`antiraid_${msg.guild.id}`);
+    if (!antraid) return;
+    if (msg.author.bot) return;
+    if(client.user.id === msg.author.id) return;
+
+    const userMessages = messageCache.get(msg.author.id) || [];
+    const now = Date.now();
+
+   
+    userMessages.push({ content: msg.content, timestamp: now });
+
+    
+    const recentMessages = userMessages.filter(m => now - m.timestamp < timeWindow);
+
+    
+    messageCache.set(msg.author.id, recentMessages);
+
+    
+    const repeatedMessages = recentMessages.filter(m => m.content === msg.content);
+
+    if (repeatedMessages.length >= spamThreshold) {
+        try {
+            await msg.member.timeout(8 * 60 * 60 * 1000, 'Raid de spam detectada: mensagens repetidas'); // 8 horas de timeout
+            msg.reply(`Usuário ${msg.author.tag} foi mutado por spam.`);
+        } catch (error) {
+            if (error.message.includes('Missing Permissions')) {
+                
+                if (!i[msg.member.id]) {
+                    i[msg.member.id] = { amount: 0 };
+                }
+
+                if (i[msg.member.id].amount > 0) return;
+
+                i[msg.member.id].amount++;
+
+                return msg.channel.send(`Estou sem permissão para castigar este membro!`);
+            } else {
+                msg.reply(`Erro ao aplicar o timeout no usuário ${msg.author.tag}: ${error.message}`);
+            }
+        }
+        messageCache.delete(msg.author.id);
+    }
+});
 
 
 

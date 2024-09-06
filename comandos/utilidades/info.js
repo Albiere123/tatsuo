@@ -45,7 +45,7 @@ exports.run = async (client, message, args) => {
         const item = searchData.data[0];
 
         
-        const synopsis = item.synopsis ? await translateText(item.synopsis) : 'Sinopse não disponível.';
+        const synopsis = item.synopsis ? await translateText(item.synopsis, "pt") : 'Sinopse não disponível.';
         const title = item.title || 'Título não disponível';
         const imageUrl = item.images?.jpg?.large_image_url || null;
         const url = item.url || null;
@@ -53,7 +53,7 @@ exports.run = async (client, message, args) => {
         const episodesOrChapters = type === 'anime' ? item.episodes : item.chapters;
         const countLabel = type === 'anime' ? 'Episódios' : 'Capítulos';
         const count = episodesOrChapters ? episodesOrChapters.toString() : 'N/A';
-        const status = item.status ? await translateText(item.status) : 'N/A';
+        const status = item.status ? await translateText(item.status, "pt") : 'N/A';
         const releaseDate = item.aired?.string || item.published?.string || 'N/A';
 
         

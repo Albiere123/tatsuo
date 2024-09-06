@@ -77,7 +77,7 @@ exports.run = async(client, message, args) => {
                     const receiverTb = receiverData ? receiverData.trabalho : "";
                     const transactionId = Date.now();
                     await db.set(`${user.id}`, { money: receiverBalance + amount, sb: receiverSb, trabalho: receiverTb,
-                        investimentos: receiverData.investimentos? receiverData.investimentos : null});
+                        investimentos: await receiverData?.investimentos || null});
                     await db.push('transactions', {
                         id: transactionId,
                         type: 'payment',

@@ -1,4 +1,4 @@
-const fs = require('fs');
+const fs = require('fs').promises;
 const path = require('path');
 
 class CustomDB {
@@ -6,9 +6,7 @@ class CustomDB {
         this.dbPath = dbPath;
 
         // Cria a pasta de dados se não existir
-        if (!fs.existsSync(this.dbPath)) {
-            fs.mkdirSync(this.dbPath, { recursive: true });
-        }
+        fs.mkdir(this.dbPath, { recursive: true }).catch(console.error);
     }
 
     _getFilePath(key) {
@@ -17,24 +15,19 @@ class CustomDB {
 
     async get(key) {
         const filePath = this._getFilePath(key);
-        if (!fs.existsSync(filePath)) {
-            return undefined;
-        }
-
         try {
-            const data = fs.readFileSync(filePath, 'utf-8');
+            const data = await fs.readFile(filePath, 'utf-8');
             return JSON.parse(data);
         } catch (error) {
             console.error(`Erro ao ler a chave "${key}":`, error);
-            return undefined;
+            return undefined; // Retorna undefined se não encontrar ou se houver erro
         }
     }
 
     async set(key, value) {
         const filePath = this._getFilePath(key);
         try {
-            fs.writeFileSync(filePath, JSON.stringify(value, null, 2));
-            
+            await fs.writeFile(filePath, JSON.stringify(value, null, 2));
         } catch (error) {
             console.error(`Erro ao salvar a chave "${key}":`, error);
         }
@@ -43,12 +36,7 @@ class CustomDB {
     async delete(key) {
         const filePath = this._getFilePath(key);
         try {
-            if (fs.existsSync(filePath)) {
-                fs.unlinkSync(filePath);
-                
-            } else {
-                console.warn(`Chave "${key}" não encontrada.`);
-            }
+            await fs.unlink(filePath);
         } catch (error) {
             console.error(`Erro ao excluir a chave "${key}":`, error);
         }
@@ -56,12 +44,23 @@ class CustomDB {
 
     async all() {
         try {
-            const files = fs.readdirSync(this.dbPath);
-            return files.map(file => {
+            const files = await fs.readdir(this.dbPath);
+            
+            // Filtra apenas arquivos com extensão .json
+            const jsonFiles = files.filter(file => path.extname(file) === '.json');
+
+            const data = await Promise.all(jsonFiles.map(async (file) => {
                 const key = path.basename(file, '.json');
-                const data = fs.readFileSync(path.join(this.dbPath, file), 'utf-8');
-                return { key, value: JSON.parse(data) };
-            });
+                try {
+                    const content = await fs.readFile(path.join(this.dbPath, file), 'utf-8');
+                    return { key, value: JSON.parse(content) };
+                } catch (error) {
+                    console.error(`Erro ao ler o arquivo "${file}":`, error);
+                    return null; // Ignora arquivos corrompidos
+                }
+            }));
+
+            return data.filter(entry => entry !== null); // Filtra arquivos corrompidos
         } catch (error) {
             console.error('Erro ao obter todos os dados:', error);
             return [];

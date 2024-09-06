@@ -38,6 +38,6 @@ exports.run = async (client, message, args) => {
 exports.help = {
     name: 'jooj',
     aliases: [],
-    description: "Aplica um efeito de espelhamento vertical na imagem do avatar do usuário mencionado ou do autor da mensagem.",
+    description: "Gera uma imagem espelhada. {prefixo}jooj [user]",
     status: false
 };

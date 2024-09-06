@@ -101,6 +101,6 @@ function resetGame() {
 exports.help = {
     name: "detetive",
     aliases: ["mystery", "crime"],
-    description: "Inicia um jogo de detetive. Descubra o culpado, o local e a arma.",
+    description: "Inicia um jogo de detetive. Descubra o culpado, o local e a arma. Usage: {prefixo}detetive",
     status: false
 };

@@ -24,7 +24,7 @@ exports.run = async (client, message, args) => {
                         money: userData.money,
                         sb: userData.sb,
                         trabalho: null,
-                        investimentos: userData.investimentos
+                        investimentos: userData?.investimentos || null
                     });
                     return message.reply({ content: "Você se demitiu do trabalho." });
                 }

@@ -41,6 +41,6 @@ exports.run = async (client, message, args) => {
 exports.help = {
     name: 'wanted',
     aliases: [],
-    description: "Coloca o avatar do usuário mencionado ou do autor da mensagem em um cartaz de 'Procurado'.",
+    description: "Coloca o avatar em um cartaz de 'Procurado'. Usage: {prefixo}wanted [user]",
     status: false
 };

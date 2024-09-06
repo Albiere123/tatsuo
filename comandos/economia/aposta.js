@@ -52,12 +52,12 @@ exports.run = async(client, message, args) => {
 
         if (random <= winChance) {
             const winnings = Math.floor(amount * multiplier);
-            await db.set(`${message.author.id}`, { money: userData.money + winnings - amount, sb: userData.sb });
+            await db.set(`${message.author.id}`, { money: userData.money + winnings - amount, sb: userData.sb, trabalho: userData?.tb || null , investimentos: userData?.investimentos || null});
             embed.setTitle("Parabéns!")
                 .setDescription(`Você apostou ${amount} moedas com um multiplicador de ${multiplier}x e ganhou ${winnings} moedas!`)
                 .setColor(client.cor);
         } else {
-            await db.set(`${message.author.id}`, { money: userData.money - amount, sb: userData.sb });
+            await db.set(`${message.author.id}`, { money: userData.money - amount, sb: userData.sb, trabalho: userData?.tb || null , investimentos: userData?.investimentos || null });
             embed.setTitle("Que pena!")
                 .setDescription(`Você apostou ${amount} moedas com um multiplicador de ${multiplier}x e perdeu tudo!`)
                 .setColor(client.cor);

@@ -111,6 +111,6 @@ exports.run = async (client, message, args) => {
 exports.help = {
     name: "desafio",
     aliases: ["challenge"],
-    description: "Proponha e resolva desafios de programação. Usage: desafio <listar|desafiar|enviar|rank>",
+    description: "Proponha e resolva desafios de programação. Usage: {prefixo}desafio <listar|desafiar|enviar|rank>",
     status: status
 };

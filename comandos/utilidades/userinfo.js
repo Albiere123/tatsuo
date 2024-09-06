@@ -88,6 +88,6 @@ exports.run = async (client, message, args) => {
 exports.help = {
     name: "userinfo",
     aliases: ["user", "uinfo"],
-    description: "Exibe informações detalhadas sobre um usuário.",
+    description: "Exibe informações detalhadas sobre um usuário. Usage: {prefixo}userinfo [user]",
     status: false
 };

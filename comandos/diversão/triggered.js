@@ -24,10 +24,8 @@ exports.run = async (client, message, args) => {
     try {
         const avatar = await Canvas.loadImage(user.displayAvatarURL({ extension: 'png', size: 256 }));
 
-        
-        const gifPath = path.join(__dirname, 'triggered.gif');
+        const gifPath = path.join(__dirname, '../../data/triggered.gif');
 
-        
         const encoder = new GIFEncoder(256, 256);
         encoder.createReadStream().pipe(fs.createWriteStream(gifPath));
         encoder.start();
@@ -42,33 +40,36 @@ exports.run = async (client, message, args) => {
             const xOffset = Math.floor(Math.random() * 10) - 5;
             const yOffset = Math.floor(Math.random() * 10) - 5;
 
-           
+            
             ctx.drawImage(avatar, xOffset, yOffset, 256, 256);
-
             
-            ctx.globalAlpha = 0.3; 
-            ctx.fillStyle = 'yellow'; 
-            ctx.fillRect(0, 0, canvas.width, canvas.height); 
-            ctx.globalAlpha = 1.0; 
-
-           
+            
             ctx.fillStyle = 'red';
-            ctx.font = 'bold 28px "Arial"'; 
-            ctx.fillText('TRIGGERED', 10, 230);
 
             
+            ctx.fillRect(xOffset, xOffset+180, 256, 75); 
+            
+            ctx.globalAlpha = 0.4; 
+            ctx.fillStyle = 'black'; 
+            ctx.fillRect(xOffset, yOffset, 256, 256);
+            ctx.globalAlpha = 1.0;
+            
+
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 28px "Arial"'; 
+            ctx.fillText('TRIGGERED', xOffset+10, yOffset+230);
+
+
             encoder.addFrame(ctx);
         }
 
         encoder.finish();
 
-        
         setTimeout(async () => {
-            
-            const attachment = new AttachmentBuilder("../../triggered.gif", { name: 'triggered.gif' });
-            message.reply({ files: [attachment] });
+            const attachment = new AttachmentBuilder("./data/triggered.gif", { name: 'triggered.gif' });
+            await message.reply({ files: [attachment] });
 
-            
+            // Remove o arquivo GIF gerado
             fs.unlinkSync(gifPath);
             
         }, 2000);
@@ -81,6 +82,6 @@ exports.run = async (client, message, args) => {
 exports.help = {
     name: 'triggered',
     aliases: [],
-    description: "Aplica o efeito 'triggered' na imagem do avatar do usuário mencionado ou do autor da mensagem, gerando um GIF com o efeito de tremor.",
+    description: "Aplica o efeito 'triggered' na imagem do avatar, gerando um GIF com o efeito de tremor. Usage: {prefixo}triggered [user]",
     status: false
 };

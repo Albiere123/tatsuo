@@ -150,6 +150,6 @@ exports.run = async (client, message, args) => {
 exports.help = {
     name: "serverinfo",
     aliases: ["infoserver", "si"],
-    description: "Mostra informações sobre o servidor, com sistema de páginas.",
+    description: "Mostra informações sobre o servidor, com sistema de páginas. Usage: {prefixo}serverinfo",
     status: false
 };

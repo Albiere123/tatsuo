@@ -10,6 +10,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@vitalets/google-translate-api": "^9.2.0",
     "axios": "^1.7.2",
     "better-sqlite3": "^11.1.2",
     "canvas": "^2.11.2",

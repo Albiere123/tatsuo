@@ -77,9 +77,9 @@ ${allReminders.join('\n\n')}`)
 
     function formatTimeString(timeString) {
         return timeString
-            .replace(/(\d+)h/g, (match, p1) => `${p1} hora ${p1 > 1 ? 's' : ''}`)
-            .replace(/(\d+)m/g, (match, p1) => `${p1} minuto ${p1 > 1 ? 's' : ''}`)
-            .replace(/(\d+)s/g, (match, p1) => `${p1} segundo ${p1 > 1 ? 's' : ''}`)
+            .replace(/(\d+)h/g, (match, p1) => `${p1} hora${p1 > 1 ? 's ' : ''}`)
+            .replace(/(\d+)m/g, (match, p1) => `${p1} minuto${p1 > 1 ? 's ' : ''}`)
+            .replace(/(\d+)s/g, (match, p1) => `${p1} segundo${p1 > 1 ? 's ' : ''}`)
             .replace(/(\d+h)?(\d+m)?(\d+s)?/, (match, h, m, s) => 
                 `${h ? h.replace(/h/, 'hora ') : ''} ${m ? m.replace(/m/, 'minuto ') : ''} ${s ? s.replace(/s/, 'segundo ') : ''}`
             );
