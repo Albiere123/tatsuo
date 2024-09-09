@@ -121,9 +121,10 @@ async function getRequiredPermissions(command, client, message, args) {
     if(/\.mute/.test(commandCode)) {
         permissions.add(PermissionFlagsBits.MuteMembers)
     }
-    if (/\.manageChannels/.test(commandCode)) {
-        permissions.add(PermissionFlagsBits.ManageChannels);
+    if (/\.manageChannels\(/.test(commandCode) || /PermissionsBitField\.Flags\.ManageChannels/.test(commandCode)) {
+        permissions.add(PermissionsBitField.Flags.ManageChannels);
     }
+    
     
 
     

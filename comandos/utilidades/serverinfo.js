@@ -24,7 +24,7 @@ exports.run = async (client, message, args) => {
         const roles = message.guild.roles.cache.filter(role => role.name != "@everyone");
         const rolesList = roles.map(role => role.toString());
         const roleChunks = [];
-        const chunkSize = 25; // Limite para dividir a lista de cargos
+        const chunkSize = 25; 
 
         for (let i = 0; i < rolesList.length; i += chunkSize) {
             roleChunks.push(truncateText(rolesList.slice(i, i + chunkSize).join(', '), 1024));

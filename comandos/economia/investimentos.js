@@ -157,5 +157,5 @@ function calcularFlutuacao(tipo) {
         'imóveis': Math.random() * 0.1 - 0.05, 
         'startups': Math.random() * 0.4 - 0.2 
     };
-    return flutuacoes[tipo] || 0;
+    return Number(flutuacoes[tipo].toFixed(2)) || 0;
 }

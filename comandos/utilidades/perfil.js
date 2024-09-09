@@ -4,6 +4,31 @@ const Canvas = require('canvas');
 const db = new QuickDB();
 const api = require('yuuta-functions');
 
+
+const isValidPNGUrl = async (url) => {
+    try {
+        
+        const response = await axios.get(url, { responseType: 'arraybuffer' });
+        const contentType = response.headers['content-type'];
+
+        
+        if (contentType !== 'image/png' && contentType !== 'image/jpeg') {
+            return false;
+        }
+
+        
+        const imageBuffer = Buffer.from(response.data);
+        const image = sharp(imageBuffer);
+
+        
+        await image.metadata();
+
+        return true;
+    } catch (error) {
+        return false;
+    }
+};
+
 const formatDate = (date) => {
     const options = { day: '2-digit', month: 'long', year: 'numeric' };
     return new Intl.DateTimeFormat('pt-BR', options).format(date);
@@ -49,7 +74,7 @@ exports.run = async (client, message, args) => {
     if (!mentionedUser) mentionedUser = message.author;
 
     const backgroundUrl = await db.get(`background_${mentionedUser.id}`) || client.user.displayAvatarURL({ size: 2048, extension: 'png' });
-
+    if(!isValidPNGUrl(backgroundUrl)) backgroundUrl == client.user.displayAvatarURL({size: 2048, extension: "png"})
     const canvas = Canvas.createCanvas(500, 500);
     const ctx = canvas.getContext('2d');
 
