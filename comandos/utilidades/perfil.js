@@ -117,10 +117,11 @@ exports.run = async (client, message, args) => {
             }
         }
     }
-
+    let t = await user?.trabalho
+    if(t == "Engenheiro de Software") t = "E. Software"
     const userInfo = {
         'Usuário': mentionedUser.username,
-        'Trabalho': user?.trabalho || 'Não definido',
+        'Trabalho': t || 'Não definido',
         'Dinheiro': api.ab(Number(await user?.money.toFixed(0))) || 0,
         'Data de Criação': formatDate(mentionedUser.createdAt),
         'Descrição': sbText.replaceAll("{bot}", client.user.username),

@@ -95,9 +95,9 @@ exports.run = async(client, message, args) => {
     setTimeout(() => { currentPlayer = null; }, 1000); 
   });
 
-  collector.on('end', () => {
+  collector.on('end', async () => {
     if (renderGame().includes('\\_') && attempts < maxAttempts) {
-      message.channel.send(`Tempo esgotado! A palavra era **${word}**.`);
+     (await client.channels.cache.get(channelId))?.send(`Tempo esgotado! A palavra era **${word}**.`);
     }
 
     delete activeGames[channelId];

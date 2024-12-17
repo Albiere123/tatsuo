@@ -240,6 +240,7 @@ function gerarEmbed(titulo, descricao, thumbnail, footer, imagem, cor) {
     return embed;
 }
 
+
 client.on("messageCreate", async message => {
     
     if (message.author.bot || message.channel.type == Discord.ChannelType.DM) return; 
@@ -284,10 +285,10 @@ client.on("messageCreate", async message => {
             
 
             if (missingPermissions.length > 0) {
-                return message.reply({
+                if(comando.help.name != "dashboard") return message.reply({
                     content: `Estou faltando as seguintes permissões para executar este comando: ${missingPermissions.map( perm => {
                         const permissionName = Object.keys(PermissionFlagsBits).find(key => PermissionFlagsBits[key] === perm);
-                        return permissionName
+                     return permissionName
                 
                 }).join(", ")}`
                 });
@@ -542,6 +543,31 @@ client.on('messageCreate', async (msg) => {
         messageCache.delete(msg.author.id);
     }
 });
+
+
+
+
+
+
+
+
+
+client.on("guildMemberAdd", async(member) => {
+    if(member.guild.id !== "950918670786396241") return;
+    if(member.user.bot) return;
+    let embed = new Discord.EmbedBuilder()
+    .setDescription(`# Bem Vindo!
+ㅤ
+Seja bem vindo ao servidor ${member.user.username}! Se atente as seguintes coisas:
+- Leia as regras (<#canal>)
+- Se houver algum erro no bot, contate nosso suporte
+`)
+    .setThumbnail(member.avatarURL({size: 4096, extension: "png"}))
+    .setColor(client.cor)
+
+    client.channels.cache.get("950919140745547786").send({embeds: [embed]})
+})
+
 
 
 

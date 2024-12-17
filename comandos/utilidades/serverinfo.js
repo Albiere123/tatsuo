@@ -12,6 +12,8 @@ function truncateText(text, maxLength) {
 
 exports.run = async (client, message, args) => {
     try {
+        const guildConfig = await db.get(`${message.guild.id}.config`) || {};
+    const antiRaidStatus = await db.get(`antiraid_${message.guild.id}`) || "Desativado";
         const status = (await db.get(`${this.help.name}_privado`)) ? (await db.get(`${this.help.name}_privado`)) : false;
         if (message.author.id !== client.dev.id && status == false) {
             return message.reply({content: "Este comando está em manutenção!"});
@@ -38,7 +40,19 @@ exports.run = async (client, message, args) => {
         const textChannels = message.guild.channels.cache.filter(channel => channel.type === Discord.ChannelType.GuildText).size;
         const channels = textChannels + voiceChannels;
         const membersWithHighestRole = message.guild.roles.highest.members.map(member => member.user.tag).join('\n');
+        const paginaFinal = new Discord.EmbedBuilder().setTitle("⚒️ Recursos do servidor").setColor(client.cor).setFooter({ text: `Página ${roleChunks.length + 3} de ${roleChunks.length + 3}` })
 
+        const configFields = Object.entries(guildConfig).map(([key, value], index) => ({
+            name: `🔹 ${key.charAt(0).toUpperCase() + key.slice(1)}`,
+            value: `${value}`,
+            inline: index <= 1 ? false : true,
+        }));
+        
+        paginaFinal.addFields(
+            { name: "⚙️ Configurações Gerais", value: configFields.length ? "\u200B" : "Nenhuma configuração encontrada.", inline:true },
+            ...configFields,
+            { name: "🛡️ Anti-Raid", value: `${antiRaidStatus}`, inline: false }
+        );
         const pages = [
             new Discord.EmbedBuilder()
                 .setTitle(`${message.guild.name} - Informações Gerais`)
@@ -57,7 +71,7 @@ exports.run = async (client, message, args) => {
                 )
                 .setColor(client.cor)
                 .setThumbnail(message.guild.iconURL())
-                .setFooter({ text: `Página 1 de ${2+roleChunks.length}` }),
+                .setFooter({ text: `Página 1 de ${3+roleChunks.length}` }),
 
             new Discord.EmbedBuilder()
                 .setTitle(`${message.guild.name} - Lista de Cargos`)
@@ -69,7 +83,7 @@ exports.run = async (client, message, args) => {
                 )
                 .setThumbnail(message.guild.iconURL())
                 .setColor(client.cor)
-                .setFooter({ text: `Página 2 de ${2+roleChunks.length}` }),
+                .setFooter({ text: `Página 2 de ${3+roleChunks.length}` }),
 
             ...roleChunks.slice(1).map((chunk, index) => 
                 new Discord.EmbedBuilder()
@@ -79,7 +93,7 @@ exports.run = async (client, message, args) => {
                     )
                     .setThumbnail(message.guild.iconURL())
                     .setColor(client.cor)
-                    .setFooter({ text: `Página ${index + 3} de ${roleChunks.length + 2}` })
+                    .setFooter({ text: `Página ${index + 3} de ${roleChunks.length + 3}` })
             ),
 
             new Discord.EmbedBuilder()
@@ -87,7 +101,8 @@ exports.run = async (client, message, args) => {
                 .setDescription(owner ? `**Nome:** ${owner.user.tag}\n**ID:** ${owner.id}\n**Conta criada em:** ${ownerCreationDate}\n**Maior cargo:** <@&${ownerHighestRole.id}>` : 'Informações do dono não disponíveis.')
                 .setColor(client.cor)
                 .setThumbnail(owner ? owner.user.avatarURL() : message.guild.iconURL())
-                .setFooter({ text: `Página ${roleChunks.length + 2} de ${roleChunks.length + 2}` })
+                .setFooter({ text: `Página ${roleChunks.length + 2} de ${roleChunks.length + 3}` }),
+            paginaFinal
         ];
 
         let currentPage = 0;
