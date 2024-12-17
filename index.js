@@ -21,4 +21,5 @@ client.on("messageCreate", async (message) => {
     if(message.member.bot) return;
 })
 
-client.login("MTI5NzM1NzY4MDA4MzQ2ODM1OQ.GbyhPn.i08lEUbTzWsrW-wS5mkEyBlhaeS9rVSfVJ1-VU")
+
+client.login(process.env.TOKEN)
