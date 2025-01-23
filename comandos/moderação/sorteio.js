@@ -1,6 +1,5 @@
 const Discord = require('discord.js');
-const CustomDB = require('../../database');
-const db = new CustomDB();
+const db = (new (require("../../database.js"))("sorteio_privado"))
 const { QuickDB } = require("quick.db");
 const qdb = new QuickDB();
 const ms = require('ms');

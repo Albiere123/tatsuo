@@ -1,5 +1,6 @@
 const translate = require('@vitalets/google-translate-api');
-
+const {QuickDB} = require("quick.db")
+const db = new QuickDB()
 async function translateText(text, targetLang) {
     try {
         if (!text || !targetLang) {
@@ -81,7 +82,29 @@ const getAPI = async(text, tipo, Aleatório) => {
 catch(e) {
     console.log(e)
 }
+
+
 }
+
+
+const tradutor = async (language, key, placeholders = {}) => {
+    
+    const translation = require(`./linguagens/${language}.json`)[key]
+
+    // Substituir os placeholders (se houver)
+    return Object.keys(placeholders).reduce((text, placeholder) => {
+        return text.replace(`{${placeholder}}`, placeholders[placeholder]);
+    }, translation);
+}
+
+async function getServerLanguage(guildId) {
+    return (await db.get(`language_${guildId}`)) || 'en'; // Padrão: inglês
+}
+
+async function setServerLanguage(guildId, language) {
+    await db.set(`language_${guildId}`, language);
+        }
+
 module.exports = {
-    translateText, getAPI, translateEmbed
+    translateText, getAPI, translateEmbed, tradutor, getServerLanguage, setServerLanguage
 }

@@ -2,7 +2,8 @@ const { AttachmentBuilder, EmbedBuilder } = require('discord.js');
 const { createCanvas, loadImage } = require('canvas');
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const gameStates = {};
-
+const {QuickDB} = require("quick.db")
+const db = new QuickDB()
 async function startGame(message, client) {
     const channelId = message.channel.id;
 
@@ -121,6 +122,11 @@ async function startGame(message, client) {
 }
 
 exports.run = async (client, message, args) => {
+    const functions = require("../../functions.js")
+    const status = (await db.get(`${this.help.name}_privado`)) || false;
+    if (message.author.id !== client.dev.id && status === false) {
+        return message.reply({ content: functions.tradutor(functions.getServerLanguage(message.guild.id), "manutenção")});
+    }
     await startGame(message, client);
 }
 

@@ -13,9 +13,11 @@ const gameTime = 240000;
 let activeGames = {};
 
 exports.run = async(client, message, args) => {
-  const status = (await db.get(`${this.help.name}_privado`)) ? (await db.get(`${this.help.name}_privado`)) : false;
-
-  if(message.author.id !== client.dev.id && status == false) return message.reply({content: "Este comando está em manutenção!"})
+  const functions = require("../../functions.js")
+    const status = (await db.get(`${this.help.name}_privado`)) || false;
+    if (message.author.id !== client.dev.id && status === false) {
+        return message.reply({ content: functions.tradutor(functions.getServerLanguage(message.guild.id), "manutenção")});
+    }
   const channelId = message.channel.id;
   let erro = new Discord.EmbedBuilder()
   if (activeGames[channelId]) {

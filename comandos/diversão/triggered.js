@@ -7,11 +7,11 @@ const path = require('path');
 const db = new QuickDB();
 
 exports.run = async (client, message, args) => {
-    const status = (await db.get(`${this.help.name}_privado`)) ? (await db.get(`${this.help.name}_privado`)) : false;
+    const functions = require("../../functions.js")
+    const status = (await db.get(`${this.help.name}_privado`)) || false;
     if (message.author.id !== client.dev.id && status === false) {
-        return message.reply({ content: "Este comando está em manutenção!" });
+        return message.reply({ content: functions.tradutor(functions.getServerLanguage(message.guild.id), "manutenção")});
     }
-
     let user = message.mentions.users.first() || client.users.cache.get(args[0]);
 
     if (!user && args.length > 0) {

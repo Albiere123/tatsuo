@@ -16,11 +16,11 @@ const locations = ['Biblioteca', 'Sala-de-Estar', 'Cozinha'];
 const weapons = ['Faca', 'Pistola', 'Corda'];
 
 exports.run = async(client, message, args) => {
-    const status = (await db.get(`${this.help.name}_privado`)) ? (await db.get(`${this.help.name}_privado`)) : false;
-
-    if(message.author.id !== client.dev.id && status == false) 
-        return message.reply({content: "Este comando está em manutenção!"});
-
+    const functions = require("../../functions.js")
+    const status = (await db.get(`${this.help.name}_privado`)) || false;
+    if (message.author.id !== client.dev.id && status === false) {
+        return message.reply({ content: functions.tradutor(functions.getServerLanguage(message.guild.id), "manutenção")});
+    }
     if (!args[0]) {
         if (gameState.isRunning) {
             return message.reply('Já há um jogo em andamento!');
