@@ -16,11 +16,11 @@ function shuffleArray(array) {
 
 
 exports.run = async (client, message, args) => {
-    const status = (await db.get(`${this.help.name}_privado`)) ? (await db.get(`${this.help.name}_privado`)) : false;
-
-    if (message.author.id !== client.dev.id && status === false) 
-        return message.reply({ content: "Este comando está em manutenção!" });
-
+    const functions = require("../../functions.js")
+    const status = (await db.get(`${this.help.name}_privado`)) || false;
+    if (message.author.id !== client.dev.id && status === false) {
+        return message.reply({ content: functions.tradutor(functions.getServerLanguage(message.guild.id), "manutenção")});
+    }
     const command = args[0];
     const channelId = message.channel.id;
 
@@ -102,6 +102,6 @@ exports.run = async (client, message, args) => {
 exports.help = {
     name: "escape",
     aliases: ["puzzles"],
-    description: "Jogo de escape com enigmas e desafios. Usage: {prefixo}escape <maxset -> configurar limite || start -> começar || solve -> responder || end -> encerrar>",
+    description: "Jogo de escape com enigmas e desafios. Usage: {prefixo}escape <maxset -> configurar limite || start -> começar || responder -> resposta || end -> encerrar>",
     status: false
 }

@@ -7,8 +7,7 @@ const fs = require("fs");
 const { QuickDB } = require("quick.db");
 const db = new QuickDB();
 const { PermissionsBitField, ChannelType } = require('discord.js'); 
-const CustomDB = require('./database');
-const botdb = new CustomDB();
+const botdb = (new (require("./db.js"))("sorteio_privado"))
 const client = new Discord.Client({
     intents: [
         GatewayIntentBits.Guilds,
@@ -545,29 +544,131 @@ client.on('messageCreate', async (msg) => {
 });
 
 
+client.on("guildMemberAdd", async member => {
+    await require("./eventos/onMembers.js").run(member, client)
 
-
-
-
-
-
-
-client.on("guildMemberAdd", async(member) => {
-    if(member.guild.id !== "950918670786396241") return;
-    if(member.user.bot) return;
-    let embed = new Discord.EmbedBuilder()
-    .setDescription(`# Bem Vindo!
-ㅤ
-Seja bem vindo ao servidor ${member.user.username}! Se atente as seguintes coisas:
-- Leia as regras (<#canal>)
-- Se houver algum erro no bot, contate nosso suporte
-`)
-    .setThumbnail(member.avatarURL({size: 4096, extension: "png"}))
-    .setColor(client.cor)
-
-    client.channels.cache.get("950919140745547786").send({embeds: [embed]})
 })
 
+const db2 = new (require("./database.js"))("wiki")
+client.on("interactionCreate", async (interaction) => {
+    if (!interaction.isButton()) return;
+
+    const customId = interaction.customId;
+
+    
+    if (customId.startsWith("wiki_cat_")) {
+        const categoria = customId.replace("wiki_cat_", "");
+        const data = (await db2.get("wiki")) || {};
+
+        if (!data[categoria]) {
+            const embed = new Discord.EmbedBuilder()
+                .setColor("Red")
+                .setDescription(`A categoria **${categoria}** não possui comandos.`);
+            return interaction.reply({ embeds: [embed], ephemeral: true });
+        }
+
+        
+        const comandos = Object.keys(data[categoria]);
+        const totalPages = Math.ceil(comandos.length / 15);
+        let currentPage = 1;
+
+        const generateEmbed = (page) => {
+            const start = (page - 1) * 15;
+            const end = start + 15;
+            const pageComandos = comandos.slice(start, end);
+
+            return new Discord.EmbedBuilder()
+                .setColor(client.cor)
+                .setTitle(`**Categoria ${categoria}**`)
+                .setDescription(pageComandos.map((cmd) => `• ${cmd}`).join("\n"))
+                .setFooter({ text: `Página ${page} de ${totalPages}` });
+        };
+
+        const embed = generateEmbed(currentPage);
+
+        const backButton = new Discord.ButtonBuilder()
+            .setLabel("Voltar")
+            .setStyle(Discord.ButtonStyle.Secondary)
+            .setCustomId("wiki_back");
+
+        const prevButton = new Discord.ButtonBuilder()
+            .setLabel("Anterior")
+            .setStyle(Discord.ButtonStyle.Primary)
+            .setCustomId("wiki_prev")
+            .setDisabled(currentPage === 1);
+
+        const nextButton = new Discord.ButtonBuilder()
+            .setLabel("Próximo")
+            .setStyle(Discord.ButtonStyle.Primary)
+            .setCustomId("wiki_next")
+            .setDisabled(currentPage === totalPages);
+
+        const row = new Discord.ActionRowBuilder().addComponents(backButton, prevButton, nextButton);
+
+        await interaction.update({ embeds: [embed], components: [row], ephemeral: true });
+
+   
+        const collector = interaction.channel.createMessageComponentCollector({
+            filter: (i) => i.user.id === interaction.user.id,
+            time: 60000,
+        });
+
+        collector.on("collect", async (i) => {
+            if (i.customId === "wiki_back") {
+                collector.stop();
+                const data = (await db2.get("wiki")) || {};
+                        if (Object.keys(data).length === 0) {
+                            client.setError(embed, "A wiki está vazia no momento.");
+                            return i.reply({ embeds: [embed] });
+                        }
+                
+                        const categorias = Object.keys(data);
+                        const buttons = categorias.map((cat) =>
+                            new Discord.ButtonBuilder()
+                                .setLabel(cat)
+                                .setStyle(Discord.ButtonStyle.Primary)
+                                .setCustomId(`wiki_cat_${cat}`)
+                        );
+                
+                        const row = new Discord.ActionRowBuilder().addComponents(buttons);
+                
+                        embed
+                            .setColor(client.cor)
+                            .setTitle("Lista de Categorias da Wiki")
+                            .setDescription("Clique em uma categoria abaixo para ver os comandos disponíveis.")
+                            .setFooter({ text: "Selecione uma categoria para continuar." });
+                
+                        return i.update({ embeds: [embed], components: [row] });
+            }
+
+            if (i.customId === "wiki_prev" && currentPage > 1) {
+                currentPage--;
+            } else if (i.customId === "wiki_next" && currentPage < totalPages) {
+                currentPage++;
+            }
+
+            const updatedEmbed = generateEmbed(currentPage);
+            const updatedRow = new Discord.ActionRowBuilder()
+                .addComponents(
+                    backButton,
+                    prevButton.setDisabled(currentPage === 1),
+                    nextButton.setDisabled(currentPage === totalPages)
+                );
+
+            await i.update({ embeds: [updatedEmbed], components: [updatedRow] });
+        });
+
+        collector.on("end", () => {
+            const disabledRow = new Discord.ActionRowBuilder().addComponents(
+                backButton.setDisabled(true),
+                prevButton.setDisabled(true),
+                nextButton.setDisabled(true)
+            );
+
+            interaction.editReply({ components: [disabledRow] });
+        });
+    }
+});
 
 
 

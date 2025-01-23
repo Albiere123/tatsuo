@@ -63,7 +63,7 @@ exports.run = async(client, message, args) => {
 
 exports.help = {
     name: "setstatus",
-    aliases: ["ss"],
+    aliases: ["ss", "liberar"],
     description: "",
     status: false
 };
