@@ -14,8 +14,8 @@ exports.run = async (client, message, args) => {
     const embed = new Discord.EmbedBuilder().setColor(client.cor);
 
     if (!args[0] || (args[0].toLowerCase() !== "lista" && isNaN(args[0]))) {
-        client.setError(embed, "Você deve fornecer um valor válido para investir.");
-        client.setUsage(embed, `${client.prefix}investir <valor | lista> <tipo>`)
+        await client.setError(message, embed, "Você deve fornecer um valor válido para investir.");
+        await client.setUsage(message, embed, `${client.prefix}investir <valor | lista> <tipo>`)
         return message.reply({embeds: [embed]})
     }
 
@@ -38,21 +38,21 @@ exports.run = async (client, message, args) => {
 
     const valor = parseInt(args[0]);
     if (isNaN(valor) || valor <= 0) {
-        client.setError(embed, "Você deve fornecer um valor maior que zero para investir.");
-        client.setUsage(embed, `${client.prefix}investir <valor | lista> <tipo>`)
+        await client.setError(message, embed, "Você deve fornecer um valor maior que zero para investir.");
+        await client.setUsage(message, embed, `${client.prefix}investir <valor | lista> <tipo>`)
         return message.reply({embeds: [embed]})
     }
 
     const tipo = args[1] ? args[1].toLowerCase() : null;
     if (!tipo || !tiposValidos.includes(tipo)) {
-        client.setError(embed, "Você deve fornecer um tipo de investimento válido.");
-        client.setUsage(embed, `${client.prefix}investir <valor | lista> <tipo>`)
+        await client.setError(message, embed, "Você deve fornecer um tipo de investimento válido.");
+        await client.setUsage(message, embed, `${client.prefix}investir <valor | lista> <tipo>`)
         return message.reply({embeds: [embed]})
     }
 
     if (userData.money < valor) {
-        client.setError(embed, "Você não tem dinheiro suficiente para fazer esse investimento.");
-        client.setUsage(embed, `${client.prefix}investir <valor | lista> <tipo>`)
+        await client.setError(message, embed, "Você não tem dinheiro suficiente para fazer esse investimento.");
+        await client.setUsage(message, embed, `${client.prefix}investir <valor | lista> <tipo>`)
         return message.reply({embeds: [embed]})
     }
 

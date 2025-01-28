@@ -8,8 +8,8 @@ exports.run = async(client, message, args) => {
     let embed = new Discord.EmbedBuilder().setColor(client.cor);
 
     if (!args[0]) {
-        client.setError(embed, "Você deve especificar o nome do comando ou 'all' para alterar o status de todos os comandos.");
-        client.setUsage(embed, `${client.prefix}setstatus <comando|all> [on/off]`);
+        await client.setError(message, embed, "Você deve especificar o nome do comando ou 'all' para alterar o status de todos os comandos.");
+        await client.setUsage(message, embed, `${client.prefix}setstatus <comando|all> [on/off]`);
         return message.reply({embeds: [embed]});
     }
 
@@ -29,8 +29,8 @@ exports.run = async(client, message, args) => {
             embed.setTitle("Todos os Comandos Em Manutenção")
                 .setDescription("Todos os comandos foram colocados em manutenção!");
         } else {
-            client.setError(embed, "Você deve especificar se deseja ligar ou desligar todos os comandos.");
-            client.setUsage(embed, `${client.prefix}setstatus all [on/off]`);
+            await client.setError(message, embed, "Você deve especificar se deseja ligar ou desligar todos os comandos.");
+            await client.setUsage(message, embed, `${client.prefix}setstatus all [on/off]`);
             return message.reply({embeds: [embed]});
         }
     } else {
@@ -38,8 +38,8 @@ exports.run = async(client, message, args) => {
         const command = client.comandos.get(commandName) || client.comandos.get(client.aliases.get(commandName));
 
         if (!command) {
-            client.setError(embed, "Comando não encontrado.");
-            client.setUsage(embed, `${client.prefix}setstatus <comando|all> [on/off]`);
+            await client.setError(message, embed, "Comando não encontrado.");
+            await client.setUsage(message, embed, `${client.prefix}setstatus <comando|all> [on/off]`);
             return message.reply({embeds: [embed]});
         }
 
@@ -52,8 +52,8 @@ exports.run = async(client, message, args) => {
             embed.setTitle("Comando Em Manutenção")
                 .setDescription(`O comando \`${command.help.name}\` foi colocado em manutenção!`);
         } else {
-            client.setError(embed, "Você deve especificar se deseja ligar ou desligar o comando.");
-            client.setUsage(embed, `${client.prefix}setstatus <comando|all> [on/off]`);
+            await client.setError(message, embed, "Você deve especificar se deseja ligar ou desligar o comando.");
+            await client.setUsage(message, embed, `${client.prefix}setstatus <comando|all> [on/off]`);
             return message.reply({embeds: [embed]});
         }
     }

@@ -41,7 +41,7 @@ exports.run = async(client, message, args) => {
         if (hoursPassed < 4 && message.author.id != client.dev.id) {
             const remainingTime = Math.ceil(4 - hoursPassed);
             let embed = new Discord.EmbedBuilder()
-            client.setError(embed, `Você já reivindicou sua recompensa. Tente novamente em ${remainingTime} horas.`)
+            await client.setError(message, embed, `Você já reivindicou sua recompensa. Tente novamente em ${remainingTime} horas.`)
             return message.reply({embeds: [embed]})
         }
     }
@@ -49,7 +49,7 @@ exports.run = async(client, message, args) => {
     let user = await getWork(message.author, message, client)
     let erro = new Discord.EmbedBuilder()
     if(!user) {
-        client.setError(erro, `Parace que você não possue um emprego...`)
+        await client.setError(message, erro, `Parace que você não possue um emprego...`)
         return message.reply({embeds: [erro]})}
     let embed = new Discord.EmbedBuilder()
     .setDescription(`# <:carteiradeidentidade2:1275650276954603631> Trabalho

@@ -25,8 +25,8 @@ exports.run = async(client, message, args) => {
             } else if (!isNaN(args[0])) {
                 targetUserId = args[0];
             } else {
-                client.setError(embed, "Usuário não encontrado. Certifique-se de mencionar um usuário, usar um ID válido ou um nome de usuário correto.");
-                client.setUsage(embed, `${client.prefix}transactions [@usuário|id|nome] [página]`);
+                await client.setError(message, embed, "Usuário não encontrado. Certifique-se de mencionar um usuário, usar um ID válido ou um nome de usuário correto.");
+                await await client.setUsage(message, embed, `${client.prefix}transactions [@usuário|id|nome] [página]`);
                 return message.reply({embeds: [embed]});
             }
         }

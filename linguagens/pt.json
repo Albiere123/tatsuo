@@ -1,4 +1,101 @@
 {
     "manutenção": "Este comando está em manutenção!",
+<<<<<<< HEAD
+    "langSet": "Linguagem setada com sucesso!",
+    "confess": {
+        "canal_invalido": "Canal de confissões não encontrado! Peço que avise a um Staff do servidor com a permissão de `Gerenciar Canais` para configurá-lo no comando {prefixo}dashboard confess <#novo canal>`",
+        "usage": "{prefixo}confess <mensagem>",
+        "no_args": "Parece que esqueceu de colocar a mensagem para a confissão...",
+        "title": "Confissão",
+        "footer": "Enviada anonimamente",
+        "finnaly": "Sua confissão foi enviada anonimamente."
+    },
+    "desafio": {
+        "no_args": "Por favor, especifique uma ação (listar, desafiar, enviar, rank).",
+        "usage": "{prefixo}desafio <listar|desafiar|enviar|rank>",
+        "usage[1]": "{prefixo} desafio desafiar titulo",
+        "usage[2]": "{prefixo} desafio enviar numeroDesafio CodigoEmLink",
+        "title": "Desafios Disponíveis",
+        "vazio": "Nenhum desafio disponível no momento.",
+        "no_args[1]": "Por favor, forneça um título e uma descrição para o desafio.",
+        "criado": "Novo Desafio Criado",
+        "criado_desc": "Desafio {title} criado por {user}",
+        "no_args[2]": "Por favor, forneça o número de um desafio válido.",
+        "link_invalido": "Por favor, forneça um link válido para a solução.",
+        "s_env": "Solução Enviada",
+        "s_desc": "Solução para o desafio \"{desafio}\" enviada por {user}",
+        "ranking_t": "Ranking de Programadores",
+        "ranking_d": "Nenhuma pontuação registrada até o momento."
+    },
+    "erros": {
+        "mensagem": "<:megafone:1275650267592790016> Mensagem de Erro <:seta2:966325688745484338>",
+        "usage": "<:batepapo:1275650282616918068> Expressão Correta <:seta2:966325688745484338>",
+        "title": "# <:bloquear:1275650261574094912> Ocorreu um erro!"
+    },
+    "blackjack": {
+      "aposta_invalida": "Você precisa apostar um valor válido maior que zero.",
+      "saldo_insuficiente": "Você não tem dinheiro suficiente para essa aposta.",
+      "vitoria": "Você venceu! 🎉",
+      "derrota": "Você perdeu! 😢",
+      "empate": "Empate! Foi por pouco! 🤝",
+      "mao_jogador": "Sua mão:",
+      "mao_dealer": "Mão do dealer:",
+      "perguntar": "Deseja `comprar` outra carta ou `parar`?",
+      "blackjack_natural": "Blackjack natural! Você venceu com estilo! 🃏🎉",
+      "dealer_blackjack": "O dealer conseguiu um Blackjack! 😓",
+      "estouro": "Você estourou! 😬",
+      "dealer_estouro": "O dealer estourou! Você venceu! 🎉",
+      "uso": "Use `{prefixo}blackjack <quantia>` para jogar.",
+      "titulo": "🎲 Blackjack 🎲",
+      "fim": "Jogo encerrado!",
+      "aposta": "Aposta:",
+      "timeout": "Tempo esgotado! Você demorou muito para responder. ⏳"
+    },
+    "detetive": {
+        "jogo_andamento": "Já há um jogo em andamento!",
+        "inicio": "O jogo de detetive começou! Façam suas perguntas ou tentem uma acusação com `{prefix}detetive acusar <suspeito> <local> <arma>`\nCaso não saiba as opções disponíveis, use `{prefix}detetive ajuda`.",
+        "erro_acusacao": "Você não utilizou o comando corretamente. Use: `{prefix}detetive acusar <suspeito> <local> <arma>`\nCaso não saiba as opções disponíveis, use `{prefix}detetive ajuda`.",
+        "errou": "Você errou! Tente novamente.",
+        "ganhou": "Parabéns! Você ganhou!!",
+        "encerrado": "O jogo foi encerrado por {user}.",
+        "ajuda": "# Detetive\n\n**Suspeitos:** {suspects}\n\n**Locais:** {locations}\n\n**Armas:** {weapons}",
+        "dica_suspeito": "Dica: O suspeito não é {notSuspect}.",
+        "dica_local": "Dica: O crime não aconteceu na {notLocation}.",
+        "dica_arma": "Dica: A arma não é {notWeapon}."
+    },
+    "escape": {
+        "invalido_limite": "Por favor, forneça um número válido para o limite de enigmas.",
+        "limite_definido": "O limite máximo de enigmas para este canal foi definido como {limite}.",
+        "jogo_andamento": "Já tem um jogo rodando neste canal!",
+        "poucos_enigmas": "O número máximo de enigmas para este canal é {limite}. Por favor, ajuste o número de enigmas.",
+        "inicio": "O jogo de escape começou! Aqui está o primeiro enigma: {enigma}",
+        "proximo_enigma": "Correto! Aqui está o próximo enigma: {enigma}",
+        "todos_resolvidos": "Parabéns! Você resolveu todos os enigmas e escapou!",
+        "resposta_errada": "Resposta incorreta. Tente novamente!",
+        "sem_jogo": "Nenhum jogo de escape está em andamento. Use `{prefix}escape start` para iniciar um novo jogo.",
+        "encerrado": "O jogo de escape foi encerrado.",
+        "nenhum_jogo": "Nenhum jogo de escape está em andamento.",
+        "comando_invalido": "Comando inválido. Use `{prefix}escape maxset <limite>`, `{prefix}escape start`, `{prefix}escape responder [resposta]` ou `{prefix}escape end`."
+    },
+    "hug": {
+        "erro_mention": "Por favor, peço que mencione um usuário!",
+        "erro_self_mention": "Poderia não mencionar a si mesmo?",
+        "hug_description": "{autor} deu um abraço em {mencionado}",
+        "hug_return_description": "{mencionado} retribuiu o abraço em {autor}"
+    },
+    "forca": {
+        "title": "Jogo da Forca",
+        "dica": "Dica Restante",
+        "tentativas": "Tentativas restantes",
+        "perdeu": "Você perdeu! A palavra era {palavra}.",
+        "ganhou": "Parabéns, {usuario}, você ganhou! A palavra era **{palavra}**.",
+        "aguarde": "Aguarde sua vez, {usuario}!",
+        "letra_ja_adivinhada": "Alguém já adivinhou essa letra, {usuario}! Tente outra.",
+        "tempo_esgotado": "Tempo esgotado! A palavra era **{palavra}**.",
+        "erro": "Parece que alguém já está jogando neste chat... Espere a partida acabar!",
+        "comando_invalido": "Comando inválido. Use {prefixo}forca para começar."
+    }
+=======
     "langSet": "Linguagem setada com sucesso!"
+>>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
 }

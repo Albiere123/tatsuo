@@ -11,8 +11,8 @@ exports.run = async (client, message, args) => {
 
     if (!args.length) {
         let embed = new Discord.EmbedBuilder();
-        client.setError(embed, "Você precisa fornecer o texto a ser revisado.");
-        client.setUsage(embed, `${client.prefix}revisar <texto>`);
+        await client.setError(message, embed, "Você precisa fornecer o texto a ser revisado.");
+        await client.setUsage(message, embed, `${client.prefix}revisar <texto>`);
         return message.reply({ embeds: [embed] });
     }
 
@@ -83,7 +83,7 @@ exports.run = async (client, message, args) => {
     } catch (error) {
         console.error('Erro ao revisar o texto:', error);
         let embed = new Discord.EmbedBuilder();
-        client.setError(embed, "Ocorreu um erro ao revisar o texto.");
+        await client.setError(message, embed, "Ocorreu um erro ao revisar o texto.");
         return message.reply({ embeds: [embed] });
     }
 };

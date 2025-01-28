@@ -28,7 +28,7 @@ exports.run = async (client, message, args) => {
         message.reply({ embeds: [embed] });
     } catch (error) {
         console.log(error.message)
-        client.setError(error, `Erro ao executar o comando ${this.help.name}`);
+        await client.setError(message, error, `Erro ao executar o comando ${this.help.name}`);
         message.reply({ content: "Ocorreu um erro ao tentar bloquear o canal. O erro foi registrado e será analisado." });
     }
 };

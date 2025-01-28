@@ -11,23 +11,23 @@ exports.run = async (client, message, args) => {
     let embed = new Discord.EmbedBuilder();
     
     if(!message.guild.members.cache.get(message.author.id).permissions.has(Discord.PermissionFlagsBits.CreateEvents)) {
-        client.setError(embed, `Você não possue a permissão \`CREATE EVENTS\``)
-        client.setUsage(embed, `${client.prefix}sorteio <tempo> <premio>`)
+        await client.setError(message, embed, `Você não possue a permissão \`CREATE EVENTS\``)
+        await client.setUsage(message, embed, `${client.prefix}sorteio <tempo> <premio>`)
         return message.reply({embeds: [embed]})
     }
     
 
     const canall = (await qdb.get(`dashboard.${message.guild.id}.canais`))?.sorteios;
     if (!canall || !canall.id) {
-        client.setError(embed, "Parece que o canal de sorteios ainda não foi definido... Peça para um staff com as permissões de GERENCIAR CANAIS defini-lo na dashboard!");
-        client.setUsage(embed, `${client.prefix}sorteio <tempo> <prêmio>`);
+        await client.setError(message, embed, "Parece que o canal de sorteios ainda não foi definido... Peça para um staff com as permissões de GERENCIAR CANAIS defini-lo na dashboard!");
+        await client.setUsage(message, embed, `${client.prefix}sorteio <tempo> <prêmio>`);
         return message.reply({ embeds: [embed] });
     }
 
     const canal = await client.channels.cache.get(canall.id);
     if (!canal) {
-        client.setError(embed, "O canal de sorteio configurado é inválido ou não existe.");
-        client.setUsage(embed, `${client.prefix}sorteio <tempo> <prêmio>`);
+        await client.setError(message, embed, "O canal de sorteio configurado é inválido ou não existe.");
+        await client.setUsage(message, embed, `${client.prefix}sorteio <tempo> <prêmio>`);
         return message.reply({ embeds: [embed] });
     }
 
@@ -59,22 +59,22 @@ exports.run = async (client, message, args) => {
 
     const tempo = args[0];
     if (!tempo) {
-        client.setError(embed, "Você precisa especificar um tempo para o sorteio.");
-        client.setUsage(embed, `${client.prefix}sorteio <tempo> <prêmio>`);
+        await client.setError(message, embed, "Você precisa especificar um tempo para o sorteio.");
+        await client.setUsage(message, embed, `${client.prefix}sorteio <tempo> <prêmio>`);
         return message.reply({ embeds: [embed] });
     }
 
     const duration = ms(tempo);
     if (!duration) {
-        client.setError(embed, "Formato de tempo inválido. Use algo como 1h1m1s.");
-        client.setUsage(embed, `${client.prefix}sorteio <tempo> <prêmio>`);
+        await client.setError(message, embed, "Formato de tempo inválido. Use algo como 1h1m1s.");
+        await client.setUsage(message, embed, `${client.prefix}sorteio <tempo> <prêmio>`);
         return message.reply({ embeds: [embed] });
     }
 
     const premio = args.slice(1).join(' ');
     if (!premio) {
-        client.setError(embed, "Você precisa especificar um prêmio para o sorteio.");
-        client.setUsage(embed, `${client.prefix}sorteio <tempo> <prêmio>`);
+        await client.setError(message, embed, "Você precisa especificar um prêmio para o sorteio.");
+        await client.setUsage(message, embed, `${client.prefix}sorteio <tempo> <prêmio>`);
         return message.reply({ embeds: [embed] });
     }
 

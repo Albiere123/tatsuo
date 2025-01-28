@@ -12,13 +12,13 @@ exports.run = async (client, message, args) => {
 
     
     if (!message.member.permissions.has(Discord.PermissionFlagsBits.BanMembers)) {
-        client.setError(error, `Parece que você não possui a permissão de \`Banir membros\``);
+        await client.setError(message, error, `Parece que você não possui a permissão de \`Banir membros\``);
         return message.reply({ embeds: [error] });
     }
 
     
     if (!message.guild.members.cache.get(client.user.id).permissions.has(Discord.PermissionFlagsBits.ManageMessages)) {
-        client.setError(error, `Estou sem um cargo com a permissão de \`Gerenciar Mensagens.\``);
+        await client.setError(message, error, `Estou sem um cargo com a permissão de \`Gerenciar Mensagens.\``);
         return message.reply({ embeds: [error] });
     }
 
@@ -32,8 +32,8 @@ exports.run = async (client, message, args) => {
     const allowedRuleTypes = ['palavra', 'link'];
 
     if (!subCommand) {
-        client.setError(erro, `Por favor, forneça um subcomando válido:`);
-        client.setUsage(erro, `${client.prefix}auto-mod <add | remove | list | clear>`);
+        await client.setError(message, erro, `Por favor, forneça um subcomando válido:`);
+        await await client.setUsage(message, erro, `${client.prefix}auto-mod <add | remove | list | clear>`);
         return message.reply({ embeds: [erro] });
     }
 
@@ -43,18 +43,18 @@ exports.run = async (client, message, args) => {
 
         
         if (!allowedRuleTypes.includes(ruleType)) {
-            client.setError(erro, `Tipo de regra inválido. Os tipos permitidos são: ${allowedRuleTypes.join(', ')}`);
+            await client.setError(message, erro, `Tipo de regra inválido. Os tipos permitidos são: ${allowedRuleTypes.join(', ')}`);
             return message.reply({ embeds: [erro] });
         }
 
         if (!ruleType || !ruleValue) {
-            client.setError(erro, `Comando utilizado de forma errada.`);
-            client.setUsage(erro, `${client.prefix}auto-mod add <${allowedRuleTypes.join(' | ')}> <valor>`);
+            await client.setError(message, erro, `Comando utilizado de forma errada.`);
+            await await client.setUsage(message, erro, `${client.prefix}auto-mod add <${allowedRuleTypes.join(' | ')}> <valor>`);
             return message.reply({ embeds: [erro] });
         }
         if(ruleType == "link" && !ruleValue === "true"  && !ruleValue == "false"){
-                client.setError(erro, `Comando utilizado de forma errada!`)
-                client.setUsage(erro, `${client.prefix}auto-mod add link <true ou false>`)
+                await client.setError(message, erro, `Comando utilizado de forma errada!`)
+                await await client.setUsage(message, erro, `${client.prefix}auto-mod add link <true ou false>`)
                 return message.reply({embeds: [erro]})
             }
 
@@ -73,14 +73,14 @@ Regra adicionada: \`${ruleType}\` -> \`${ruleValue}\`.`)
         const ruleIndex = parseInt(args[1]);
 
         if (isNaN(ruleIndex)) {
-            client.setError(erro, `Por favor, forneça um índice de regra válido para remover.`);
-            client.setUsage(erro, `${client.prefix}auto-mod remove <índice>`);
+            await client.setError(message, erro, `Por favor, forneça um índice de regra válido para remover.`);
+            await await client.setUsage(message, erro, `${client.prefix}auto-mod remove <índice>`);
             return message.reply({ embeds: [erro] });
         }
 
         const rules = await db.get(`automod_rules_${guildId}`);
         if (!rules || !rules[ruleIndex]) {
-            client.setError(erro, `Regra não encontrada.`);
+            await client.setError(message, erro, `Regra não encontrada.`);
             return message.reply({ embeds: [erro] });
         }
 
@@ -99,7 +99,7 @@ Regra de auto-moderação removida.`)
     } else if (subCommand === "list") {
         const rules = await db.get(`automod_rules_${guildId}`);
         if (!rules || rules.length === 0) {
-            client.setError(erro, `Nenhuma regra de auto-moderação foi configurada.`);
+            await client.setError(message, erro, `Nenhuma regra de auto-moderação foi configurada.`);
             return message.reply({ embeds: [erro] });
         }
 
@@ -149,8 +149,8 @@ Todas as regras de auto-moderação foram removidas.`)
             .setThumbnail(message.guild.iconURL({ size: 2048, extension: "png" }));
         message.reply({ embeds: [embed] });
     } else {
-        client.setError(erro, `Subcomando inválido. Use:`);
-        client.setUsage(erro, `${client.prefix}auto-mod <add | remove | list | clear>`);
+        await client.setError(message, erro, `Subcomando inválido. Use:`);
+        await await client.setUsage(message, erro, `${client.prefix}auto-mod <add | remove | list | clear>`);
         return message.reply({ embeds: [erro] });
     }
 };

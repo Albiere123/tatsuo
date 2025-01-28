@@ -1,4 +1,102 @@
 {
     "manutenção": "This command is under maintenance!",
+<<<<<<< HEAD
+    "langSet": "Language set successfully!",
+    "confess": {
+        "canal_invalido": "Confession channel not found! Please notify a server staff member with the `Manage Channels` permission to configure it using the command `{prefixo}dashboard confess <#new channel>`.",
+        "usage": "{prefixo}confess <message>",
+        "no_args": "It seems you forgot to include the message for the confession...",
+        "title": "Confession",
+        "footer": "Sent anonymously",
+        "finnaly": "Your confession has been sent anonymously."
+    },
+    "desafio": {
+        "no_args": "Please specify an action (list, challenge, send, rank).",
+        "usage": "{prefixo}challenge <list|challenge|send|rank>",
+        "usage[1]": "{prefixo} challenge challenge title",
+        "usage[2]": "{prefixo} challenge send challengeNumber CodeLink",
+        "title": "Available Challenges",
+        "vazio": "No challenges available at the moment.",
+        "no_args[1]": "Please provide a title and a description for the challenge.",
+        "criado": "New Challenge Created",
+        "criado_desc": "Challenge {title} created by {user}",
+        "no_args[2]": "Please provide a valid challenge number.",
+        "link_invalido": "Please provide a valid link for the solution.",
+        "s_env": "Solution Sent",
+        "s_desc": "Solution for the challenge \"{desafio}\" sent by {user}",
+        "ranking_t": "Programmers Ranking",
+        "ranking_d": "No scores recorded yet."
+    },  
+    "erros": {
+            "mensagem": "<:megafone:1275650267592790016> Error Message <:seta2:966325688745484338>",
+            "usage": "<:batepapo:1275650282616918068> Correct Usage <:seta2:966325688745484338>",
+            "title": "# <:bloquear:1275650261574094912> An error occurred!"
+        },
+    "blackjack": {
+      "aposta_invalida": "You need to bet a valid amount greater than zero.",
+      "saldo_insuficiente": "You don't have enough money for this bet.",
+      "vitoria": "You won! 🎉",
+      "derrota": "You lost! 😢",
+      "empate": "It's a tie! So close! 🤝",
+      "mao_jogador": "Your hand:",
+      "mao_dealer": "Dealer's hand:",
+      "perguntar": "Do you want to `hit` another card or `stand`?",
+      "blackjack_natural": "Natural Blackjack! You won in style! 🃏🎉",
+      "dealer_blackjack": "The dealer got a Blackjack! 😓",
+      "estouro": "You busted! 😬",
+      "dealer_estouro": "The dealer busted! You win! 🎉",
+      "uso": "Use `{prefixo}blackjack <amount>` to play.",
+      "titulo": "🎲 Blackjack 🎲",
+      "fim": "Jogo encerrado!",
+      "aposta": "Aposta:",
+      "timeout": "Time's up! You took too long to respond. ⏳"
+    },
+        "detetive": {
+            "jogo_andamento": "There is already a game in progress!",
+            "inicio": "The detective game has started! Ask your questions or make an accusation with `{prefix}detetive accuse <suspect> <location> <weapon>`\nIf you don't know the available options, use `{prefix}detetive help`.",
+            "erro_acusacao": "You didn't use the command correctly. Use: `{prefix}detetive accuse <suspect> <location> <weapon>`\nIf you don't know the available options, use `{prefix}detetive help`.",
+            "errou": "You got it wrong! Try again.",
+            "ganhou": "Congratulations! You won!!",
+            "encerrado": "The game was ended by {user}.",
+            "ajuda": "# Detective\n\n**Suspects:** {suspects}\n\n**Locations:** {locations}\n\n**Weapons:** {weapons}",
+            "dica_suspeito": "Hint: The suspect is not {notSuspect}.",
+            "dica_local": "Hint: The crime did not happen in {notLocation}.",
+            "dica_arma": "Hint: The weapon is not {notWeapon}."
+        },
+        "escape": {
+        "invalido_limite": "Please provide a valid number for the puzzle limit.",
+        "limite_definido": "The maximum puzzle limit for this channel has been set to {limite}.",
+        "jogo_andamento": "There is already a game running in this channel!",
+        "poucos_enigmas": "The maximum number of puzzles for this channel is {limite}. Please adjust the number of puzzles.",
+        "inicio": "The escape game has started! Here is the first puzzle: {enigma}",
+        "proximo_enigma": "Correct! Here is the next puzzle: {enigma}",
+        "todos_resolvidos": "Congratulations! You solved all the puzzles and escaped!",
+        "resposta_errada": "Incorrect answer. Try again!",
+        "sem_jogo": "No escape game is currently running. Use `{prefix}escape start` to start a new game.",
+        "encerrado": "The escape game has been closed.",
+        "nenhum_jogo": "No escape game is currently running.",
+        "comando_invalido": "Invalid command. Use `{prefix}escape maxset <limit>`, `{prefix}escape start`, `{prefix}escape responder [answer]`, or `{prefix}escape end`."
+    },
+    "hug": {
+        "erro_mention": "Please mention a user!",
+        "erro_self_mention": "Could you not mention yourself?",
+        "hug_description": "{author} gave a hug to {mentioned}",
+        "hug_return_description": "{mentioned} returned the hug to {author}"
+    },
+    "forca": {
+        "title": "Hangman Game",
+        "dica": "Remaining Hint",
+        "tentativas": "Remaining Attempts",
+        "perdeu": "You lost! The word was {palavra}.",
+        "ganhou": "Congrats, {usuario}, you won! The word was **{palavra}**.",
+        "aguarde": "Wait your turn, {usuario}!",
+        "letra_ja_adivinhada": "Someone already guessed that letter, {usuario}! Try another.",
+        "tempo_esgotado": "Time's up! The word was **{palavra}**.",
+        "erro": "Looks like someone is already playing in this chat... Please wait for the game to end!",
+        "comando_invalido": "Invalid command. Use {prefixo}forca to start."
+    }
+}
+=======
     "langSet": "Language set successfully!"
 }
+>>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce

@@ -88,6 +88,33 @@ catch(e) {
 
 
 const tradutor = async (language, key, placeholders = {}) => {
+<<<<<<< HEAD
+    try {
+        // Importa o arquivo de tradução
+        const translations = require(`./linguagens/${language}.json`);
+
+        // Divide a chave pelo ponto (.)
+        const keys = key.split('.');
+        let translation = translations;
+
+        // Percorre os níveis do JSON usando as partes da chave
+        for (const part of keys) {
+            translation = translation?.[part];
+        }
+
+        // Se a tradução não for encontrada, retorna uma mensagem padrão
+        if (!translation) return `Tradução para '${key}' não encontrada no idioma '${language}'.`;
+
+        // Substituir os placeholders (se houver)
+        return Object.keys(placeholders).reduce((text, placeholder) => {
+            return String(text).replace(`{${placeholder}}`, placeholders[placeholder]);
+        }, translation);
+    } catch (error) {
+        return `Erro ao carregar o arquivo de idioma: ${error.message}`;
+    }
+};
+
+=======
     
     const translation = require(`./linguagens/${language}.json`)[key]
 
@@ -96,6 +123,7 @@ const tradutor = async (language, key, placeholders = {}) => {
         return text.replace(`{${placeholder}}`, placeholders[placeholder]);
     }, translation);
 }
+>>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
 
 async function getServerLanguage(guildId) {
     return (await db.get(`language_${guildId}`)) || 'en'; // Padrão: inglês

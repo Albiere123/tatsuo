@@ -8,6 +8,10 @@ const { QuickDB } = require("quick.db");
 const db = new QuickDB();
 const { PermissionsBitField, ChannelType } = require('discord.js'); 
 const botdb = (new (require("./db.js"))("sorteio_privado"))
+<<<<<<< HEAD
+const functions1 = require("./functions.js")
+=======
+>>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
 const client = new Discord.Client({
     intents: [
         GatewayIntentBits.Guilds,
@@ -140,6 +144,7 @@ async function getRequiredPermissions(command, client, message, args) {
 
 
 const { PermissionFlagsBits } = require('discord.js');
+const functions = require("yuuta-functions/functions.js");
 
 const permissionValues = {
     [PermissionFlagsBits.CreateInstantInvite]: PermissionFlagsBits.CreateInstantInvite,
@@ -405,31 +410,30 @@ client.on("ready", async () => {
     }, 100000);
 });
 
-function setUsage(embed, usage) {
+async function setUsage(message, embed, usage) {
     if (!(embed instanceof Discord.EmbedBuilder)) return; 
     embed.addFields(
-        { name: `<:batepapo:1275650282616918068> Expressão Correta <:seta2:966325688745484338>`, value: usage, inline: false }
-    );
-    embed.setDescription(`# <:bloquear:1275650261574094912> Ocorreu um erro!`)
+        { name: await functions1.tradutor(await functions1.getServerLanguage(message.guild.id), "erros.usage"), value: usage, inline: false });
+    embed.setDescription(await functions1.tradutor(await functions1.getServerLanguage(message.guild.id), "erros.title"))
     embed.setColor(client.cor);
     embed.setThumbnail(client.user.avatarURL({ size: 2048, extension: "png" }));
 }
 
-function setError(embed, error) {
+async function setError(message, embed, error) {
     if (!(embed instanceof Discord.EmbedBuilder)) return; 
-    embed.addFields({ name: `<:megafone:1275650267592790016> Mensagem de Erro <:seta2:966325688745484338>`, value: error }); 
-    embed.setDescription(`# <:bloquear:1275650261574094912> Ocorreu um erro!`);
+    embed.addFields({ name: await functions1.tradutor(await functions1.getServerLanguage(message.guild.id), "erros.mensagem"), value: error }); 
+    embed.setDescription(await functions1.tradutor(await functions1.getServerLanguage(message.guild.id), "erros.title"));
     embed.setColor(client.cor); 
     embed.setThumbnail(client.user.avatarURL({ size: 2048, extension: "png" }));
 }
 
 
-function set(s, r) {
-    return db.set(`${s}`, r)
+async function set(s, r) {
+    return await db.set(`${s}`, r)
 }
 
-function get(s) {
-    return db.get(`${s}`)
+async function get(s) {
+    return await db.get(`${s}`)
 
 }
 
@@ -497,6 +501,7 @@ const messageCache = new Discord.Collection();
 const timeWindow = 10 * 1000; 
 const spamThreshold = 3; 
 const i = {}; 
+
 
 client.on('messageCreate', async (msg) => {
     let antraid = await db.get(`antiraid_${msg.guild.id}`);

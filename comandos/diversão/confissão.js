@@ -1,29 +1,35 @@
 const Discord = require("discord.js");
 const { QuickDB } = require("quick.db");
 const db = new QuickDB();
+
+
 exports.run = async (client, message, args) => {
     const functions = require("../../functions.js")
     const status = (await db.get(`${this.help.name}_privado`)) || false;
     if (message.author.id !== client.dev.id && status === false) {
+<<<<<<< HEAD
+        return message.reply({ content: await functions.tradutor(await functions.getServerLanguage(message.guild.id), "manutenção")});
+=======
         return message.reply({ content: functions.tradutor(functions.getServerLanguage(message.guild.id), "manutenção")});
+>>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
     }
     let error = new Discord.EmbedBuilder()
-
+    const lang = await functions.getServerLanguage(message.guild.id)
     const dashboard = await db.get(`dashboard.${message.guild.id}.canais`) || {};
     const confessionChannelId = dashboard.confess || {id: "Nenhum"};
     
     const confessionChannel = client.channels.cache.get(confessionChannelId.id);
     if (!confessionChannel) {
-        client.setError(error, "Canal de confissões não encontrado! Peço que avise a um Staff do servidor com a permissão de `Gerenciar Canais` para configurá-lo no comando `"+client.prefix+"dashboard confess <#novo canal>`")
-        client.setUsage(error, `${client.prefix}confess <mensagem>`)
+        await client.setError(message, error, await functions.tradutor(lang, "confess.canal_invalido", {prefixo: client.prefix}))
+        await client.setUsage(message, error, await functions.tradutor(lang, "confess.usage", {prefixo: client.prefix}))
         return message.reply({ embeds: [error] });
     }
 
     
     const confession = args.join(' ');
     if (!confession) {
-        client.setError(error, `Parece que esqueceu de colocar a mensagem para a confissão...`)
-        client.setUsage(error, `${client.prefix}confess <mensagem>`)
+        await client.setError(message, error, await functions.tradutor(lang, "confess.no_args"))
+        await client.setUsage(message, error, await functions.tradutor(lang, "confess.usage", {prefixo: prefix}))
         return message.reply({ embeds: [error] });
     }
 
@@ -37,15 +43,15 @@ exports.run = async (client, message, args) => {
 
     
     const embed = new Discord.EmbedBuilder()
-        .setDescription(`# <:avaliacao:1275831072554356918> Confissão
+        .setDescription(`# <:avaliacao:1275831072554356918> ${await functions.tradutor(lang, "confess.title")}
 
 "${confession}"`)
         .setColor(client.cor)
-        .setFooter({ text: 'Enviada anonimamente', iconURL: 'https://cdn-icons-png.flaticon.com/512/3400/3400837.png' });
+        .setFooter({ text: await functions.tradutor(lang, "confess.footer"), iconURL: 'https://cdn-icons-png.flaticon.com/512/3400/3400837.png' });
 
     confessionChannel.send({ embeds: [embed] });
 
-    message.reply({ content: 'Sua confissão foi enviada anonimamente.' }).then(msg => {
+    message.reply({ content: await functions.tradutor(lang, "confess.finnaly") }).then(msg => {
     setInterval(() => {
         msg.delete()
         if(!client.user.permissions.has(Discord.PermissionFlagsBits.ManageMessages)) return;

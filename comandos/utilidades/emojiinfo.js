@@ -3,8 +3,8 @@ const Discord = require('discord.js');
 exports.run = async (client, message, args) => {
     if (!args[0]) {
         let embed = new Discord.EmbedBuilder();
-        client.setError(embed, "Você precisa fornecer um emoji, nome ou ID válido.");
-        client.setUsage(embed, `${client.prefix}emojiinfo <emoji/nome/id>`);
+        await client.setError(message, embed, "Você precisa fornecer um emoji, nome ou ID válido.");
+        await client.setUsage(message, embed, `${client.prefix}emojiinfo <emoji/nome/id>`);
         return message.reply({ embeds: [embed] });
     }
 
@@ -20,7 +20,7 @@ exports.run = async (client, message, args) => {
 
     if (!emoji) {
         let embed = new Discord.EmbedBuilder();
-        client.setError(embed, "Emoji não encontrado.");
+        await client.setError(message, embed, "Emoji não encontrado.");
         return message.reply({ embeds: [embed] });
     }
 

@@ -8,19 +8,19 @@ exports.run = async(client, message, args) => {
     let erro = new Discord.EmbedBuilder()
 
     if(!message.guild.members.cache.get(message.author.id).permissions.has(Discord.PermissionFlagsBits.ManageGuild)) {
-        client.setError(erro, `Você não possue permissão! Permissão necessária \`Manage Guild\``)
-        client.setUsage(erro, `${client.prefix}setprefix <novo prefixo>`)
+        await client.setError(message, erro, `Você não possue permissão! Permissão necessária \`Manage Guild\``)
+        await client.setUsage(message, erro, `${client.prefix}setprefix <novo prefixo>`)
         message.reply({embeds: [erro]})
     }
 
     if(!args[0]) {
-        client.setError(erro, `Coloque um prefixo!`)
-        client.setUsage(erro, `${client.prefix}setprefix <novo prefixo>`)
+        await client.setError(message, erro, `Coloque um prefixo!`)
+        await client.setUsage(message, erro, `${client.prefix}setprefix <novo prefixo>`)
         return message.reply({embeds: [erro]})
 }
     if (args[0].includes("\n") || args[0].includes("\r")) {
-        client.setError(erro, `Evite usar quebra de linha.`)
-        client.setUsage(erro, `${client.prefix}setprefix <novo prefixo>`)
+        await client.setError(message, erro, `Evite usar quebra de linha.`)
+        await client.setUsage(message, erro, `${client.prefix}setprefix <novo prefixo>`)
         return message.reply({embeds: [erro]}) 
     }
     
@@ -30,8 +30,8 @@ exports.run = async(client, message, args) => {
 
     if(!prefixo === config.prefix) {
     if(prefixo === args[0] && prefixo.length > 2) {
-        client.setError(erro, `Evite prefixos compostos. Exemplo de prefixos válidos: \`k?\`, \`t.\``)
-        client.setUsage(erro, `${client.prefix}setprefix <novo prefixo>`)
+        await client.setError(message, erro, `Evite prefixos compostos. Exemplo de prefixos válidos: \`k?\`, \`t.\``)
+        await client.setUsage(message, erro, `${client.prefix}setprefix <novo prefixo>`)
         return message.reply({embeds: [erro]})
     }}
 
@@ -39,8 +39,8 @@ exports.run = async(client, message, args) => {
     let aprefix = guild?.prefix || config.prefix;
 
     if(aprefix == prefixo) {
-        client.setError(erro, `Evite colocar o mesmo prefix anterior!`)
-        client.setUsage(erro, `${client.prefix}setprefix <novo prefixo>`)
+        await client.setError(message, erro, `Evite colocar o mesmo prefix anterior!`)
+        await client.setUsage(message, erro, `${client.prefix}setprefix <novo prefixo>`)
         return message.reply({embeds: [erro]})
     }
 

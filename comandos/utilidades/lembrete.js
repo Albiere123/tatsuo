@@ -42,25 +42,25 @@ ${allReminders.join('\n\n')}`)
         return message.channel.send({ embeds: [embed] });
     }
     if (!timeString) {
-        client.setError(embed, `Parece que você não especificou o tempo.. exemplo: 10h10m10s`);
-        client.setUsage(embed, `${client.prefix}lembrete <tempo | list> <mensagem>`);
+        await client.setError(message, embed, `Parece que você não especificou o tempo.. exemplo: 10h10m10s`);
+        await client.setUsage(message, embed, `${client.prefix}lembrete <tempo | list> <mensagem>`);
         return message.channel.send({ embeds: [embed] });
     }
     if(isNaN(args[0].replace("m", "").replace("h", "").replace("s", ""))) {
-        client.setError(embed, `Parece que está tentando usar algo que não seja um formato de tempo...`)
-        client.setUsage(embed, `${client.prefix}lembrete <tempo> <mensagem>`)
+        await client.setError(message, embed, `Parece que está tentando usar algo que não seja um formato de tempo...`)
+        await client.setUsage(message, embed, `${client.prefix}lembrete <tempo> <mensagem>`)
         return message.reply({embeds: [embed]})
     }
     if (!reminderMessage) {
-        client.setError(embed, `Parece que você não especificou a mensagem...`);
-        client.setUsage(embed, `${client.prefix}lembrete <tempo> <mensagem>`);
+        await client.setError(message, embed, `Parece que você não especificou a mensagem...`);
+        await client.setUsage(message, embed, `${client.prefix}lembrete <tempo> <mensagem>`);
         return message.channel.send({ embeds: [embed] });
     }
 
     const time = parseTime(timeString);
 
     if (time === null) {
-        client.setError(embed, `Parece que você não colocou o tempo corretamente.. exemplo: 10h10m10s | 45s | 1m | 3h`);
+        await client.setError(message, embed, `Parece que você não colocou o tempo corretamente.. exemplo: 10h10m10s | 45s | 1m | 3h`);
         return message.channel.send({ embeds: [embed] });
     }
 

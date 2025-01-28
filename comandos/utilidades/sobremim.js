@@ -23,22 +23,22 @@ exports.run = async (client, message, args) => {
 
         if (hoursPassed < cooldownHours) {
             const remainingTime = Math.ceil(cooldownHours - hoursPassed);
-            client.setError(erro, `Você deve esperar ${remainingTime} horas antes de atualizar sua descrição novamente.`);
-            client.setUsage(erro, `${client.prefix}sobre <descrição curta>`);
+            await client.setError(message, erro, `Você deve esperar ${remainingTime} horas antes de atualizar sua descrição novamente.`);
+            await client.setUsage(message, erro, `${client.prefix}sobre <descrição curta>`);
             return message.reply({ embeds: [erro] });
         }
     }
 
     let newAbout = args.join(' ');
     if (!newAbout) {
-        client.setError(erro, `Forneça uma descrição! Você pode adicionar emojis ao usar {emoji:IDDOEMOJI}`);
-        client.setUsage(erro, `${client.prefix}sobre <descrição>`);
+        await client.setError(message, erro, `Forneça uma descrição! Você pode adicionar emojis ao usar {emoji:IDDOEMOJI}`);
+        await client.setUsage(message, erro, `${client.prefix}sobre <descrição>`);
         return message.reply({ embeds: [erro] });
     }
 
     if (newAbout.includes("\n") || newAbout.includes("\r")) {
-        client.setError(erro, `Evite usar quebra de linha.`);
-        client.setUsage(erro, `${client.prefix}sobre <descrição>`);
+        await client.setError(message, erro, `Evite usar quebra de linha.`);
+        await client.setUsage(message, erro, `${client.prefix}sobre <descrição>`);
         return message.reply({ embeds: [erro] }); 
     }
 

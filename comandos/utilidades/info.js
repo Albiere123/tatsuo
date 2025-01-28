@@ -14,8 +14,8 @@ exports.run = async (client, message, args) => {
     
     if (args.length < 2) {
         const erro = new EmbedBuilder();
-        client.setError(erro, "Por favor, forneça o tipo e o nome do anime ou mangá para buscar informações.");
-        client.setUsage(erro, `${client.prefix}info <anime | manga> <nome>`);
+        await client.setError(message, erro, "Por favor, forneça o tipo e o nome do anime ou mangá para buscar informações.");
+        await client.setUsage(message, erro, `${client.prefix}info <anime | manga> <nome>`);
         return message.reply({ embeds: [erro] });
     }
 
@@ -25,8 +25,8 @@ exports.run = async (client, message, args) => {
     
     if (type !== 'anime' && type !== 'manga') {
         const erro = new EmbedBuilder();
-        client.setError(erro, "Tipo inválido. Por favor, especifique `anime` ou `manga`.");
-        client.setUsage(erro, `${client.prefix}info <anime | manga> <nome>`);
+        await client.setError(message, erro, "Tipo inválido. Por favor, especifique `anime` ou `manga`.");
+        await client.setUsage(message, erro, `${client.prefix}info <anime | manga> <nome>`);
         return message.reply({ embeds: [erro] });
     }
 
@@ -37,8 +37,8 @@ exports.run = async (client, message, args) => {
 
         if (!searchData || !searchData.data || searchData.data.length === 0) {
             const erro = new EmbedBuilder();
-            client.setError(erro, `Nenhum resultado encontrado para "${query}".`);
-            client.setUsage(erro, `${client.prefix}info <anime | manga> <nome>`);
+            await client.setError(message, erro, `Nenhum resultado encontrado para "${query}".`);
+            await client.setUsage(message, erro, `${client.prefix}info <anime | manga> <nome>`);
             return message.reply({ embeds: [erro] });
         }
 
@@ -148,8 +148,8 @@ exports.run = async (client, message, args) => {
     } catch (error) {
         console.error('Erro ao buscar informações:', error);
         const erro = new EmbedBuilder();
-        client.setError(erro, "Ocorreu um erro ao tentar buscar as informações. Por favor, tente novamente mais tarde.");
-        client.setUsage(erro, `${client.prefix}info <anime | manga> <nome>`);
+        await client.setError(message, erro, "Ocorreu um erro ao tentar buscar as informações. Por favor, tente novamente mais tarde.");
+        await client.setUsage(message, erro, `${client.prefix}info <anime | manga> <nome>`);
         return message.reply({ embeds: [erro] });
     }
 };

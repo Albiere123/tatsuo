@@ -42,7 +42,7 @@ exports.run = async (client, message, args) => {
 
         message.reply({ embeds: [embed] });
     } catch (error) {
-        client.setError(error, `Erro ao executar o comando ${this.help.name}`);
+        await await client.setError(message, error, `Erro ao executar o comando ${this.help.name}`);
         message.reply({ content: "Ocorreu um erro ao tentar executar este comando. O erro foi registrado e será analisado." });
     }
 };

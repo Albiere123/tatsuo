@@ -11,20 +11,20 @@ exports.run = async (client, message, args) => {
     const player2 = message.mentions.users.first();
     let erro = new Discord.EmbedBuilder()
     if (!player2) {
-        client.setError(erro, `Aparentemente você não marcou um segundo jogador(bot's não são jogadores válidos!)`)
-        client.setUsage(erro, `${client.prefix}jogodavelha <user>`)
+        await client.setError(message, message, erro, `Aparentemente você não marcou um segundo jogador(bot's não são jogadores válidos!)`)
+        await client.setUsage(message, erro, `${client.prefix}jogodavelha <user>`)
         return message.reply({embeds: [erro]})
     }
     
     if(player2.id == message.author.id) {
-        client.setError(erro, `Evite marcar você mesmo, sei que deve se sentir solitário. Entretanto deve marcar um 2º Jogador`)
-        client.setUsage(erro, `${client.prefix}jogodavelha <user>`)
+        await client.setError(message, message, erro, `Evite marcar você mesmo, sei que deve se sentir solitário. Entretanto deve marcar um 2º Jogador`)
+        await client.setUsage(message, erro, `${client.prefix}jogodavelha <user>`)
         return message.reply({embeds: [erro]})
     }
 
     if(player2.bot) {
-        client.setError(erro, `Bot's não são jogadores válidos!`)
-        client.setUsage(erro, `${client.prefix}jogodavelha <user>`)
+        await client.setError(message, message, erro, `Bot's não são jogadores válidos!`)
+        await client.setUsage(message, erro, `${client.prefix}jogodavelha <user>`)
         return message.reply({embeds: [erro]})
     }
     

@@ -19,8 +19,13 @@ exports.run = async (client, message, args) => {
             const channelType = args[0].toLowerCase();
 
             if (!validChannels.includes(channelType)) {
+<<<<<<< HEAD
+                await client.setError(message, embed, "Tipo de canal inválido. Use um dos seguintes: `confess`, `logs`, `sorteios`, `muterole`, `memberadd`.");
+                await client.setUsage(message, embed, `${client.prefix}dashboard <confess/logs/sorteios/muterole/memberadd(categoria separada)> <#canal/ID do canal>`);
+=======
                 client.setError(embed, "Tipo de canal inválido. Use um dos seguintes: `confess`, `logs`, `sorteios`, `muterole`, `memberadd`.");
                 client.setUsage(embed, `${client.prefix}dashboard <confess/logs/sorteios/muterole/memberadd(categoria separada)> <#canal/ID do canal>`);
+>>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
                 return message.reply({ embeds: [embed] });
             }
             if(channelType === "lang") {
@@ -48,7 +53,11 @@ exports.run = async (client, message, args) => {
                                 .setColor(client.cor)
                                 .setTitle("Erro")
                                 .setDescription("Você precisa mencionar um canal de texto válido ou fornecer um ID válido.");
+<<<<<<< HEAD
+                            await client.setUsage(message, embed, `${client.prefix}dashboard memberadd canal <#canal/ID do canal>`);
+=======
                             client.setUsage(embed, `${client.prefix}dashboard memberadd canal <#canal/ID do canal>`);
+>>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
                             return message.reply({ embeds: [embed] });
                         }
             
@@ -139,8 +148,13 @@ exports.run = async (client, message, args) => {
                     return message.reply({ embeds: [embed] });
                 } else {
                     const embed = new Discord.EmbedBuilder()
+<<<<<<< HEAD
+                    await client.setError(message, embed, "Comando inválido. Use ${client.prefix}dashboard memberadd <opção>.");
+                    await client.setUsage(message, embed, `${client.prefix}dashboard memberadd canal, titulo, descricao, thumbnail, image, ligar, desligar`);
+=======
                     client.setError(embed, "Comando inválido. Use ${client.prefix}dashboard memberadd <opção>.");
                     client.setUsage(embed, `${client.prefix}dashboard memberadd canal, titulo, descricao, thumbnail, image, ligar, desligar`);
+>>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
                     return message.reply({ embeds: [embed] });
                 }
             }
@@ -150,8 +164,8 @@ exports.run = async (client, message, args) => {
             if (channelType === "muterole") {
                 const role = message.mentions.roles.first() || message.guild.roles.cache.get(args[1]);
                 if (!role) {
-                    client.setError(embed, "Você precisa mencionar um cargo válido ou fornecer um ID válido.");
-                    client.setUsage(embed, `${client.prefix}dashboard muterole <@cargo/ID do cargo>`);
+                    await client.setError(message, embed, "Você precisa mencionar um cargo válido ou fornecer um ID válido.");
+                    await client.setUsage(message, embed, `${client.prefix}dashboard muterole <@cargo/ID do cargo>`);
                     return message.reply({ embeds: [embed] });
                 }
 
@@ -166,8 +180,8 @@ exports.run = async (client, message, args) => {
             let channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[1]);
 
             if (!channel || channel.type !== Discord.ChannelType.GuildText) {  
-                client.setError(embed, "Você precisa mencionar um canal de texto válido ou fornecer um ID válido.");
-                client.setUsage(embed, `${client.prefix}dashboard <confess/logs/sorteios> <#canal/ID do canal>`);
+                await client.setError(message, embed, "Você precisa mencionar um canal de texto válido ou fornecer um ID válido.");
+                await client.setUsage(message, embed, `${client.prefix}dashboard <confess/logs/sorteios> <#canal/ID do canal>`);
                 return message.reply({ embeds: [embed] });
             }
 
@@ -213,7 +227,7 @@ exports.run = async (client, message, args) => {
             return message.reply({ embeds: [main] });
         }
     } catch (error) {
-        client.setError(error, `Erro ao executar o comando ${this.help.name}`);
+        await client.setError(message, error, `Erro ao executar o comando ${this.help.name}`);
         message.reply({ content: "Ocorreu um erro ao tentar executar este comando. O erro foi registrado e será analisado." });
         console.log(`${error}`)
     }

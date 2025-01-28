@@ -22,14 +22,14 @@ exports.run = async (client, message, args) => {
     let error = new Discord.EmbedBuilder()
     let mention = await message.mentions.users.first();
     if (!mention) {
-        client.setError(error, `Por favor, peço que mencione um usuário!`)
-        client.setUsage(error, `${client.prefix}slap <usuário>`)
+        await client.setError(message, error, `Por favor, peço que mencione um usuário!`)
+        await client.setUsage(message, error, `${client.prefix}slap <usuário>`)
         return message.reply({embeds: [error]})
     }
 
     if (mention.id === message.author.id) {
-        client.setError(error, `Poderia não mencionar a sí mesmo?`)
-        client.setUsage(error, `${client.prefix}slap <usuário>`)
+        await client.setError(message, error, `Poderia não mencionar a sí mesmo?`)
+        await client.setUsage(message, error, `${client.prefix}slap <usuário>`)
         return message.reply({embeds: [error]})
     }
         let imageUrl = await api.slap[Math.floor(Math.random() * api.slap.length)]

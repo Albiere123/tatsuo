@@ -8,82 +8,121 @@ let gameState = {
     location: null,
     weapon: null,
     players: new Set(),
-    hintsGiven: 0,  
+    hintsGiven: 0,
 };
 
 const suspects = ['Sr.-Verde', 'Sra.-Branca', 'Coronel-Mostarda'];
 const locations = ['Biblioteca', 'Sala-de-Estar', 'Cozinha'];
 const weapons = ['Faca', 'Pistola', 'Corda'];
 
+<<<<<<< HEAD
+exports.run = async (client, message, args) => {
+    const functions = require("../../functions.js");
+    const lang = await functions.getServerLanguage(message.guild.id);
+
+    const status = (await db.get(`${this.help.name}_privado`)) || false;
+    if (message.author.id !== client.dev.id && status === false) {
+        return message.reply({
+            content: await functions.tradutor(lang, "manutenção"),
+        });
+    }
+
+=======
 exports.run = async(client, message, args) => {
     const functions = require("../../functions.js")
     const status = (await db.get(`${this.help.name}_privado`)) || false;
     if (message.author.id !== client.dev.id && status === false) {
         return message.reply({ content: functions.tradutor(functions.getServerLanguage(message.guild.id), "manutenção")});
     }
+>>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
     if (!args[0]) {
         if (gameState.isRunning) {
-            return message.reply('Já há um jogo em andamento!');
+            return message.reply({
+                content: await functions.tradutor(lang, "detetive.jogo_andamento"),
+            });
         }
         gameState.isRunning = true;
         gameState.suspect = suspects[Math.floor(Math.random() * suspects.length)];
-        gameState.location =
-         locations[Math.floor(Math.random() * locations.length)];
+        gameState.location = locations[Math.floor(Math.random() * locations.length)];
         gameState.weapon = weapons[Math.floor(Math.random() * weapons.length)];
-        gameState.hintsGiven = 0; 
+        gameState.hintsGiven = 0;
 
-        message.channel.send('O jogo de detetive começou! Façam suas perguntas ou tentem uma acusação com `'+client.prefix+'detetive acusar <suspeito> <local> <arma>`'+`\nCaso não saiba as opções disponiveis use \`${client.prefix}detetive ajuda\``);
-        giveHint(message)
-        setTimeout(giveHint, 60000, message);  
+        message.channel.send(
+            await functions.tradutor(lang, "detetive.inicio", {
+                prefix: client.prefix,
+            })
+        );
+        giveHint(message, lang);
+        setTimeout(giveHint, 60000, message, lang);
     } else if (args[0] == "acusar") {
         if (!args[1] || !args[2] || !args[3]) {
-            return message.reply({content: "Você não utilizou o comando corretamente. Use: `"+client.prefix+`detetive acusar <suspeito> <local> <arma>\`\nCaso não saiba as opções disponiveis use \`${client.prefix}detetive ajuda\``});
+            return message.reply({
+                content: await functions.tradutor(lang, "detetive.erro_acusacao", {
+                    prefix: client.prefix,
+                }),
+            });
         }
-        if (args[1] !== gameState.suspect || args[2] !== gameState.location || args[3] !== gameState.weapon) {
-            return message.reply({content: "Você errou! Tente novamente."});
+        if (
+            args[1] !== gameState.suspect ||
+            args[2] !== gameState.location ||
+            args[3] !== gameState.weapon
+        ) {
+            return message.reply({
+                content: await functions.tradutor(lang, "detetive.errou"),
+            });
         } else {
-            message.reply("Você ganhou!!");
+            message.reply(await functions.tradutor(lang, "detetive.ganhou"));
             resetGame();
         }
-    }else if (args[0] == "encerrar") {
+    } else if (args[0] == "encerrar") {
         resetGame();
-        message.reply({content: "O jogo foi forcado a encerrar por "+ message.author.username})
-    }else if (args[0] == "help" || args[0] == "ajuda") {
+        message.reply({
+            content: await functions.tradutor(lang, "detetive.encerrado", {
+                user: message.author.username,
+            }),
+        });
+    } else if (args[0] == "ajuda") {
         let embed = new Discord.EmbedBuilder()
-        .setDescription(`# Detetive
-ㅤ
-Suspeitos: ${suspects.join(", ")}
-ㅤ
-Locais: ${locations.join(", ")}
-ㅤ
-Armas: ${weapons.join(", ")}`)
-        .setColor(client.cor)
-        message.reply({embeds: [embed]})
+            .setDescription(
+                await functions.tradutor(lang, "detetive.ajuda", {
+                    suspects: suspects.join(", "),
+                    locations: locations.join(", "),
+                    weapons: weapons.join(", "),
+                })
+            )
+            .setColor(client.cor);
+        message.reply({ embeds: [embed] });
     }
 };
 
-function giveHint(message) {
+async function giveHint(message, lang) {
     if (!gameState.isRunning) return;
 
     let hint;
-    switch(gameState.hintsGiven) {
+    switch (gameState.hintsGiven) {
         case 0:
-            hint = `Dica: O suspeito não é ${suspects.find(s => s !== gameState.suspect)}.`;
+            hint = await functions.tradutor(lang, "detetive.dica_suspeito", {
+                notSuspect: suspects.find((s) => s !== gameState.suspect),
+            });
             break;
         case 1:
-            hint = `Dica: O crime não aconteceu na ${locations.find(l => l !== gameState.location)}.`;
+            hint = await functions.tradutor(lang, "detetive.dica_local", {
+                notLocation: locations.find((l) => l !== gameState.location),
+            });
             break;
         case 2:
-            hint = `Dica: A arma não é ${weapons.find(w => w !== gameState.weapon)}.`;
+            hint = await functions.tradutor(lang, "detetive.dica_arma", {
+                notWeapon: weapons.find((w) => w !== gameState.weapon),
+            });
             break;
         default:
-            return;  
+            return;
     }
     message.channel.send(hint);
     gameState.hintsGiven++;
 
     if (gameState.hintsGiven < 3) {
-        setTimeout(giveHint, 60000, message);  
+        setTimeout(giveHint, 60000, message, lang);
     }
 }
 
@@ -100,7 +139,7 @@ function resetGame() {
 
 exports.help = {
     name: "detetive",
-    aliases: ["mystery", "crime"],
-    description: "Inicia um jogo de detetive. Descubra o culpado, o local e a arma. Usage: {prefixo}detetive",
-    status: false
+    aliases: ["mistério", "crime"],
+    description: "Inicia um jogo de detetive. Descubra o culpado, o local e a arma. Uso: {prefixo}detetive",
+    status: false,
 };

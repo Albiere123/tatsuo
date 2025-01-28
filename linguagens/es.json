@@ -1,4 +1,104 @@
 {
+<<<<<<< HEAD
+    "manutenção": "¡Este comando está en mantenimiento!",
+    "langSet": "¡Idioma configurado con éxito!",
+    "confess": {
+        "canal_invalido": "¡No se encontró el canal de confesiones! Por favor, notifique a un miembro del staff del servidor con el permiso de `Administrar Canales` para configurarlo usando el comando `{prefixo}dashboard confess <#nuevo canal>`.",
+        "usage": "{prefixo}confess <mensaje>",
+        "no_args": "Parece que olvidaste incluir el mensaje para la confesión...",
+        "title": "Confesión",
+        "footer": "Enviado anónimamente",
+        "finnaly": "Tu confesión ha sido enviada de forma anónima."
+    },
+    "desafio": {
+        "no_args": "Por favor, especifica una acción (listar, desafiar, enviar, rank).",
+        "usage": "{prefixo}desafío <listar|desafiar|enviar|rank>",
+        "usage[1]": "{prefixo} desafío desafiar título",
+        "usage[2]": "{prefixo} desafío enviar númeroDesafío CódigoEnLink",
+        "title": "Desafíos Disponibles",
+        "vazio": "No hay desafíos disponibles en este momento.",
+        "no_args[1]": "Por favor, proporciona un título y una descripción para el desafío.",
+        "criado": "Nuevo Desafío Creado",
+        "criado_desc": "Desafío {title} creado por {user}",
+        "no_args[2]": "Por favor, proporciona un número de desafío válido.",
+        "link_invalido": "Por favor, proporciona un enlace válido para la solución.",
+        "s_env": "Solución Enviada",
+        "s_desc": "Solución para el desafío \"{desafio}\" enviada por {user}",
+        "ranking_t": "Clasificación de Programadores",
+        "ranking_d": "Aún no se ha registrado ninguna puntuación."
+    },
+    "erros": {
+        "mensagem": "<:megafone:1275650267592790016> Mensaje de Error <:seta2:966325688745484338>",
+        "usage": "<:batepapo:1275650282616918068> Uso Correcto <:seta2:966325688745484338>",
+        "title": "# <:bloquear:1275650261574094912> ¡Ocurrió un error!"
+    },
+    "blackjack": {
+      "aposta_invalida": "Necesitas apostar una cantidad válida mayor que cero.",
+      "saldo_insuficiente": "No tienes suficiente dinero para esta apuesta.",
+      "vitoria": "¡Ganaste! 🎉",
+      "derrota": "¡Perdiste! 😢",
+      "empate": "¡Es un empate! ¡Estuvo cerca! 🤝",
+      "mao_jogador": "Tu mano:",
+      "mao_dealer": "Mano del dealer:",
+      "perguntar": "¿Quieres `pedir` otra carta o `plantarte`?",
+      "blackjack_natural": "¡Blackjack natural! ¡Ganaste con estilo! 🃏🎉",
+      "dealer_blackjack": "¡El dealer consiguió un Blackjack! 😓",
+      "estouro": "¡Te pasaste! 😬",
+      "dealer_estouro": "¡El dealer se pasó! ¡Ganaste! 🎉",
+      "uso": "Usa `{prefixo}blackjack <cantidad>` para jugar.",
+      "titulo": "🎲 Blackjack 🎲",
+      "fim": "Jogo encerrado!",
+      "aposta": "Aposta:",
+      "timeout": "¡Se acabó el tiempo! Tardaste demasiado en responder. ⏳"
+    },
+       "detetive": {
+            "jogo_andamento": "¡Ya hay un juego en progreso!",
+            "inicio": "¡El juego de detectives ha comenzado! Haz tus preguntas o haz una acusación con `{prefix}detetive acusar <sospechoso> <lugar> <arma>`\nSi no conoces las opciones disponibles, usa `{prefix}detetive ayuda`.",
+            "erro_acusacao": "No usaste el comando correctamente. Usa: `{prefix}detetive acusar <sospechoso> <lugar> <arma>`\nSi no conoces las opciones disponibles, usa `{prefix}detetive ayuda`.",
+            "errou": "¡Te equivocaste! Inténtalo de nuevo.",
+            "ganhou": "¡Felicidades! ¡Ganaste!",
+            "encerrado": "El juego fue terminado por {user}.",
+            "ajuda": "# Detective\n\n**Sospechosos:** {suspects}\n\n**Lugares:** {locations}\n\n**Armas:** {weapons}",
+            "dica_suspeito": "Pista: El sospechoso no es {notSuspect}.",
+            "dica_local": "Pista: El crimen no ocurrió en {notLocation}.",
+            "dica_arma": "Pista: El arma no es {notWeapon}."
+        },
+        "escape": {
+        "invalido_limite": "Por favor, proporcione un número válido para el límite de acertijos.",
+        "limite_definido": "El límite máximo de acertijos para este canal ha sido establecido en {limite}.",
+        "jogo_andamento": "¡Ya hay un juego en marcha en este canal!",
+        "poucos_enigmas": "El número máximo de acertijos para este canal es {limite}. Ajuste el número de acertijos.",
+        "inicio": "¡El juego de escape ha comenzado! Aquí está el primer acertijo: {enigma}",
+        "proximo_enigma": "¡Correcto! Aquí está el siguiente acertijo: {enigma}",
+        "todos_resolvidos": "¡Felicidades! ¡Has resuelto todos los acertijos y escapaste!",
+        "resposta_errada": "Respuesta incorrecta. ¡Inténtalo de nuevo!",
+        "sem_jogo": "No hay ningún juego de escape en curso. Usa `{prefix}escape start` para comenzar un nuevo juego.",
+        "encerrado": "El juego de escape ha sido cerrado.",
+        "nenhum_jogo": "No hay ningún juego de escape en curso.",
+        "comando_invalido": "Comando inválido. Usa `{prefix}escape maxset <límite>`, `{prefix}escape start`, `{prefix}escape responder [respuesta]` o `{prefix}escape end`."
+    },
+    "hug": {
+        "erro_mention": "¡Por favor, menciona a un usuario!",
+        "erro_self_mention": "¿Podrías no mencionarte a ti mismo?",
+        "hug_description": "{autor} dio un abrazo a {mencionado}",
+        "hug_return_description": "{mencionado} devolvió el abrazo a {autor}"
+    },
+    "forca": {
+        "title": "Juego de Ahorcado",
+        "dica": "Pista restante",
+        "tentativas": "Intentos restantes",
+        "perdeu": "¡Perdiste! La palabra era {palavra}.",
+        "ganhou": "¡Felicidades, {usuario}, ganaste! La palabra era **{palavra}**.",
+        "aguarde": "¡Espera tu turno, {usuario}!",
+        "letra_ja_adivinhada": "Alguien ya adivinó esa letra, {usuario}! Intenta otra.",
+        "tempo_esgotado": "¡Se acabó el tiempo! La palabra era **{palavra}**.",
+        "erro": "Parece que alguien ya está jugando en este chat... ¡Espera que termine la partida!",
+        "comando_invalido": "Comando inválido. Usa {prefixo}forca para comenzar."
+    }
+}
+    
+=======
     "manutenção": "¡Este 'command' está en mantenimiento!",
     "langSet": "¡Idioma configurado correctamente!"
 }
+>>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce

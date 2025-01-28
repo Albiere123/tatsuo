@@ -3,23 +3,31 @@ const axios = require("axios");
 const api = require("../../api.json")
 const {QuickDB} = require('quick.db')
 const db = new QuickDB()
+<<<<<<< HEAD
+
+=======
+>>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
 exports.run = async (client, message, args) => {
     const functions = require("../../functions.js")
     const status = (await db.get(`${this.help.name}_privado`)) || false;
     if (message.author.id !== client.dev.id && status === false) {
+<<<<<<< HEAD
+        return message.reply({ content: await functions.tradutor(await functions.getServerLanguage(message.guild.id), "manutenção")});
+=======
         return message.reply({ content: functions.tradutor(functions.getServerLanguage(message.guild.id), "manutenção")});
+>>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
     }
     let error = new Discord.EmbedBuilder()
     let mention = message.mentions.users.first();
     if (!mention) {
-        client.setError(error, `Por favor, peço que mencione um usuário!`)
-        client.setUsage(error, `${client.prefix}hug <usuário>`)
+        await client.setError(message, error, await functions.tradutor(await functions.getServerLanguage(message.guild.id), "hug.erro_mention"))
+        await client.setUsage(error, `${client.prefix}hug <usuário>`)
         return message.reply({embeds: [error]})
     }
 
     if (mention.id === message.author.id) {
-        client.setError(error, `Poderia não mencionar a sí mesmo?`)
-        client.setUsage(error, `${client.prefix}hug <usuário>`)
+        await client.setError(message, error, await functions.tradutor(await functions.getServerLanguage(message.guild.id), "hug.erro_self_mention"))
+        await client.setUsage(error, `${client.prefix}hug <usuário>`)
         return message.reply({embeds: [error]})
     }
 
@@ -30,36 +38,35 @@ exports.run = async (client, message, args) => {
     .setStyle(Discord.ButtonStyle.Success)
     const row = new Discord.ActionRowBuilder().addComponents(button)
 
-        let imageUrl = api.hug[Math.floor(Math.random() * api.kiss.length)]
-        let embed = new Discord.EmbedBuilder()
+    let imageUrl = api.hug[Math.floor(Math.random() * api.kiss.length)]
+    let embed = new Discord.EmbedBuilder()
+        .setTitle(`<:cafe:820694213866946591> | Hug`)
+        .setDescription(await functions.tradutor(await functions.getServerLanguage(message.guild.id), "hug.hug_description", {autor: message.author.username, mencionado: mention.username}))
+        .setImage(imageUrl)
+        .setColor(client.cor);
+    
+    const msg = await message.reply({ embeds: [embed], components: [row] });
+    const filter = i => i.user.id == mention.id;
+    const collector = msg.createMessageComponentCollector({filter, max: 1})
+    collector.on("collect", async col => {
+        let id = col.customId
+        if(id === "ret") {
+            imageUrl = await api.hug[Math.floor(Math.random() * api.kiss.length)]
+            let embed = new Discord.EmbedBuilder()
             .setTitle(`<:cafe:820694213866946591> | Hug`)
-            .setDescription(`ㅤ\n${message.author.username} deu um abraço em ${mention.username}`)
+            .setDescription(await functions.tradutor(await functions.getServerLanguage(message.guild.id), "hug.hug_return_description", {autor: message.author.username, mencionado: mention.username}))
             .setImage(imageUrl)
-            .setColor(client.cor);
-        
-            const msg = await message.reply({ embeds: [embed], components: [row] });
-            const filter = i => i.user.id == mention.id;
-            const collector = msg.createMessageComponentCollector({filter, max: 1})
-            collector.on("collect", async col => {
-                let id = col.customId
-                if(id === "ret") {
-                    imageUrl = await api.hug[Math.floor(Math.random() * api.kiss.length)]
-                    let embed = new Discord.EmbedBuilder()
-                    .setTitle(`<:cafe:820694213866946591> | Hug`)
-                    .setDescription(`ㅤ\n${mention.username} retribuiu o abraço em ${message.author.username}`)
-                    .setImage(imageUrl)
-                    .setColor(client.cor)
-                    col.deferUpdate()
-                    return message.channel.send({embeds: [embed]})
-                    
-                }
-                col.deferUpdate();
-            })
+            .setColor(client.cor)
+            col.deferUpdate()
+            return message.channel.send({embeds: [embed]})
+        }
+        col.deferUpdate();
+    })
 };
 
 exports.help = {
     name: "hug",
     aliases: ["abraço", "abraco"],
-    description: `Dê um abraço em um usuário! {prefixo}hug <usuário>`,
+    description: "Dê um abraço em um usuário! {prefixo}hug <usuário>",
     status: false
 };

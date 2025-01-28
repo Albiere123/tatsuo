@@ -41,8 +41,8 @@ exports.run = async (client, message, args) => {
 
     if (!args.length) {
         let embed = new Discord.EmbedBuilder();
-        client.setError(embed, "Você precisa fornecer o texto a ser resumido.");
-        client.setUsage(embed, `${client.prefix}resumir <texto>`);
+        await client.setError(message, embed, "Você precisa fornecer o texto a ser resumido.");
+        await client.setUsage(message, embed, `${client.prefix}resumir <texto>`);
         return message.reply({ embeds: [embed] });
     }
 
@@ -64,7 +64,7 @@ exports.run = async (client, message, args) => {
     } catch (error) {
         console.error('Erro ao resumir o texto:', error);
         let embed = new Discord.EmbedBuilder();
-        client.setError(embed, "Ocorreu um erro ao resumir o texto.");
+        await client.setError(message, embed, "Ocorreu um erro ao resumir o texto.");
         return message.reply({ embeds: [embed] });
     }
 };

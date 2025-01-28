@@ -30,8 +30,8 @@ exports.run = async (client, message, args) => {
         }
 
         if (!user1) {
-            client.setError(erro, "Não encontrei o usuário especificado!");
-            client.setUsage(erro, `${config.prefix}ship <ID/nome> [ID/nome]`);
+            await client.setError(message, erro, "Não encontrei o usuário especificado!");
+            await client.setUsage(message, erro, `${config.prefix}ship <ID/nome> [ID/nome]`);
             erro.setColor(client.cor);
             erro.setThumbnail(client.user.displayAvatarURL());
             return message.reply({ embeds: [erro] });
@@ -53,8 +53,8 @@ exports.run = async (client, message, args) => {
         }
 
         if (!user2) {
-            client.setError(erro, "Não encontrei o segundo usuário especificado!");
-            client.setUsage(erro, `${config.prefix}ship <usuário> [usuário]`);
+            await client.setError(message, erro, "Não encontrei o segundo usuário especificado!");
+            await client.setUsage(message, erro, `${config.prefix}ship <usuário> [usuário]`);
             erro.setColor(client.cor);
             erro.setThumbnail(client.user.displayAvatarURL());
             return message.reply({ embeds: [erro] });
@@ -110,8 +110,8 @@ exports.run = async (client, message, args) => {
             files: [attachment],
         });
     } else {
-        client.setError(erro, "Insira o nome, menção ou id de alguém");
-        client.setUsage(erro, `${config.prefix}ship <usuário> [usuário]`);
+        await client.setError(message, erro, "Insira o nome, menção ou id de alguém");
+        await client.setUsage(message, erro, `${config.prefix}ship <usuário> [usuário]`);
         erro.setColor(client.cor);
         erro.setThumbnail(client.user.displayAvatarURL());
         return message.reply({ embeds: [erro] });

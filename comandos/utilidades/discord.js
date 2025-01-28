@@ -7,13 +7,13 @@ exports.run = async (client,  message, args) => {
     if(message.author.id !== client.dev.id && status == false) return message.reply({content: "Este comando está em manutenção!"})
     let erro = new Discord.EmbedBuilder()
     if(!args[0] || args[0].length > 15) {
-        client.setError(erro, `Insira o nome de uma função ou evento existente no DBD`)
-        client.setUsage(erro, `${client.prefix}dbd <função ou evento>`)
+        await client.setError(message, erro, `Insira o nome de uma função ou evento existente no DBD`)
+        await client.setUsage(message, erro, `${client.prefix}dbd <função ou evento>`)
         return message.reply({embeds: [erro]})
     }
     if (args[0].includes("\n") || args[0].includes("\r")) {
-        client.setError(erro, `Evite usar quebra de linha.`)
-        client.setUsage(erro, `${client.prefix}dbd <função ou evento>`)
+        await client.setError(message, erro, `Evite usar quebra de linha.`)
+        await client.setUsage(message, erro, `${client.prefix}dbd <função ou evento>`)
         return message.reply({embeds: [erro]}) 
     }
     let a = args[0].toLowerCase().replace("$", "");    
@@ -37,8 +37,8 @@ exports.run = async (client,  message, args) => {
     let b = ``;
     if(a.startsWith("on")) b = "e Evento"
     else b = "a Função"
-    client.setError(erro, `Não encontrei est${b} na API, verifique se est${b} existe. Minha API contém 35,75% das funções e eventos!`)
-    client.setUsage(erro, `${client.prefix}dbd <evento ou função>`)
+    await client.setError(message, erro, `Não encontrei est${b} na API, verifique se est${b} existe. Minha API contém 35,75% das funções e eventos!`)
+    await client.setUsage(message, erro, `${client.prefix}dbd <evento ou função>`)
     return message.reply({embeds: [erro]})
 }
 }

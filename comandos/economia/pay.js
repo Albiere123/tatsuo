@@ -11,16 +11,16 @@ exports.run = async(client, message, args) => {
     
     
     if (!args[0] || !args[1]) {
-        client.setError(embed, "Você deve mencionar um usuário, fornecer o nome de usuário ou ID e especificar um valor.");
-        client.setUsage(embed, `${client.prefix}pay <@usuário | nome | ID> <valor>`);
+        await client.setError(message, embed, "Você deve mencionar um usuário, fornecer o nome de usuário ou ID e especificar um valor.");
+        await await client.setUsage(message, embed, `${client.prefix}pay <@usuário | nome | ID> <valor>`);
         return message.reply({embeds: [embed]});
     }
 
     
     const amount = parseInt(args[1]);
     if (isNaN(amount) || amount <= 0) {
-        client.setError(embed, "Você deve especificar um valor válido.");
-        client.setUsage(embed, `${client.prefix}pay <@usuário | nome | ID> <valor>`);
+        await client.setError(message, embed, "Você deve especificar um valor válido.");
+        await await client.setUsage(message, embed, `${client.prefix}pay <@usuário | nome | ID> <valor>`);
         return message.reply({embeds: [embed]});
     }
 
@@ -38,8 +38,8 @@ exports.run = async(client, message, args) => {
     }
 
     if (!user) {
-        client.setError(embed, "Usuário não encontrado. Tente usar a menção, nome de usuário ou ID.");
-        client.setUsage(embed, `${client.prefix}pay <@usuário | nome | ID> <valor>`);
+        await client.setError(message, embed, "Usuário não encontrado. Tente usar a menção, nome de usuário ou ID.");
+        await await client.setUsage(message, embed, `${client.prefix}pay <@usuário | nome | ID> <valor>`);
         return message.reply({embeds: [embed]});
     }
 
@@ -50,7 +50,7 @@ exports.run = async(client, message, args) => {
     const senderTb = senderData ? senderData.trabalho: "";
     
     if (senderBalance < amount) {
-        client.setError(embed, "Você não tem saldo suficiente para essa transação.");
+        await client.setError(message, embed, "Você não tem saldo suficiente para essa transação.");
         return message.reply({embeds: [embed]});
     }
 

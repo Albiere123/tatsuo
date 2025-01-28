@@ -100,7 +100,7 @@ exports.run = async (client, message, args) => {
 
     } catch (error) {
         console.log(error)
-        client.setError(error, `Erro ao executar o comando ${this.help.name}`);
+        client.setError(message, error, `Erro ao executar o comando ${this.help.name}`);
         message.reply({ content: "Ocorreu um erro ao tentar executar este comando. O erro foi registrado e será analisado." });
     }
 };

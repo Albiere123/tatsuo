@@ -10,8 +10,8 @@ exports.run = async(client, message, args) => {
     let embed = new Discord.EmbedBuilder();
 
     if (!args[0] || !args[1]) {
-        client.setError(embed, "Você deve especificar o tipo de aposta e o valor.");
-        client.setUsage(embed, `${client.prefix}bet <solo|duo> <valor> [multiplicador] [@usuário]`);
+        await client.setError(message, embed, "Você deve especificar o tipo de aposta e o valor.");
+        await client.setUsage(message, embed, `${client.prefix}bet <solo|duo> <valor> [multiplicador] [@usuário]`);
         return message.reply({embeds: [embed]});
     }
 
@@ -19,14 +19,14 @@ exports.run = async(client, message, args) => {
     const amount = parseInt(args[1]);
 
     if (isNaN(amount) || amount <= 0) {
-        client.setError(embed, "Valor inválido. Escolha um valor positivo.");
-        client.setUsage(embed, `${client.prefix}bet <solo|duo> <valor> [multiplicador] [@usuário]`);
+        await client.setError(message, embed, "Valor inválido. Escolha um valor positivo.");
+        await client.setUsage(message, embed, `${client.prefix}bet <solo|duo> <valor> [multiplicador] [@usuário]`);
         return message.reply({embeds: [embed]});
     }
 
     const userData = await db.get(`${message.author.id}`);
     if (!userData || userData.money < amount) {
-        client.setError(embed, "Você não tem saldo suficiente para essa aposta.");
+        await client.setError(message, embed, "Você não tem saldo suficiente para essa aposta.");
         return message.reply({embeds: [embed]});
     }
 
@@ -34,16 +34,16 @@ exports.run = async(client, message, args) => {
 
     if (type === 'solo') {
         if (!args[2]) {
-            client.setError(embed, "Você deve especificar um multiplicador para o modo solo.");
-            client.setUsage(embed, `${client.prefix}bet solo <valor> <multiplicador>`);
+            await client.setError(message, embed, "Você deve especificar um multiplicador para o modo solo.");
+            await client.setUsage(message, embed, `${client.prefix}bet solo <valor> <multiplicador>`);
             return message.reply({embeds: [embed]});
         }
 
         const multiplier = parseFloat(args[2]);
 
         if (isNaN(multiplier) || multiplier < 1 || multiplier > 2.4) {
-            client.setError(embed, "Multiplicador inválido. Escolha um multiplicador entre 1 e 2.4.");
-            client.setUsage(embed, `${client.prefix}bet solo <valor> <multiplicador>`);
+            await client.setError(message, embed, "Multiplicador inválido. Escolha um multiplicador entre 1 e 2.4.");
+            await client.setUsage(message, embed, `${client.prefix}bet solo <valor> <multiplicador>`);
             return message.reply({embeds: [embed]});
         }
 
@@ -79,14 +79,14 @@ exports.run = async(client, message, args) => {
         const opponent = message.mentions.users.first();
 
         if (!opponent) {
-            client.setError(embed, "Você deve mencionar um usuário para desafiar.");
-            client.setUsage(embed, `${client.prefix}bet duo <valor> @usuário`);
+            await client.setError(message, embed, "Você deve mencionar um usuário para desafiar.");
+            await client.setUsage(message, embed, `${client.prefix}bet duo <valor> @usuário`);
             return message.reply({embeds: [embed]});
         }
 
         if (opponent.id === message.author.id) {
-            client.setError(embed, "Você não pode desafiar a si mesmo.");
-            client.setUsage(embed, `${client.prefix}bet duo <valor> @usuário`);
+            await client.setError(message, embed, "Você não pode desafiar a si mesmo.");
+            await client.setUsage(message, embed, `${client.prefix}bet duo <valor> @usuário`);
             return message.reply({embeds: [embed]});
         }
 
@@ -146,8 +146,8 @@ ${winner.tag} ganhou ${amount} moedas de ${loser.tag}!`)
         });
 
     } else {
-        client.setError(embed, "Tipo de aposta inválido. Use 'solo' ou 'duo'.");
-        client.setUsage(embed, `${client.prefix}bet <solo|duo> <valor> [multiplicador] [@usuário]`);
+        await client.setError(message, embed, "Tipo de aposta inválido. Use 'solo' ou 'duo'.");
+        await client.setUsage(message, embed, `${client.prefix}bet <solo|duo> <valor> [multiplicador] [@usuário]`);
         return message.reply({embeds: [embed]});
     }
 }
