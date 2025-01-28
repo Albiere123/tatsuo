@@ -34,6 +34,9 @@ exports.run = async(client, message, args) => {
     if (message.author.id !== client.dev.id && status === false) {
         return message.reply({ content: functions.tradutor(functions.getServerLanguage(message.guild.id), "manutenção")});
     }
+<<<<<<< HEAD
+>>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
+=======
 >>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
     if (!args[0]) {
         if (gameState.isRunning) {

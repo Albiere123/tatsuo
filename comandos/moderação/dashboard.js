@@ -20,8 +20,13 @@ exports.run = async (client, message, args) => {
 
             if (!validChannels.includes(channelType)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
                 await client.setError(message, embed, "Tipo de canal inválido. Use um dos seguintes: `confess`, `logs`, `sorteios`, `muterole`, `memberadd`.");
                 await client.setUsage(message, embed, `${client.prefix}dashboard <confess/logs/sorteios/muterole/memberadd(categoria separada)> <#canal/ID do canal>`);
+=======
+                client.setError(embed, "Tipo de canal inválido. Use um dos seguintes: `confess`, `logs`, `sorteios`, `muterole`, `memberadd`.");
+                client.setUsage(embed, `${client.prefix}dashboard <confess/logs/sorteios/muterole/memberadd(categoria separada)> <#canal/ID do canal>`);
+>>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
 =======
                 client.setError(embed, "Tipo de canal inválido. Use um dos seguintes: `confess`, `logs`, `sorteios`, `muterole`, `memberadd`.");
                 client.setUsage(embed, `${client.prefix}dashboard <confess/logs/sorteios/muterole/memberadd(categoria separada)> <#canal/ID do canal>`);
@@ -54,7 +59,11 @@ exports.run = async (client, message, args) => {
                                 .setTitle("Erro")
                                 .setDescription("Você precisa mencionar um canal de texto válido ou fornecer um ID válido.");
 <<<<<<< HEAD
+<<<<<<< HEAD
                             await client.setUsage(message, embed, `${client.prefix}dashboard memberadd canal <#canal/ID do canal>`);
+=======
+                            client.setUsage(embed, `${client.prefix}dashboard memberadd canal <#canal/ID do canal>`);
+>>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
 =======
                             client.setUsage(embed, `${client.prefix}dashboard memberadd canal <#canal/ID do canal>`);
 >>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
@@ -149,8 +158,13 @@ exports.run = async (client, message, args) => {
                 } else {
                     const embed = new Discord.EmbedBuilder()
 <<<<<<< HEAD
+<<<<<<< HEAD
                     await client.setError(message, embed, "Comando inválido. Use ${client.prefix}dashboard memberadd <opção>.");
                     await client.setUsage(message, embed, `${client.prefix}dashboard memberadd canal, titulo, descricao, thumbnail, image, ligar, desligar`);
+=======
+                    client.setError(embed, "Comando inválido. Use ${client.prefix}dashboard memberadd <opção>.");
+                    client.setUsage(embed, `${client.prefix}dashboard memberadd canal, titulo, descricao, thumbnail, image, ligar, desligar`);
+>>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
 =======
                     client.setError(embed, "Comando inválido. Use ${client.prefix}dashboard memberadd <opção>.");
                     client.setUsage(embed, `${client.prefix}dashboard memberadd canal, titulo, descricao, thumbnail, image, ligar, desligar`);

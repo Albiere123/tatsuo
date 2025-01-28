@@ -1,6 +1,7 @@
 {
     "manutenção": "This command is under maintenance!",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "langSet": "Language set successfully!",
     "confess": {
         "canal_invalido": "Confession channel not found! Please notify a server staff member with the `Manage Channels` permission to configure it using the command `{prefixo}dashboard confess <#new channel>`.",
@@ -96,6 +97,10 @@
         "comando_invalido": "Invalid command. Use {prefixo}forca to start."
     }
 }
+=======
+    "langSet": "Language set successfully!"
+}
+>>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
 =======
     "langSet": "Language set successfully!"
 }

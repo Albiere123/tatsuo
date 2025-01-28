@@ -5,15 +5,21 @@ const status = false;
 const functions = require("../../functions.js")
 exports.run = async (client, message, args) => {
 <<<<<<< HEAD
+<<<<<<< HEAD
     
     const status = (await db.get(`${this.help.name}_privado`)) || false;
     if (message.author.id !== client.dev.id && status === false) {
         return message.reply({ content: await functions.tradutor(await functions.getServerLanguage(message.guild.id), "manutenção")});
 =======
+=======
+>>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
     const functions = require("../../functions.js")
     const status = (await db.get(`${this.help.name}_privado`)) || false;
     if (message.author.id !== client.dev.id && status === false) {
         return message.reply({ content: functions.tradutor(functions.getServerLanguage(message.guild.id), "manutenção")});
+<<<<<<< HEAD
+>>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
+=======
 >>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
     }
     let embed = new Discord.EmbedBuilder().setColor(client.cor);

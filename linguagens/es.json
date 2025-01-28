@@ -1,5 +1,6 @@
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
     "manutenção": "¡Este comando está en mantenimiento!",
     "langSet": "¡Idioma configurado con éxito!",
     "confess": {
@@ -97,6 +98,11 @@
     }
 }
     
+=======
+    "manutenção": "¡Este 'command' está en mantenimiento!",
+    "langSet": "¡Idioma configurado correctamente!"
+}
+>>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
 =======
     "manutenção": "¡Este 'command' está en mantenimiento!",
     "langSet": "¡Idioma configurado correctamente!"

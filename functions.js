@@ -89,6 +89,7 @@ catch(e) {
 
 const tradutor = async (language, key, placeholders = {}) => {
 <<<<<<< HEAD
+<<<<<<< HEAD
     try {
         // Importa o arquivo de tradução
         const translations = require(`./linguagens/${language}.json`);
@@ -115,6 +116,8 @@ const tradutor = async (language, key, placeholders = {}) => {
 };
 
 =======
+=======
+>>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
     
     const translation = require(`./linguagens/${language}.json`)[key]
 
@@ -123,6 +126,9 @@ const tradutor = async (language, key, placeholders = {}) => {
         return text.replace(`{${placeholder}}`, placeholders[placeholder]);
     }, translation);
 }
+<<<<<<< HEAD
+>>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
+=======
 >>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
 
 async function getServerLanguage(guildId) {

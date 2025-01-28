@@ -4,7 +4,10 @@ const api = require("../../api.json")
 const {QuickDB} = require('quick.db')
 const db = new QuickDB()
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
 =======
 >>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
 exports.run = async (client, message, args) => {
@@ -12,7 +15,11 @@ exports.run = async (client, message, args) => {
     const status = (await db.get(`${this.help.name}_privado`)) || false;
     if (message.author.id !== client.dev.id && status === false) {
 <<<<<<< HEAD
+<<<<<<< HEAD
         return message.reply({ content: await functions.tradutor(await functions.getServerLanguage(message.guild.id), "manutenção")});
+=======
+        return message.reply({ content: functions.tradutor(functions.getServerLanguage(message.guild.id), "manutenção")});
+>>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
 =======
         return message.reply({ content: functions.tradutor(functions.getServerLanguage(message.guild.id), "manutenção")});
 >>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce

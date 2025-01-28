@@ -9,7 +9,10 @@ const db = new QuickDB();
 const { PermissionsBitField, ChannelType } = require('discord.js'); 
 const botdb = (new (require("./db.js"))("sorteio_privado"))
 <<<<<<< HEAD
+<<<<<<< HEAD
 const functions1 = require("./functions.js")
+=======
+>>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
 =======
 >>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
 const client = new Discord.Client({

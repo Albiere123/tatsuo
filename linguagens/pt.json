@@ -1,6 +1,7 @@
 {
     "manutenção": "Este comando está em manutenção!",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "langSet": "Linguagem setada com sucesso!",
     "confess": {
         "canal_invalido": "Canal de confissões não encontrado! Peço que avise a um Staff do servidor com a permissão de `Gerenciar Canais` para configurá-lo no comando {prefixo}dashboard confess <#novo canal>`",
@@ -95,6 +96,9 @@
         "erro": "Parece que alguém já está jogando neste chat... Espere a partida acabar!",
         "comando_invalido": "Comando inválido. Use {prefixo}forca para começar."
     }
+=======
+    "langSet": "Linguagem setada com sucesso!"
+>>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
 =======
     "langSet": "Linguagem setada com sucesso!"
 >>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce

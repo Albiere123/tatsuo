@@ -17,7 +17,11 @@ exports.run = async (client, message, args) => {
     if (message.author.id !== client.dev.id && status == false) {
         const embed = new Discord.EmbedBuilder();
 <<<<<<< HEAD
+<<<<<<< HEAD
         await client.setError(message, embed, "Este comando está em manutenção!");
+=======
+        client.setError(embed, "Este comando está em manutenção!");
+>>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
 =======
         client.setError(embed, "Este comando está em manutenção!");
 >>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
@@ -37,6 +41,7 @@ exports.run = async (client, message, args) => {
     if (subCommand === "add") {
         if (!categoria || !titulo || !codigo) {
 <<<<<<< HEAD
+<<<<<<< HEAD
             await client.setUsage(message, embed, `\`${client.prefix}wiki add <categoria> <título> <código>\``);
             return message.reply({ embeds: [embed] });
         }
@@ -45,6 +50,8 @@ exports.run = async (client, message, args) => {
 Categorias disponiveis: \`${categorias.join("`, `")}\``)
             await client.setUsage(message, embed, `\`${client.prefix}wiki add <categoria> <título> <código>\``);
 =======
+=======
+>>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
             client.setUsage(embed, `\`${client.prefix}wiki add <categoria> <título> <código>\``);
             return message.reply({ embeds: [embed] });
         }
@@ -52,6 +59,9 @@ Categorias disponiveis: \`${categorias.join("`, `")}\``)
             client.setError(embed, `A categoria não foi encontrada na whitelist... Contate o desenvolvedor caso for um erro!
 Categorias disponiveis: \`${categorias.join("`, `")}\``)
             client.setUsage(embed, `\`${client.prefix}wiki add <categoria> <título> <código>\``);
+<<<<<<< HEAD
+>>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
+=======
 >>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
             return message.reply({ embeds: [embed] });
         }
@@ -70,7 +80,11 @@ Categorias disponiveis: \`${categorias.join("`, `")}\``)
         const data = (await db.get("wiki")) || {};
         if (Object.keys(data).length === 0) {
 <<<<<<< HEAD
+<<<<<<< HEAD
             await client.setError(message, embed, "A wiki está vazia no momento.");
+=======
+            client.setError(embed, "A wiki está vazia no momento.");
+>>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
 =======
             client.setError(embed, "A wiki está vazia no momento.");
 >>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
@@ -102,7 +116,11 @@ Categorias disponiveis: \`${categorias.join("`, `")}\``)
 
         if (!categoriaData || !categoriaData[titulo]) {
 <<<<<<< HEAD
+<<<<<<< HEAD
             await client.setError(message, embed, `Nenhum comando encontrado para **${titulo}** na categoria **${categoria}**.`);
+=======
+            client.setError(embed, `Nenhum comando encontrado para **${titulo}** na categoria **${categoria}**.`);
+>>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
 =======
             client.setError(embed, `Nenhum comando encontrado para **${titulo}** na categoria **${categoria}**.`);
 >>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
@@ -121,7 +139,11 @@ Categorias disponiveis: \`${categorias.join("`, `")}\``)
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     await client.setUsage(message, 
+=======
+    client.setUsage(
+>>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
 =======
     client.setUsage(
 >>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
