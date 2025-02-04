@@ -15,29 +15,12 @@ const suspects = ['Sr.-Verde', 'Sra.-Branca', 'Coronel-Mostarda'];
 const locations = ['Biblioteca', 'Sala-de-Estar', 'Cozinha'];
 const weapons = ['Faca', 'Pistola', 'Corda'];
 
-<<<<<<< HEAD
-exports.run = async (client, message, args) => {
-    const functions = require("../../functions.js");
-    const lang = await functions.getServerLanguage(message.guild.id);
-
-    const status = (await db.get(`${this.help.name}_privado`)) || false;
-    if (message.author.id !== client.dev.id && status === false) {
-        return message.reply({
-            content: await functions.tradutor(lang, "manutenção"),
-        });
-    }
-
-=======
 exports.run = async(client, message, args) => {
     const functions = require("../../functions.js")
     const status = (await db.get(`${this.help.name}_privado`)) || false;
     if (message.author.id !== client.dev.id && status === false) {
         return message.reply({ content: functions.tradutor(functions.getServerLanguage(message.guild.id), "manutenção")});
     }
-<<<<<<< HEAD
->>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
-=======
->>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
     if (!args[0]) {
         if (gameState.isRunning) {
             return message.reply({

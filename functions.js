@@ -88,8 +88,6 @@ catch(e) {
 
 
 const tradutor = async (language, key, placeholders = {}) => {
-<<<<<<< HEAD
-<<<<<<< HEAD
     try {
         // Importa o arquivo de tradução
         const translations = require(`./linguagens/${language}.json`);
@@ -113,31 +111,23 @@ const tradutor = async (language, key, placeholders = {}) => {
     } catch (error) {
         return `Erro ao carregar o arquivo de idioma: ${error.message}`;
     }
-};
 
-=======
-=======
->>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
-    
-    const translation = require(`./linguagens/${language}.json`)[key]
+   /* const translation = require(`./linguagens/${language}.json`)[key]
 
     // Substituir os placeholders (se houver)
     return Object.keys(placeholders).reduce((text, placeholder) => {
         return text.replace(`{${placeholder}}`, placeholders[placeholder]);
-    }, translation);
+    }, translation);*/
 }
-<<<<<<< HEAD
->>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
-=======
->>>>>>> 32e921881c151f4161707c42cdc6fb88c4a5e5ce
 
 async function getServerLanguage(guildId) {
-    return (await db.get(`language_${guildId}`)) || 'en'; // Padrão: inglês
+    return (await db.get(`language_${guildId}`)) || 'pt'; // Padrão: inglês
 }
 
 async function setServerLanguage(guildId, language) {
     await db.set(`language_${guildId}`, language);
         }
+
 
 module.exports = {
     translateText, getAPI, translateEmbed, tradutor, getServerLanguage, setServerLanguage
