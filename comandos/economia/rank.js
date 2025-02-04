@@ -59,9 +59,9 @@ Escolha entre as categorias:
                 const description = pageData.map((user, index) => {
                     const userName = client.users.cache.get(user.userId)?.username || "Usuário desconhecido";
                     const position = start + index + 1; 
-                    if (index === 0) return `<:medalhadeouro:1275833851536736367> ${userName} - **R$ ${user.money.toFixed(0)}**`;
-                    if (index === 1) return `<:medalhadeprata:1275833849410228264> ${userName} - **R$ ${user.money.toFixed(0)}**`;
-                    if (index === 2) return `<:medalhadebronze:1275833846503575586> ${userName} - **R$ ${user.money.toFixed(0)}**`;
+                    if (index === 0 && page == 0) return `<:medalhadeouro:1275833851536736367> ${userName} - **R$ ${user.money.toFixed(0)}**`;
+                    if (index === 1 && page == 0) return `<:medalhadeprata:1275833849410228264> ${userName} - **R$ ${user.money.toFixed(0)}**`;
+                    if (index === 2 && page == 0) return `<:medalhadebronze:1275833846503575586> ${userName} - **R$ ${user.money.toFixed(0)}**`;
                     return `<:medalhaestrela:1275833855600885844> ${position}. ${userName} - **R$ ${user.money.toFixed(0)}**`;
                 }).join('\n');
 
